@@ -1,16 +1,16 @@
 // Reusable UI Components for Ascension Lutheran Church PWA
-// Version: 2025011402
+// Version: 2025011404
 
-console.log('🏛️ components.js loading... v2025011402');
+console.log('🏛️ components.js loading... v2025011404');
 
 class ComponentLibrary {
     constructor() {
-        this.version = '2025011402';
+        this.version = '2025011404';
         this.init();
     }
 
     init() {
-        console.log('🏛️ ComponentLibrary init v2025011402');
+        console.log('🏛️ ComponentLibrary init v2025011404');
         this.setupLazyLoading();
         this.setupFormValidation();
         this.setupImageOptimization();
@@ -536,7 +536,7 @@ class ComponentLibrary {
     }
 
     // Enhanced image loading with cache busting
-    loadImageWithCacheBust(src, version = '2025011402') {
+    loadImageWithCacheBust(src, version = '2025011404') {
         return new Promise((resolve, reject) => {
             const img = new Image();
             const cacheBustedSrc = src.includes('?') ? `${src}&v=${version}` : `${src}?v=${version}`;
@@ -695,4 +695,4 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 
 // Version check for cache verification
-console.log('🏛️ ALC PWA Components.js Version: 2025011402');
+console.log('🏛️ ALC PWA Components.js Version: 2025011404');
