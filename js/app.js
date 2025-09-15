@@ -1,14 +1,16 @@
 // Main Application JavaScript for Ascension Lutheran Church PWA
 // Updated with real church content from alcsfw.360unite.com
+// Version: 2025011402
 
-console.log('🏛️ app.js loading...');
+console.log('🏛️ app.js loading... v2025011402');
 
 class ChurchApp {
     constructor() {
-        console.log('🏛️ ChurchApp constructor called');
+        console.log('🏛️ ChurchApp constructor called v2025011402');
         this.currentPage = 'home';
         this.isLoading = false;
         this.installPrompt = null;
+        this.version = '2025011402';
         
         this.init();
     }
@@ -28,7 +30,7 @@ class ChurchApp {
     }
 
     setup() {
-        console.log('🏛️ ChurchApp setup called');
+        console.log('🏛️ ChurchApp setup called v2025011402');
         
         // Check if required elements exist
         const loadingScreen = document.getElementById('loading-screen');
@@ -47,7 +49,7 @@ class ChurchApp {
         this.setupSocialSharing();
         this.loadInitialPage();
         
-        console.log('🏛️ Ascension Lutheran Church PWA initialized');
+        console.log('🏛️ Ascension Lutheran Church PWA initialized v2025011402');
     }
 
     setupLoadingScreen() {
@@ -360,11 +362,6 @@ class ChurchApp {
                         <p class="stewardship-reference">LCMS Stewardship Bulletin Sentences</p>
                     </section>
 
-                    <section class="verse-display">
-                        <p class="verse-text">"And the third day, He rose again according to the Scriptures and ascended into heaven and sits at the right hand of the Father."</p>
-                        <p class="verse-reference">~ The Nicene Creed</p>
-                    </section>
-
                     <section class="info-section">
                         <div class="section-header">
                             <h2 class="section-title">Meet Our Pastor</h2>
@@ -373,7 +370,7 @@ class ChurchApp {
                         <div class="card">
                             <div class="card-content" style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
                                 <div style="flex: 0 0 200px;">
-                                    <img src="./images/Pastor.png" alt="Rev. James Gier, Senior Pastor" 
+                                    <img src="./images/Pastor.png?v=2025011402" alt="Rev. James Gier, Senior Pastor" 
                                          style="width: 200px; height: 250px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);"
                                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                     <div style="display: none; width: 200px; height: 250px; background: linear-gradient(45deg, var(--primary-color), var(--primary-light)); border-radius: var(--radius-lg); align-items: center; justify-content: center; color: white; font-size: 3rem; box-shadow: var(--shadow-md);">👨‍💼</div>
@@ -386,6 +383,11 @@ class ChurchApp {
                                 </div>
                             </div>
                         </div>
+                    </section>
+
+                    <section class="verse-display">
+                        <p class="verse-text">"And the third day, He rose again according to the Scriptures and ascended into heaven and sits at the right hand of the Father."</p>
+                        <p class="verse-reference">~ The Nicene Creed</p>
                     </section>
 
                     <section class="info-section">
@@ -995,14 +997,14 @@ class ChurchApp {
 }
 
 // Initialize the app when DOM is ready
-console.log('🏛️ About to set up app initialization');
+console.log('🏛️ About to set up app initialization v2025011402');
 
 function initializeApp() {
-    console.log('🏛️ Initializing ChurchApp');
+    console.log('🏛️ Initializing ChurchApp v2025011402');
     try {
         const app = new ChurchApp();
         window.app = app;
-        console.log('🏛️ App initialized successfully');
+        console.log('🏛️ App initialized successfully v2025011402');
     } catch (error) {
         console.error('🏛️ Error initializing app:', error);
     }
@@ -1015,3 +1017,6 @@ if (document.readyState === 'loading') {
     console.log('🏛️ DOM already loaded, initializing immediately');
     initializeApp();
 }
+
+// Version check for cache verification
+console.log('🏛️ ALC PWA App.js Version: 2025011402');
