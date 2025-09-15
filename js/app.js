@@ -70,18 +70,16 @@ const pages = {
                         <h2 class="section-title">Meet Our Pastor</h2>
                         <p class="section-subtitle">Shepherding our congregation with wisdom and faith</p>
                     </div>
-                    <div class="pastor-section">
-                        <div class="pastor-image-wrapper">
-                            <img src="./images/Pastor.png" alt="Rev. James Gier" class="pastor-photo">
+                    <div class="card" style="display: flex; align-items: center; gap: 2rem; padding: 0;">
+                        <div style="flex-shrink: 0; padding: 2rem;">
+                            <img src="./images/Pastor.png" alt="Rev. James Gier" style="width: 200px; height: 200px; border-radius: 12px; object-fit: cover; box-shadow: 0 10px 25px rgba(139, 0, 0, 0.2);">
                         </div>
-                        <div class="pastor-info">
-                            <h3 class="pastor-name">Rev. James Gier</h3>
-                            <p class="pastor-role">Senior Pastor</p>
-                            <div class="pastor-bio">
-                                <p>Pastor Gier was a licensed architect prior to entering the Holy Ministry and is a graduate of Concordia Theological Seminary in Fort Wayne. He brings a unique perspective to ministry, combining his background in design with his passion for God's Word.</p>
-                                <p>Pastor Gier has been faithfully serving our congregation, providing pastoral care, preaching God's Word, and administering the sacraments with dedication and love.</p>
-                            </div>
-                            <button class="card-link pastor-contact" onclick="loadPage('contact')">Contact Pastor Gier →</button>
+                        <div style="flex: 1; padding: 2rem 2rem 2rem 0;">
+                            <h3 style="color: var(--primary-color); font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;">Rev. James Gier</h3>
+                            <p style="color: var(--primary-light); font-weight: 600; margin-bottom: 1rem; font-size: 1.1rem;">Senior Pastor</p>
+                            <p style="color: var(--gray-600); margin-bottom: 1rem; line-height: 1.7;">Pastor Gier was a licensed architect prior to entering the Holy Ministry and is a graduate of Concordia Theological Seminary in Fort Wayne. He brings a unique perspective to ministry, combining his background in design with his passion for God's Word.</p>
+                            <p style="color: var(--gray-600); margin-bottom: 1.5rem; line-height: 1.7;">Pastor Gier has been faithfully serving our congregation, providing pastoral care, preaching God's Word, and administering the sacraments with dedication and love.</p>
+                            <button class="card-link" onclick="loadPage('contact')">Contact Pastor Gier →</button>
                         </div>
                     </div>
                 </section>
