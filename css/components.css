@@ -1,7 +1,7 @@
-/* Enhanced components.css - Pastor Section & Mobile Navigation */
+/* FIXED components.css - Mobile Pastor Section & Enhanced Mobile Navigation */
 
 /* ========================================
-   PASTOR SECTION - FULLY RESPONSIVE
+   PASTOR SECTION - FULLY MOBILE OPTIMIZED
 ======================================== */
 
 .pastor-section {
@@ -24,6 +24,9 @@
 
 .pastor-image-wrapper {
     flex-shrink: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .pastor-photo {
@@ -38,6 +41,7 @@
 .pastor-info {
     flex: 1;
     width: 100%;
+    max-width: 600px; /* Constrain width for readability */
 }
 
 .pastor-name {
@@ -55,11 +59,16 @@
     margin-bottom: var(--spacing-lg);
 }
 
+.pastor-bio {
+    margin-bottom: var(--spacing-xl);
+}
+
 .pastor-bio p {
     color: var(--gray-600);
     margin-bottom: var(--spacing-lg);
     line-height: 1.7;
-    text-align: left;
+    text-align: center; /* Centered for mobile */
+    font-size: 1rem;
 }
 
 .pastor-contact {
@@ -77,6 +86,7 @@
     cursor: pointer;
     font-size: 1rem;
     min-height: 48px;
+    white-space: nowrap;
 }
 
 .pastor-contact:hover {
@@ -87,7 +97,7 @@
 }
 
 /* ========================================
-   MOBILE NAVIGATION - COMPLETE SYSTEM
+   MOBILE NAVIGATION - ENHANCED SYSTEM
 ======================================== */
 
 .mobile-menu-toggle {
@@ -96,14 +106,30 @@
     background: none;
     border: none;
     cursor: pointer;
-    padding: var(--spacing-sm);
+    padding: var(--spacing-md);
     gap: 4px;
-    min-height: 44px;
-    min-width: 44px;
+    min-height: 48px;
+    min-width: 48px;
     align-items: center;
     justify-content: center;
     z-index: 1001;
     position: relative;
+    border-radius: var(--radius-md);
+    transition: background-color var(--transition-fast);
+}
+
+.mobile-menu-toggle:hover {
+    background-color: var(--gray-100);
+}
+
+.mobile-menu-toggle:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.mobile-menu-toggle:active {
+    background-color: var(--gray-200);
+    transform: scale(0.95);
 }
 
 .hamburger-line {
@@ -112,19 +138,23 @@
     background-color: var(--gray-700);
     transition: all 0.3s ease;
     border-radius: 2px;
+    transform-origin: center;
 }
 
-/* Hamburger Animation States */
+/* Enhanced Hamburger Animation */
 .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
     transform: rotate(45deg) translate(5px, 5px);
+    background-color: var(--primary-color);
 }
 
 .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
     opacity: 0;
+    transform: scale(0);
 }
 
 .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
     transform: rotate(-45deg) translate(7px, -6px);
+    background-color: var(--primary-color);
 }
 
 /* ========================================
@@ -137,28 +167,29 @@
         display: flex;
     }
     
+    /* Mobile navigation overlay */
     .nav-menu {
         position: fixed;
-        top: 100%;
+        top: 0;
         left: 0;
         width: 100%;
+        height: 100vh;
         background: var(--white);
         flex-direction: column;
         align-items: stretch;
-        padding: var(--spacing-xl);
+        justify-content: flex-start;
+        padding: 80px var(--spacing-xl) var(--spacing-xl);
         box-shadow: var(--shadow-xl);
-        transform: translateY(-100%);
+        transform: translateX(-100%);
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s ease;
-        z-index: 1000;
-        border-top: 1px solid var(--gray-200);
-        max-height: calc(100vh - 100px);
+        z-index: 999;
         overflow-y: auto;
     }
     
     .nav-menu.active {
-        transform: translateY(0);
+        transform: translateX(0);
         opacity: 1;
         visibility: visible;
     }
@@ -167,13 +198,19 @@
         padding: var(--spacing-lg) var(--spacing-md);
         text-align: center;
         border-radius: var(--radius-md);
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         min-height: 56px;
         border-bottom: 1px solid var(--gray-100);
-        margin-bottom: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: all var(--transition-fast);
+    }
+    
+    .nav-link:hover {
+        background-color: var(--gray-100);
+        transform: translateX(8px);
     }
     
     .nav-link:last-child:not(.donate-link) {
@@ -182,39 +219,48 @@
     }
     
     .donate-link {
-        margin-top: var(--spacing-lg);
-        justify-content: center;
-        width: 100%;
+        margin-top: var(--spacing-lg) !important;
+        justify-content: center !important;
+        width: auto !important;
         border-bottom: none !important;
+        padding: var(--spacing-lg) var(--spacing-xl) !important;
+        font-size: 1.1rem !important;
     }
     
-    /* Pastor Section Mobile */
+    /* FIXED Pastor Section Mobile Layout */
     .pastor-section {
-        margin: 0 var(--spacing-md);
+        margin: var(--spacing-lg) var(--spacing-md);
         padding: var(--spacing-xl) var(--spacing-lg);
+        gap: var(--spacing-lg);
     }
     
     .pastor-photo {
-        width: 180px;
-        height: 200px;
+        width: 160px;
+        height: 190px;
     }
     
     .pastor-name {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
+        text-align: center;
     }
     
     .pastor-role {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        text-align: center;
     }
     
     .pastor-bio p {
-        font-size: 1rem;
+        font-size: 0.95rem;
         text-align: center;
+        line-height: 1.6;
+        margin-bottom: var(--spacing-md);
     }
     
     .pastor-contact {
         width: 100%;
         justify-content: center;
+        padding: var(--spacing-lg) var(--spacing-xl);
+        font-size: 1rem;
     }
 }
 
@@ -228,12 +274,20 @@
         padding: var(--spacing-2xl);
     }
     
+    .pastor-image-wrapper {
+        width: auto;
+    }
+    
     .pastor-info {
         text-align: left;
     }
     
     .pastor-bio p {
         text-align: left;
+    }
+    
+    .pastor-contact {
+        width: auto;
     }
 }
 
@@ -249,6 +303,10 @@
         margin: var(--spacing-2xl) auto;
     }
     
+    .pastor-image-wrapper {
+        width: auto;
+    }
+    
     .pastor-photo {
         width: 220px;
         height: 260px;
@@ -260,10 +318,12 @@
     
     .pastor-name {
         font-size: 2rem;
+        text-align: left;
     }
     
     .pastor-role {
         font-size: 1.3rem;
+        text-align: left;
     }
     
     .pastor-bio p {
@@ -315,86 +375,6 @@
 .focus-visible {
     outline: 2px solid var(--primary-color);
     outline-offset: 2px;
-}
-
-/* ========================================
-   SITE-WIDE MOBILE OPTIMIZATIONS
-======================================== */
-
-/* Ensure all interactive elements are touch-friendly */
-.btn, .card-link, .nav-link, button {
-    min-height: 44px;
-    min-width: 44px;
-}
-
-/* Improve text readability on mobile */
-@media (max-width: 767px) {
-    body {
-        font-size: 16px;
-        line-height: 1.6;
-    }
-    
-    h1, .hero-title {
-        font-size: clamp(2rem, 8vw, 3rem);
-        line-height: 1.2;
-    }
-    
-    h2, .section-title {
-        font-size: clamp(1.5rem, 6vw, 2.2rem);
-        line-height: 1.3;
-    }
-    
-    h3, .card-title {
-        font-size: clamp(1.25rem, 5vw, 1.8rem);
-        line-height: 1.4;
-    }
-    
-    p, .card-text {
-        font-size: 1rem;
-        line-height: 1.7;
-        margin-bottom: var(--spacing-md);
-    }
-    
-    /* Improve spacing on mobile */
-    .container {
-        padding: 0 var(--spacing-md);
-    }
-    
-    .info-section {
-        padding: var(--spacing-xl) 0;
-    }
-    
-    .section-header {
-        padding: 0 var(--spacing-md);
-        margin-bottom: var(--spacing-xl);
-    }
-    
-    /* Card spacing */
-    .card {
-        margin: 0 0 var(--spacing-xl) 0;
-    }
-    
-    .card-content {
-        padding: var(--spacing-lg);
-    }
-    
-    /* Better mobile hero */
-    .hero-content {
-        padding: 0 var(--spacing-md);
-    }
-    
-    .hero-cta {
-        flex-direction: column;
-        gap: var(--spacing-md);
-        align-items: stretch;
-        max-width: 300px;
-        margin: 0 auto;
-    }
-    
-    .btn {
-        width: 100%;
-        justify-content: center;
-    }
 }
 
 /* ========================================
@@ -470,7 +450,6 @@ textarea {
    UTILITY CLASSES
 ======================================== */
 
-/* Layout utilities */
 .flex {
     display: flex;
 }
@@ -499,7 +478,6 @@ textarea {
     text-align: right;
 }
 
-/* Spacing utilities */
 .mt-auto {
     margin-top: auto;
 }
@@ -513,7 +491,6 @@ textarea {
     margin-right: auto;
 }
 
-/* Visibility utilities */
 .visible {
     visibility: visible;
 }
@@ -531,109 +508,9 @@ textarea {
 }
 
 /* ========================================
-   DARK MODE SUPPORT
-======================================== */
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --white: #1a1a1a;
-        --gray-50: #2d3748;
-        --gray-100: #4a5568;
-        --gray-200: #718096;
-        --gray-800: #f7fafc;
-        --gray-900: #ffffff;
-    }
-    
-    body {
-        background-color: var(--gray-800);
-        color: var(--gray-100);
-    }
-    
-    .card,
-    .worship-times,
-    .contact-info,
-    .pastor-section {
-        background: var(--gray-50);
-        border-color: var(--gray-200);
-    }
-}
-
-/* ========================================
-   PRINT STYLES
-======================================== */
-
-@media print {
-    .loading-screen,
-    .mobile-menu-toggle,
-    .nav-menu,
-    .hero-cta,
-    .social-links {
-        display: none !important;
-    }
-    
-    .main-header {
-        position: static;
-        box-shadow: none;
-        border-bottom: 1px solid var(--gray-300);
-    }
-    
-    .pastor-section,
-    .card,
-    .worship-times {
-        break-inside: avoid;
-        box-shadow: none;
-        border: 1px solid var(--gray-300);
-    }
-    
-    .hero-section {
-        background: none !important;
-        color: var(--gray-800) !important;
-        border: 1px solid var(--gray-300);
-    }
-    
-    .hero-title,
-    .hero-subtitle {
-        color: var(--gray-800) !important;
-    }
-    
-    .btn {
-        border: 1px solid var(--gray-300) !important;
-    }
-}
-
-/* ========================================
-   PERFORMANCE OPTIMIZATIONS
-======================================== */
-
-/* GPU acceleration for animations */
-.card,
-.btn,
-.nav-link,
-.pastor-section {
-    transform: translateZ(0);
-    will-change: transform;
-}
-
-/* Optimize images */
-img {
-    loading: lazy;
-}
-
-/* Reduce motion for accessibility */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-}
-
-/* ========================================
    COMPONENT ANIMATIONS
 ======================================== */
 
-/* Fade in animation */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -645,7 +522,6 @@ img {
     }
 }
 
-/* Slide in animation */
 @keyframes slideIn {
     from {
         transform: translateX(-100%);
@@ -655,7 +531,6 @@ img {
     }
 }
 
-/* Scale in animation */
 @keyframes scaleIn {
     from {
         transform: scale(0.8);
@@ -667,7 +542,6 @@ img {
     }
 }
 
-/* Apply animations to elements */
 .card {
     animation: fadeIn 0.6s ease-out;
 }
@@ -681,10 +555,148 @@ img {
 }
 
 /* ========================================
-   BROWSER COMPATIBILITY
+   PERFORMANCE OPTIMIZATIONS
 ======================================== */
 
-/* Fallbacks for older browsers */
+.card,
+.btn,
+.nav-link,
+.pastor-section {
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+img {
+    loading: lazy;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ========================================
+   MOBILE NAVIGATION FIXES
+======================================== */
+
+@media (max-width: 767px) {
+    /* Prevent body scroll when mobile menu is open */
+    body.menu-open {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+    }
+    
+    /* Ensure proper touch targets */
+    .btn, .card-link, .nav-link, button {
+        min-height: 48px;
+        min-width: 48px;
+    }
+    
+    /* Improve text readability on mobile */
+    body {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+    
+    h1, .hero-title {
+        font-size: clamp(2rem, 8vw, 3rem);
+        line-height: 1.2;
+    }
+    
+    h2, .section-title {
+        font-size: clamp(1.5rem, 6vw, 2.2rem);
+        line-height: 1.3;
+    }
+    
+    h3, .card-title {
+        font-size: clamp(1.25rem, 5vw, 1.8rem);
+        line-height: 1.4;
+    }
+    
+    p, .card-text {
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .info-section {
+        padding: var(--spacing-xl) 0;
+    }
+    
+    .section-header {
+        padding: 0 var(--spacing-md);
+        margin-bottom: var(--spacing-xl);
+    }
+    
+    .card {
+        margin: 0 0 var(--spacing-xl) 0;
+    }
+    
+    .card-content {
+        padding: var(--spacing-lg);
+    }
+    
+    .hero-content {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        align-items: stretch;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Extra small mobile (iPhone SE, etc.) */
+@media (max-width: 375px) {
+    .pastor-section {
+        margin: var(--spacing-md) var(--spacing-sm);
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+    
+    .pastor-photo {
+        width: 140px;
+        height: 170px;
+    }
+    
+    .pastor-name {
+        font-size: 1.3rem;
+    }
+    
+    .pastor-role {
+        font-size: 0.95rem;
+    }
+    
+    .pastor-bio p {
+        font-size: 0.9rem;
+    }
+    
+    .pastor-contact {
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-size: 0.95rem;
+    }
+}
+
+/* ========================================
+   BROWSER COMPATIBILITY & FIXES
+======================================== */
+
 @supports not (backdrop-filter: blur(10px)) {
     .loading-content {
         background: rgba(139, 0, 0, 0.9);
@@ -699,18 +711,15 @@ img {
     }
 }
 
-/* Prevent horizontal scroll */
 html, body {
     overflow-x: hidden;
 }
 
-/* Improve image responsiveness */
 img {
     max-width: 100%;
     height: auto;
 }
 
-/* Better focus states for accessibility */
 button:focus,
 .nav-link:focus,
 .btn:focus {
