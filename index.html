@@ -23,9 +23,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- CSS -->
-    <link rel="stylesheet" href="./css/NEW_main.css">
-    <link rel="stylesheet" href="./css/NEW_components.css">
+    <!-- CSS - FIXED: Using correct filenames -->
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/components.css">
 </head>
 <body>
     <!-- Navigation Header -->
@@ -130,21 +130,24 @@
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script src="./js/NEW_app.js"></script>
+    <!-- JavaScript - FIXED: Using correct filename -->
+    <script src="./js/app.js"></script>
     
     <script>
         console.log('🏛️ HTML loaded, checking for app functions...');
         
         // Mobile menu toggle function
         function toggleMobileMenu() {
+            console.log('🏛️ toggleMobileMenu called');
             const navMenu = document.getElementById('nav-menu');
             const isOpen = navMenu.classList.contains('active');
             
             if (isOpen) {
                 navMenu.classList.remove('active');
+                console.log('🏛️ Mobile menu closed');
             } else {
                 navMenu.classList.add('active');
+                console.log('🏛️ Mobile menu opened');
             }
         }
         
@@ -154,8 +157,10 @@
                 console.log('🏛️ Main app not loaded, using fallback');
                 window.loadPage = function(page) {
                     console.log('🏛️ Fallback loadPage called for:', page);
-                    document.getElementById('page-container').innerHTML = '<div class="page-content"><div class="container"><h1>Loading ' + page + '...</h1><p>Please check that NEW_app.js is loading correctly.</p></div></div>';
+                    document.getElementById('page-container').innerHTML = '<div class="page-content"><div class="container"><h1>Loading ' + page + '...</h1><p>Please check that app.js is loading correctly.</p><p>Check the browser console for errors.</p></div></div>';
                 };
+            } else {
+                console.log('🏛️ Main app loaded successfully!');
             }
         }, 1000);
     </script>
