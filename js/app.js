@@ -224,7 +224,7 @@ class ChurchApp {
         this.loadPage('home');
     }
 
-    async loadPage(pageName) {
+    loadPage(pageName) {
         console.log('🏛️ Loading page:', pageName);
         if (this.isLoading) {
             console.log('🏛️ Already loading, skipping');
@@ -235,7 +235,7 @@ class ChurchApp {
         this.currentPage = pageName;
         
         try {
-            const pageContent = await this.getPageContent(pageName);
+            const pageContent = this.getPageContent(pageName);
             console.log('🏛️ Got page content, rendering...');
             this.renderPage(pageContent);
             this.updateActiveNavigation(pageName);
@@ -256,7 +256,7 @@ class ChurchApp {
         }
     }
 
-    async getPageContent(pageName) {
+    getPageContent(pageName) {
         console.log('🏛️ Getting content for page:', pageName);
         
         const pages = {
