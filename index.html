@@ -19,17 +19,114 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="./manifest.json">
     
-    <!-- Fonts -->
+    <!-- Critical CSS - Inline to prevent FOUC -->
+    <style>
+        /* Critical loading screen styles to prevent FOUC */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #8B0000 0%, #660000 100%);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.8s ease-out;
+        }
+        
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loading-content {
+            text-align: center;
+            color: white;
+            max-width: 400px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1.5rem;
+        }
+        
+        .loading-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .loading-subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Hide main content during loading */
+        body.loading .main-header,
+        body.loading .page-container,
+        body.loading .main-footer {
+            visibility: hidden;
+        }
+        
+        /* Mobile responsive loading */
+        @media (max-width: 480px) {
+            .loading-content {
+                margin: 1.5rem;
+                padding: 2rem 1.5rem;
+                max-width: 350px;
+            }
+            
+            .logo-img {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .loading-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+    
+    <!-- Fonts - Preload for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- CSS Files -->
+    <!-- CSS Files - Load after fonts -->
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/components.css">
 </head>
-<body>
-    <!-- Loading Screen -->
+<body class="loading">
+    <!-- Enhanced Loading Screen -->
     <div id="loading-screen" class="loading-screen">
         <div class="loading-background">
             <div class="decorative-pattern">
@@ -70,7 +167,7 @@
     <header class="main-header">
         <nav class="navbar">
             <div class="nav-container">
-                <div class="nav-brand">
+                <div class="nav-brand" id="nav-brand-home" role="button" tabindex="0" aria-label="Go to home page">
                     <div class="nav-logo-container">
                         <img src="./images/Color Luther Rose - 72 dpi.jpg" alt="Luther Rose Logo" class="nav-logo">
                     </div>
@@ -80,7 +177,7 @@
                     </div>
                 </div>
                 
-                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" type="button">
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
@@ -111,7 +208,86 @@
         <!-- Footer will be populated by JavaScript -->
     </footer>
 
-    <!-- JavaScript Files - Load content first -->
+    <!-- JavaScript Files - Load content first, then app logic -->
+    <script>
+        // Prevent FOUC by keeping loading class until everything is ready
+        console.log('🏛️ Starting content-driven site initialization...');
+        
+        // Loading screen state management
+        let loadingSteps = {
+            content: false,
+            fonts: false,
+            css: false,
+            dom: false
+        };
+        
+        function checkLoadingComplete() {
+            const allLoaded = Object.values(loadingSteps).every(step => step);
+            if (allLoaded) {
+                console.log('🏛️ All resources loaded, hiding loading screen...');
+                setTimeout(() => {
+                    hideLoadingScreen();
+                }, 1500); // Show loading screen for minimum 1.5 seconds
+            }
+        }
+        
+        function hideLoadingScreen() {
+            const loadingScreen = document.getElementById('loading-screen');
+            const body = document.body;
+            
+            if (loadingScreen) {
+                loadingScreen.classList.add('hidden');
+                body.classList.remove('loading');
+                
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 800);
+            }
+        }
+        
+        // Check if fonts are loaded
+        if (document.fonts) {
+            document.fonts.ready.then(() => {
+                loadingSteps.fonts = true;
+                checkLoadingComplete();
+            });
+        } else {
+            loadingSteps.fonts = true;
+        }
+        
+        // Check CSS load (approximate)
+        setTimeout(() => {
+            loadingSteps.css = true;
+            checkLoadingComplete();
+        }, 500);
+        
+        // DOM ready check
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                loadingSteps.dom = true;
+                checkLoadingComplete();
+            });
+        } else {
+            loadingSteps.dom = true;
+        }
+        
+        // Window load fallback
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                if (!Object.values(loadingSteps).every(step => step)) {
+                    console.log('🏛️ Fallback: Force hiding loading screen');
+                    hideLoadingScreen();
+                }
+            }, 3000); // Maximum 3 seconds loading time
+        });
+        
+        // Emergency fallback
+        setTimeout(() => {
+            console.log('🏛️ Emergency fallback: Force hiding loading screen');
+            hideLoadingScreen();
+        }, 6000); // Absolute maximum 6 seconds
+    </script>
+    
     <script src="./content/content.js"></script>
     <script src="./js/app.js"></script>
     
@@ -119,7 +295,7 @@
     <script>
         // Content-driven initialization
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🏛️ Initializing content-driven site...');
+            console.log('🏛️ DOM ready - initializing content...');
             
             // Populate static elements with content once available
             function populateStaticContent() {
@@ -129,8 +305,9 @@
                 }
 
                 const content = SITE_CONTENT;
+                console.log('🏛️ Content available, populating static elements...');
 
-                // Update loading screen
+                // Update loading screen content
                 const loadingTitle = document.getElementById('loading-title');
                 const loadingSubtitle = document.getElementById('loading-subtitle');
                 const loadingLocation = document.getElementById('loading-location');
@@ -155,8 +332,15 @@
 
                 // Populate footer
                 populateFooter(content.footer, content.social);
+                
+                // Setup logo click handler for home
+                setupLogoClickHandler();
 
-                console.log('🏛️ Static content populated');
+                // Mark content as loaded
+                loadingSteps.content = true;
+                checkLoadingComplete();
+
+                console.log('🏛️ Static content populated successfully');
             }
 
             function populateNavigation(navItems, donateLink) {
@@ -214,36 +398,40 @@
 
                 footer.innerHTML = `
                     <div class="footer-content">
-                        ${sections}
+                        <div class="footer-container">
+                            ${sections}
+                        </div>
                     </div>
                     <div class="footer-bottom">
                         ${bottom}
                     </div>
                 `;
             }
+            
+            function setupLogoClickHandler() {
+                const logoBrand = document.getElementById('nav-brand-home');
+                if (logoBrand) {
+                    logoBrand.addEventListener('click', () => {
+                        if (window.ascensionApp) {
+                            window.ascensionApp.loadPage('home');
+                        }
+                    });
+                    
+                    // Keyboard support
+                    logoBrand.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            if (window.ascensionApp) {
+                                window.ascensionApp.loadPage('home');
+                            }
+                        }
+                    });
+                }
+            }
 
             // Start populating content
             populateStaticContent();
         });
-
-        // Loading screen management
-        function hideLoadingScreen() {
-            const loadingScreen = document.getElementById('loading-screen');
-            if (loadingScreen) {
-                loadingScreen.classList.add('hidden');
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                }, 1000);
-            }
-        }
-
-        // Hide loading screen after page loads
-        window.addEventListener('load', () => {
-            setTimeout(hideLoadingScreen, 2000);
-        });
-
-        // Fallback
-        setTimeout(hideLoadingScreen, 5000);
 
         // Service Worker Registration
         if ('serviceWorker' in navigator) {
@@ -271,7 +459,7 @@
                     if (perf) {
                         console.log('🏛️ Page load time:', Math.round(perf.loadEventEnd - perf.loadEventStart), 'ms');
                     }
-                }, 0);
+                }, 100);
             });
         }
     </script>
