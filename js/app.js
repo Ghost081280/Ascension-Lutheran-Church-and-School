@@ -1,4 +1,4 @@
-// Ascension Lutheran Church App - Clean Rebuild
+// Ascension Lutheran Church App - Enhanced with Real Content
 console.log('🏛️ App.js loading...');
 
 class AscensionApp {
@@ -201,6 +201,10 @@ class AscensionApp {
         return this.generateSchoolPage(pageData);
       case 'worship':
         return this.generateWorshipPage(pageData);
+      case 'ministries':
+        return this.generateMinistriesPage(pageData);
+      case 'leadership':
+        return this.generateLeadershipPage(pageData);
       case 'contact':
         return this.generateContactPage(pageData);
       default:
@@ -216,6 +220,7 @@ class AscensionApp {
           ${this.generateWorshipTimesSection(data.sections.worshipTimes)}
           ${this.generateMinistrySection(data.sections.ministry)}
           ${this.generatePastorSection(data.sections.pastor)}
+          ${this.generateMissionStatement(data.mission)}
           ${this.generateVerseDisplay(data.verse)}
         </div>
       </div>
@@ -227,8 +232,8 @@ class AscensionApp {
       <div class="page-content">
         <div class="container">
           ${this.generateHeroSection(data.hero)}
-          ${this.generateStewardshipQuote(data.stewardshipQuote)}
           ${this.generateBeliefsSection(data.beliefs)}
+          ${this.generateHistorySection(data.history)}
           ${this.generateVerseDisplay(data.verse)}
         </div>
       </div>
@@ -242,6 +247,7 @@ class AscensionApp {
           ${this.generateHeroSection(data.hero)}
           ${this.generateFamilyPrograms(data.programs)}
           ${this.generateLearnByHeart(data.learnByHeart)}
+          ${this.generateSpecialPrograms(data.specialPrograms)}
           ${this.generateVerseDisplay(data.verse)}
         </div>
       </div>
@@ -254,6 +260,9 @@ class AscensionApp {
         <div class="container">
           ${this.generateHeroSection(data.hero)}
           ${this.generateMissionSection(data.mission)}
+          ${this.generateSchoolStats(data.stats)}
+          ${this.generateSchoolPrograms(data.programs)}
+          ${this.generateAdmissionsInfo(data.admissions)}
           ${this.generateVerseDisplay(data.verse)}
         </div>
       </div>
@@ -273,6 +282,32 @@ class AscensionApp {
     `;
   }
 
+  generateMinistriesPage(data) {
+    return `
+      <div class="page-content">
+        <div class="container">
+          ${this.generateHeroSection(data.hero)}
+          ${this.generateMusicMinistry(data.musicMinistry)}
+          ${this.generateEducationMinistry(data.education)}
+          ${this.generateMissionsMinistry(data.missions)}
+          ${this.generateVerseDisplay(data.verse)}
+        </div>
+      </div>
+    `;
+  }
+
+  generateLeadershipPage(data) {
+    return `
+      <div class="page-content">
+        <div class="container">
+          ${this.generateHeroSection(data.hero)}
+          ${this.generateStaffDirectory()}
+          ${this.generateVerseDisplay(data.verse)}
+        </div>
+      </div>
+    `;
+  }
+
   generateContactPage(data) {
     return `
       <div class="page-content">
@@ -280,6 +315,7 @@ class AscensionApp {
           ${this.generateHeroSection(data.hero)}
           ${this.generateContactSections(data.sections)}
           ${this.generateOfficeHours(data.officeHours)}
+          ${this.generateMembershipInfo(data.membership)}
           ${this.generateVerseDisplay(data.verse)}
         </div>
       </div>
@@ -357,9 +393,9 @@ class AscensionApp {
   }
 
   generatePastorSection(section) {
-    if (!section || !this.content.pastor) return '';
+    if (!section || !this.content.staff.seniorPastor) return '';
 
-    const pastor = this.content.pastor;
+    const pastor = this.content.staff.seniorPastor;
     const bio = pastor.bio.map(p => `<p>${p}</p>`).join('');
 
     return `
@@ -385,15 +421,17 @@ class AscensionApp {
     `;
   }
 
-  generateStewardshipQuote(quote) {
-    if (!quote) return '';
-
-    const verses = quote.verses.map(verse => `<p>${verse}</p>`).join('');
+  generateMissionStatement(mission) {
+    if (!mission) return '';
 
     return `
-      <section class="stewardship-quote">
-        ${verses}
-        <p class="stewardship-reference">${quote.reference}</p>
+      <section class="info-section">
+        <div class="card">
+          <div class="card-content">
+            <h3>Our Mission</h3>
+            <p>${mission.statement}</p>
+          </div>
+        </div>
       </section>
     `;
   }
@@ -402,7 +440,6 @@ class AscensionApp {
     if (!beliefs) return '';
 
     const content = beliefs.content.map(p => `<p>${p}</p>`).join('');
-    const points = beliefs.points.map(point => `<li>${point}</li>`).join('');
 
     return `
       <section class="info-section">
@@ -413,10 +450,26 @@ class AscensionApp {
         <div class="card">
           <div class="card-content">
             ${content}
-            <h4>What we believe:</h4>
-            <ul class="content-list">
-              ${points}
-            </ul>
+            <div class="stewardship-quote">
+              <p><em>${beliefs.niceneCreed}</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  generateHistorySection(history) {
+    if (!history) return '';
+
+    return `
+      <section class="info-section">
+        <div class="card">
+          <div class="card-content">
+            <h3>Our History</h3>
+            <p><strong>Founded:</strong> ${history.founded}</p>
+            <p><strong>Joined LCMS:</strong> ${history.lcmsJoined}</p>
+            <p>${history.description}</p>
           </div>
         </div>
       </section>
@@ -427,14 +480,28 @@ class AscensionApp {
     if (!programs) return '';
 
     const content = programs.content.map(p => `<p>${p}</p>`).join('');
+    const offerings = programs.offerings.map(offering => `
+      <div class="card">
+        <div class="card-content">
+          <h4>${offering.name}</h4>
+          <p><strong>Schedule:</strong> ${offering.schedule}</p>
+          <p>${offering.description}</p>
+        </div>
+      </div>
+    `).join('');
 
     return `
       <section class="info-section">
+        <div class="section-header">
+          <h2 class="section-title">${programs.title}</h2>
+        </div>
         <div class="card">
           <div class="card-content">
-            <h3>${programs.title}</h3>
             ${content}
           </div>
+        </div>
+        <div class="card-grid">
+          ${offerings}
         </div>
       </section>
     `;
@@ -443,6 +510,7 @@ class AscensionApp {
   generateLearnByHeart(learn) {
     if (!learn) return '';
 
+    const practices = learn.practices.map(practice => `<li>${practice}</li>`).join('');
     const items = learn.items.map(item => `<li>${item}</li>`).join('');
 
     return `
@@ -453,32 +521,259 @@ class AscensionApp {
         </div>
         <div class="card">
           <div class="card-content">
-            <p><strong>${learn.description}</strong></p>
+            <p>${learn.description}</p>
+            <h4>Four Key Faith Practices:</h4>
+            <ul class="content-list">
+              ${practices}
+            </ul>
+            <h4>Weekly Materials Include:</h4>
             <ul class="content-list">
               ${items}
             </ul>
-            <p>${learn.note}</p>
+            <p><em>${learn.note}</em></p>
           </div>
         </div>
       </section>
     `;
   }
 
-  generateMissionSection(mission) {
-    if (!mission) return '';
+  generateSpecialPrograms(special) {
+    if (!special) return '';
 
-    const content = mission.content.map(p => `<p>${p}</p>`).join('');
+    const programs = special.programs.map(program => `
+      <div class="card">
+        <div class="card-content">
+          <h4>${program.name}</h4>
+          <p>${program.description}</p>
+        </div>
+      </div>
+    `).join('');
 
     return `
       <section class="info-section">
         <div class="section-header">
-          <h2 class="section-title">${mission.title}</h2>
-          <p class="section-subtitle">${mission.subtitle}</p>
+          <h2 class="section-title">${special.title}</h2>
+        </div>
+        <div class="card-grid">
+          ${programs}
+        </div>
+      </section>
+    `;
+  }
+
+  generateSchoolStats(stats) {
+    if (!stats) return '';
+
+    return `
+      <section class="info-section">
+        <div class="section-header">
+          <h2 class="section-title">${stats.title}</h2>
         </div>
         <div class="card">
           <div class="card-content">
-            <h3>Our Mission</h3>
-            ${content}
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+              <div><strong>Enrollment:</strong> ${stats.enrollment} students</div>
+              <div><strong>Student-Teacher Ratio:</strong> ${stats.studentTeacherRatio}</div>
+              <div><strong>Minority Enrollment:</strong> ${stats.minorityEnrollment}</div>
+              <div><strong>Tuition:</strong> ${stats.tuition}</div>
+              <div><strong>Acceptance Rate:</strong> ${stats.acceptanceRate}</div>
+              <div><strong>Application Deadline:</strong> ${stats.applicationDeadline}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  generateSchoolPrograms(programs) {
+    if (!programs) return '';
+
+    const academics = programs.academics.map(item => `<li>${item}</li>`).join('');
+    const arts = programs.arts.map(item => `<li>${item}</li>`).join('');
+    const clubs = programs.clubs.map(item => `<li>${item}</li>`).join('');
+    const sports = programs.sports.map(item => `<li>${item}</li>`).join('');
+
+    return `
+      <section class="info-section">
+        <div class="section-header">
+          <h2 class="section-title">${programs.title}</h2>
+        </div>
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-content">
+              <h4>Academics</h4>
+              <ul class="content-list">${academics}</ul>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-content">
+              <h4>Arts & Music</h4>
+              <ul class="content-list">${arts}</ul>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-content">
+              <h4>Clubs</h4>
+              <ul class="content-list">${clubs}</ul>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-content">
+              <h4>Sports</h4>
+              <ul class="content-list">${sports}</ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  generateAdmissionsInfo(admissions) {
+    if (!admissions) return '';
+
+    const requirements = admissions.requirements.map(req => `<li>${req}</li>`).join('');
+
+    return `
+      <section class="info-section">
+        <div class="section-header">
+          <h2 class="section-title">${admissions.title}</h2>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <ul class="content-list">${requirements}</ul>
+            <p><em>${admissions.note}</em></p>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  generateMusicMinistry(music) {
+    if (!music) return '';
+
+    const ensembles = music.ensembles.map(ensemble => `<li>${ensemble}</li>`).join('');
+
+    return `
+      <section class="info-section">
+        <div class="section-header">
+          <h2 class="section-title">${music.title}</h2>
+          <p class="section-subtitle">${music.subtitle}</p>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <h4>Musical Ensembles</h4>
+            <ul class="content-list">${ensembles}</ul>
+            <p><em>${music.invitation}</em></p>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  generateEducationMinistry(education) {
+    if (!education) return '';
+
+    const programs = education.programs.map(program => `<li>${program}</li>`).join('');
+
+    return `
+      <section class="info-section">
+        <div class="section-header">
+          <h2 class="section-title">${education.title}</h2>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <ul class="content-list">${programs}</ul>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  generateMissionsMinistry(missions) {
+    if (!missions) return '';
+
+    const speakers = missions.recentSpeakers.map(speaker => `<li>${speaker}</li>`).join('');
+
+    return `
+      <section class="info-section">
+        <div class="section-header">
+          <h2 class="section-title">${missions.title}</h2>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <p>${missions.focus}</p>
+            <h4>Recent Mission Speakers</h4>
+            <ul class="content-list">${speakers}</ul>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  generateStaffDirectory() {
+    if (!this.content.staff) return '';
+
+    const staff = this.content.staff;
+
+    return `
+      <section class="info-section">
+        <div class="section-header">
+          <h2 class="section-title">Our Staff</h2>
+        </div>
+        
+        <!-- Senior Pastor -->
+        <div class="pastor-section">
+          <div class="pastor-image-wrapper">
+            <img src="${staff.seniorPastor.image}" alt="${staff.seniorPastor.name}" class="pastor-photo">
+          </div>
+          <div class="pastor-info">
+            <h3 class="pastor-name">${staff.seniorPastor.name}</h3>
+            <p class="pastor-role">${staff.seniorPastor.title}</p>
+            <div class="pastor-bio">
+              ${staff.seniorPastor.bio.map(p => `<p>${p}</p>`).join('')}
+              <p><strong>Installed:</strong> ${staff.seniorPastor.installedDate}</p>
+              <p><strong>Education:</strong></p>
+              <ul>${staff.seniorPastor.education.map(edu => `<li>${edu}</li>`).join('')}</ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Other Staff -->
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-content">
+              <h4>${staff.associatePastor.name}</h4>
+              <p><strong>${staff.associatePastor.title}</strong></p>
+              <p>Joined: ${staff.associatePastor.joinedDate}</p>
+              <p>${staff.associatePastor.pastoralExperience}</p>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-content">
+              <h4>${staff.deaconess.name}</h4>
+              <p><strong>${staff.deaconess.title}</strong></p>
+              <p>Joined: ${staff.deaconess.joinedDate}</p>
+              <p><strong>Focus:</strong> ${staff.deaconess.focus}</p>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-content">
+              <h4>${staff.officeAdministrator.name}</h4>
+              <p><strong>${staff.officeAdministrator.title}</strong></p>
+              <p>${staff.officeAdministrator.description}</p>
+              <blockquote>"${staff.officeAdministrator.quote}"</blockquote>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-content">
+              <h4>${staff.musicDirector.name}</h4>
+              <p><strong>${staff.musicDirector.title}</strong></p>
+              <p>Service: ${staff.musicDirector.serviceYears}</p>
+              <p>${staff.musicDirector.education}</p>
+            </div>
           </div>
         </div>
       </section>
@@ -582,6 +877,26 @@ class AscensionApp {
         </div>
         <div class="worship-times">
           ${hours}
+        </div>
+      </section>
+    `;
+  }
+
+  generateMembershipInfo(membership) {
+    if (!membership) return '';
+
+    const content = membership.content.map(p => `<p>${p}</p>`).join('');
+
+    return `
+      <section class="info-section">
+        <div class="section-header">
+          <h2 class="section-title">${membership.title}</h2>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            ${content}
+            <p><strong>Note:</strong> ${membership.requirement}</p>
+          </div>
         </div>
       </section>
     `;
