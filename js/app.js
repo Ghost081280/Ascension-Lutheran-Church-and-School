@@ -366,6 +366,29 @@ class ChurchApp {
                     </section>
 
                     <section class="info-section">
+                        <div class="section-header">
+                            <h2 class="section-title">Meet Our Pastor</h2>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-content" style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+                                <div style="flex: 0 0 200px;">
+                                    <img src="./images/Pastor.png" alt="Rev. James Gier, Senior Pastor" 
+                                         style="width: 200px; height: 250px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);"
+                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div style="display: none; width: 200px; height: 250px; background: linear-gradient(45deg, var(--primary-color), var(--primary-light)); border-radius: var(--radius-lg); align-items: center; justify-content: center; color: white; font-size: 3rem; box-shadow: var(--shadow-md);">👨‍💼</div>
+                                </div>
+                                <div style="flex: 1; min-width: 300px;">
+                                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Rev. James Gier</h3>
+                                    <p style="color: var(--secondary-color); font-weight: 600; margin-bottom: 1rem;">Senior Pastor</p>
+                                    <p>Pastor Gier was installed as Ascension's third senior pastor in 2019. He was a licensed architect prior to entering the Holy Ministry and is a graduate of Concordia Theological Seminary in Fort Wayne.</p>
+                                    <p>Pastor Gier brings a unique perspective to ministry, combining his architectural background with his theological training to help build both physical and spiritual communities at Ascension.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="info-section">
                         <p style="text-align: center; font-size: 1.2rem; line-height: 1.8; max-width: 800px; margin: 0 auto;">
                             In the Gospel of St. John (14:6), Jesus said "I am the way, and the truth, and the life. No one comes to the Father except through me." Jesus is our way back to our Father in heaven. He is the Gospel (Good News) of God to the world. As Evangelical Lutherans, we are loyal to the Gospel of Christ, "for there is no other name under heaven given among men by which we must be saved" (Acts 4:12).
                         </p>
