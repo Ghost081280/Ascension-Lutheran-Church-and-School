@@ -379,7 +379,7 @@
     </style>
     
     <script>
-        // Simple loading manager - no complex detection
+        // Extended loading manager - gives time to read the Bible verse
         let loadingTimer;
         
         function hideLoading() {
@@ -388,16 +388,17 @@
                 loadingScreen.classList.add('hidden');
                 setTimeout(() => {
                     loadingScreen.style.display = 'none';
-                }, 500);
+                }, 800);
             }
         }
         
-        // Hide loading after reasonable time or when everything is ready
-        loadingTimer = setTimeout(hideLoading, 2000);
+        // Extended loading time to appreciate the design and read the verse
+        loadingTimer = setTimeout(hideLoading, 4500); // Increased from 2000ms to 4500ms
         
         window.addEventListener('load', () => {
             clearTimeout(loadingTimer);
-            setTimeout(hideLoading, 500);
+            // Still wait a bit even when everything is loaded so people can read
+            setTimeout(hideLoading, 3000); // Minimum 3 seconds to read the verse
         });
         
         // Initialize app when DOM is ready
