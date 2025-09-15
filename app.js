@@ -234,9 +234,9 @@ class ChurchApp {
         this.currentPage = pageName;
         
         try {
-            const content = await this.getPageContent(pageName);
+            const pageContent = await this.getPageContent(pageName);
             console.log('🏛️ Got page content, rendering...');
-            this.renderPage(content);
+            this.renderPage(pageContent);
             this.updateActiveNavigation(pageName);
             this.updatePageTitle(pageName);
             
@@ -563,7 +563,7 @@ class ChurchApp {
         `;
     }
 
-    renderPage(content) {
+    renderPage(pageContent) {
         console.log('🏛️ Rendering page content');
         const container = document.getElementById('page-container');
         
@@ -577,7 +577,7 @@ class ChurchApp {
         container.style.transform = 'translateX(-20px)';
         
         setTimeout(() => {
-            container.innerHTML = content;
+            container.innerHTML = pageContent;
             
             // Add event listeners to any dynamic content
             this.attachPageEventListeners();
