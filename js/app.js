@@ -40,21 +40,21 @@ class ChurchApp {
         const loadingScreen = document.getElementById('loading-screen');
         const mainApp = document.getElementById('main-app');
         
-        // Increased from 1500ms to 4000ms (4 seconds) to allow reading the verse
+        // Reduced from 4000ms to 3200ms (3.2 seconds) - optimal reading time
         setTimeout(() => {
             console.log('🏛️ Loading screen timeout triggered');
             if (loadingScreen) {
                 loadingScreen.style.opacity = '0';
                 setTimeout(() => {
                     loadingScreen.style.display = 'none';
-                }, 500); // Slightly longer fade out
+                }, 600); // Slightly longer elegant fade
             }
             
             if (mainApp) {
                 mainApp.classList.remove('hidden');
                 mainApp.style.opacity = '1';
             }
-        }, 4000); // Changed from 1500 to 4000 milliseconds
+        }, 3200); // Optimized timing for readability without feeling slow
     }
 
     setupNavigation() {
