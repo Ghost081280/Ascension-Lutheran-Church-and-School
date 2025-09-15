@@ -844,6 +844,22 @@ function initializeApp() {
         const app = new ChurchApp();
         window.app = app;
         console.log('🏛️ App initialized successfully v2025011402');
+        
+        // Test all page content methods immediately
+        setTimeout(() => {
+            console.log('🏛️ Testing page content methods:');
+            try {
+                console.log('Home content length:', app.getHomeContent().length);
+                console.log('Church content length:', app.getChurchContent().length);
+                console.log('Family content length:', app.getFamilyContent().length);
+                console.log('School content length:', app.getSchoolContent().length);
+                console.log('Worship content length:', app.getWorshipContent().length);
+                console.log('Contact content length:', app.getContactContent().length);
+            } catch (e) {
+                console.error('🏛️ Error testing page methods:', e);
+            }
+        }, 1000);
+        
     } catch (error) {
         console.error('🏛️ Error initializing app:', error);
         
