@@ -54,7 +54,7 @@
             overflow: hidden;
         }
         
-        /* LV Pattern Background - Enhanced Movement */
+        /* Enhanced LV Pattern Background - More Visible & Animated */
         .decorative-pattern {
             position: relative;
             width: 100%;
@@ -63,66 +63,51 @@
         
         .pattern-cross {
             position: absolute;
-            color: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.2);
             font-size: 2.5rem;
             font-weight: bold;
-            animation: luxuryFloat 18s linear infinite;
+            animation: enhancedFloat 20s ease-in-out infinite;
             user-select: none;
             pointer-events: none;
         }
         
         .pattern-circle {
             position: absolute;
-            border: 2px solid rgba(255, 255, 255, 0.08);
+            border: 3px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
-            animation: luxuryPulse 15s ease-in-out infinite;
+            animation: enhancedPulse 18s ease-in-out infinite;
         }
         
         /* Enhanced Pattern Grid Positions with More Movement */
         .cross-1 { top: 8%; left: 12%; animation-delay: 0s; }
-        .cross-2 { top: 15%; left: 35%; animation-delay: 4s; }
-        .cross-3 { top: 10%; left: 58%; animation-delay: 8s; }
-        .cross-4 { top: 12%; left: 78%; animation-delay: 12s; }
-        .cross-5 { top: 45%; left: 15%; animation-delay: 2s; }
-        .cross-6 { top: 38%; left: 65%; animation-delay: 6s; }
-        .cross-7 { top: 75%; left: 10%; animation-delay: 10s; }
-        .cross-8 { top: 68%; left: 60%; animation-delay: 14s; }
+        .cross-2 { top: 15%; left: 35%; animation-delay: 5s; }
+        .cross-3 { top: 10%; left: 58%; animation-delay: 10s; }
+        .cross-4 { top: 12%; left: 78%; animation-delay: 15s; }
+        .cross-5 { top: 45%; left: 15%; animation-delay: 2.5s; }
+        .cross-6 { top: 38%; left: 65%; animation-delay: 7.5s; }
+        .cross-7 { top: 75%; left: 10%; animation-delay: 12.5s; }
+        .cross-8 { top: 68%; left: 60%; animation-delay: 17.5s; }
         
         .circle-1 { top: 3%; left: 25%; width: 70px; height: 70px; animation-delay: 1s; }
-        .circle-2 { top: 8%; left: 70%; width: 90px; height: 90px; animation-delay: 5s; }
-        .circle-3 { top: 30%; left: 3%; width: 60px; height: 60px; animation-delay: 9s; }
-        .circle-4 { top: 25%; left: 82%; width: 80px; height: 80px; animation-delay: 13s; }
-        .circle-5 { top: 60%; left: 8%; width: 100px; height: 100px; animation-delay: 3s; }
-        .circle-6 { top: 55%; left: 75%; width: 65px; height: 65px; animation-delay: 7s; }
-        .circle-7 { top: 85%; left: 30%; width: 85px; height: 85px; animation-delay: 11s; }
-        .circle-8 { top: 80%; left: 70%; width: 75px; height: 75px; animation-delay: 15s; }
+        .circle-2 { top: 8%; left: 70%; width: 90px; height: 90px; animation-delay: 6s; }
+        .circle-3 { top: 30%; left: 3%; width: 60px; height: 60px; animation-delay: 11s; }
+        .circle-4 { top: 25%; left: 82%; width: 80px; height: 80px; animation-delay: 16s; }
+        .circle-5 { top: 60%; left: 8%; width: 100px; height: 100px; animation-delay: 3.5s; }
+        .circle-6 { top: 55%; left: 75%; width: 65px; height: 65px; animation-delay: 8.5s; }
+        .circle-7 { top: 85%; left: 30%; width: 85px; height: 85px; animation-delay: 13.5s; }
+        .circle-8 { top: 80%; left: 70%; width: 75px; height: 75px; animation-delay: 18.5s; }
         
-        /* FIXED - Responsive Loading Module */
+        /* REVERTED - Back to Working Loading Screen with Fixes */
         .loading-content {
             text-align: center;
             z-index: 10;
-            width: 100%;
-            max-width: 420px;
-            padding: 2.5rem 2rem;
-            background: linear-gradient(145deg, #ffffff 0%, #fefefe 100%);
-            border-radius: 16px;
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.4),
-                0 0 0 3px var(--primary-color);
-            position: relative;
-            margin: 1rem;
-        }
-        
-        .loading-content::before {
-            content: '';
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            right: 12px;
-            bottom: 12px;
-            border: 1px solid var(--primary-color);
-            border-radius: 12px;
-            opacity: 0.25;
+            max-width: 400px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
         
         .church-logo {
@@ -130,100 +115,126 @@
         }
         
         .logo-img {
-            width: 90px;
-            height: 90px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            box-shadow: 
-                0 8px 20px rgba(139, 0, 0, 0.3),
-                0 0 0 3px rgba(255, 255, 255, 0.8),
-                0 0 0 4px var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
         
         .loading-title {
-            color: var(--primary-color);
+            color: white;
             font-size: 2rem;
             font-weight: 700;
             margin: 0 0 0.5rem 0;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
             font-family: 'Playfair Display', serif;
-            line-height: 1.2;
         }
         
         .loading-subtitle {
-            color: var(--gray-600);
+            color: rgba(255, 255, 255, 0.9);
             font-size: 1.1rem;
-            margin: 0 0 1.5rem 0;
+            margin: 0 0 0.25rem 0;
             font-weight: 500;
         }
         
+        .loading-location {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            margin: 0 0 1.5rem 0;
+            font-weight: 400;
+        }
+        
         .loading-spinner {
-            margin: 1rem auto;
+            margin: 1.5rem auto;
+            display: flex;
+            justify-content: center;
         }
         
         .spinner {
-            width: 35px;
-            height: 35px;
-            border: 3px solid var(--gray-200);
-            border-top: 3px solid var(--primary-color);
-            border-right: 3px solid var(--secondary-color);
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
             border-radius: 50%;
-            animation: spin 1.2s linear infinite;
+            animation: spin 1.5s linear infinite;
         }
         
         .loading-status {
-            color: var(--primary-color);
+            color: white;
             font-size: 0.9rem;
             font-weight: 600;
             margin: 0.5rem 0 1.5rem 0;
             letter-spacing: 1px;
             text-transform: uppercase;
+            opacity: 0.8;
         }
         
         .loading-verse {
-            color: var(--gray-700);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 3px solid rgba(255, 255, 255, 0.5);
+            color: white;
             font-size: 0.95rem;
             font-style: italic;
-            margin: 0;
-            line-height: 1.6;
-            border-top: 1px solid var(--gray-200);
-            padding-top: 1.5rem;
-            font-family: 'Playfair Display', serif;
+            line-height: 1.5;
         }
         
-        /* Animations - Keep the Beautiful LV Pattern */
-        @keyframes luxuryFloat {
-            0%, 100% { 
+        /* Enhanced Animations - More Visible Icons */
+        @keyframes enhancedFloat {
+            0% { 
                 transform: translate(0, 0) rotate(0deg) scale(1); 
-                opacity: 0.08; 
+                opacity: 0.05; 
             }
             25% { 
-                transform: translate(30px, -25px) rotate(90deg) scale(1.2); 
-                opacity: 0.15; 
+                transform: translate(40px, -30px) rotate(90deg) scale(1.3); 
+                opacity: 0.4; 
             }
             50% { 
-                transform: translate(-20px, -40px) rotate(180deg) scale(0.8); 
-                opacity: 0.03; 
+                transform: translate(-25px, -50px) rotate(180deg) scale(0.7); 
+                opacity: 0.1; 
             }
             75% { 
-                transform: translate(25px, -15px) rotate(270deg) scale(1.1); 
-                opacity: 0.12; 
+                transform: translate(35px, -20px) rotate(270deg) scale(1.2); 
+                opacity: 0.35; 
+            }
+            100% { 
+                transform: translate(0, 0) rotate(360deg) scale(1); 
+                opacity: 0.05; 
             }
         }
         
-        @keyframes luxuryPulse {
-            0%, 100% { 
+        @keyframes enhancedPulse {
+            0% { 
                 transform: scale(1) translateX(0) translateY(0); 
-                opacity: 0.08; 
-                border-color: rgba(255, 255, 255, 0.08); 
+                opacity: 0.1; 
+                border-color: rgba(255, 255, 255, 0.1); 
             }
-            33% { 
-                transform: scale(1.4) translateX(15px) translateY(-15px); 
-                opacity: 0.2; 
-                border-color: rgba(255, 255, 255, 0.2); 
+            20% { 
+                transform: scale(1.5) translateX(20px) translateY(-20px); 
+                opacity: 0.4; 
+                border-color: rgba(255, 255, 255, 0.4); 
             }
-            66% { 
-                transform: scale(0.7) translateX(-10px) translateY(20px); 
-                opacity: 0.02; 
-                border-color: rgba(255, 255, 255, 0.02); 
+            40% { 
+                transform: scale(0.6) translateX(-15px) translateY(25px); 
+                opacity: 0.05; 
+                border-color: rgba(255, 255, 255, 0.05); 
+            }
+            60% { 
+                transform: scale(1.3) translateX(25px) translateY(-10px); 
+                opacity: 0.35; 
+                border-color: rgba(255, 255, 255, 0.35); 
+            }
+            80% { 
+                transform: scale(0.8) translateX(-10px) translateY(15px); 
+                opacity: 0.15; 
+                border-color: rgba(255, 255, 255, 0.15); 
+            }
+            100% { 
+                transform: scale(1) translateX(0) translateY(0); 
+                opacity: 0.1; 
+                border-color: rgba(255, 255, 255, 0.1); 
             }
         }
         
@@ -325,7 +336,7 @@
                     </div>
                 </div>
                 
-                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu">
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
@@ -440,92 +451,20 @@
         // Fallback - hide loading screen after max 6 seconds
         setTimeout(hideLoadingScreen, 6000);
         
-        // COMPLETELY FIXED Mobile Navigation
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🏛️ DOM loaded, setting up mobile navigation');
-            
-            const mobileToggle = document.getElementById('mobile-menu-toggle');
+        // Simple working mobile menu toggle
+        function toggleMobileMenu() {
+            console.log('🏛️ toggleMobileMenu called');
             const navMenu = document.getElementById('nav-menu');
-            const hamburgerLines = mobileToggle ? mobileToggle.querySelectorAll('.hamburger-line') : [];
+            const isOpen = navMenu.classList.contains('active');
             
-            console.log('🏛️ Navigation elements:', { 
-                toggle: !!mobileToggle, 
-                menu: !!navMenu, 
-                lines: hamburgerLines.length 
-            });
-            
-            if (!mobileToggle || !navMenu) {
-                console.error('🏛️ Missing navigation elements');
-                return;
+            if (isOpen) {
+                navMenu.classList.remove('active');
+                console.log('🏛️ Mobile menu closed');
+            } else {
+                navMenu.classList.add('active');
+                console.log('🏛️ Mobile menu opened');
             }
-            
-            function toggleMobileMenu() {
-                console.log('🏛️ Toggle mobile menu called');
-                const isOpen = navMenu.classList.contains('active');
-                
-                if (isOpen) {
-                    // Close menu
-                    navMenu.classList.remove('active');
-                    mobileToggle.setAttribute('aria-expanded', 'false');
-                    document.body.style.overflow = '';
-                    
-                    // Reset hamburger
-                    hamburgerLines[0].style.transform = 'none';
-                    hamburgerLines[1].style.opacity = '1';
-                    hamburgerLines[2].style.transform = 'none';
-                    
-                    console.log('🏛️ Menu closed');
-                } else {
-                    // Open menu
-                    navMenu.classList.add('active');
-                    mobileToggle.setAttribute('aria-expanded', 'true');
-                    document.body.style.overflow = 'hidden';
-                    
-                    // Animate hamburger to X
-                    hamburgerLines[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                    hamburgerLines[1].style.opacity = '0';
-                    hamburgerLines[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
-                    
-                    console.log('🏛️ Menu opened');
-                }
-            }
-            
-            // Add event listeners
-            mobileToggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleMobileMenu();
-            });
-            
-            // Close menu when clicking nav links
-            const navLinks = navMenu.querySelectorAll('.nav-link:not(.donate-link)');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (navMenu.classList.contains('active')) {
-                        toggleMobileMenu();
-                    }
-                });
-            });
-            
-            // Close menu when clicking outside
-            document.addEventListener('click', function(e) {
-                if (navMenu.classList.contains('active') &&
-                    !navMenu.contains(e.target) && 
-                    !mobileToggle.contains(e.target)) {
-                    toggleMobileMenu();
-                }
-            });
-            
-            // Close menu on escape
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && navMenu.classList.contains('active')) {
-                    toggleMobileMenu();
-                }
-            });
-            
-            // Make function globally available
-            window.toggleMobileMenu = toggleMobileMenu;
-        });
+        }
         
         // Fallback in case main app doesn't load
         setTimeout(function() {
