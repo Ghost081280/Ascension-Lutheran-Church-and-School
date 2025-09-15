@@ -76,10 +76,10 @@ const pages = {
     church: `
         <div class="page-content">
             <div class="container">
-                <section class="hero-section" style="background-image: linear-gradient(rgba(139, 0, 0, 0.7), rgba(102, 0, 0, 0.7)), url('./images/ascension-lutheran-school-fort-wayne-in-primaryphoto.jpg'); background-size: cover; background-position: center;">
-                    <div class="hero-content">
-                        <h1 class="hero-title">Our Church</h1>
-                        <p class="hero-subtitle">Faithful to the Gospel of Christ since 1977</p>
+                <section class="info-section">
+                    <div class="section-header">
+                        <h1 class="section-title">Our Church</h1>
+                        <p class="section-subtitle">Faithful to the Gospel of Christ since 1977</p>
                     </div>
                 </section>
                 <section class="stewardship-quote">
@@ -117,10 +117,10 @@ const pages = {
     family: `
         <div class="page-content">
             <div class="container">
-                <section class="hero-section" style="background-image: linear-gradient(rgba(139, 0, 0, 0.7), rgba(102, 0, 0, 0.7)), url('./images/families.jpg'); background-size: cover; background-position: center;">
-                    <div class="hero-content">
-                        <h1 class="hero-title">Family Ministry</h1>
-                        <p class="hero-subtitle">Ascension is a place for families with many opportunities to grow in faith together</p>
+                <section class="info-section">
+                    <div class="section-header">
+                        <h1 class="section-title">Family Ministry</h1>
+                        <p class="section-subtitle">Ascension is a place for families with many opportunities to grow in faith together</p>
                     </div>
                 </section>
                 <section class="info-section">
@@ -162,11 +162,11 @@ const pages = {
     school: `
         <div class="page-content">
             <div class="container">
-                <section class="hero-section" style="background-image: linear-gradient(rgba(139, 0, 0, 0.7), rgba(102, 0, 0, 0.7)), url('./images/Ascension-Lutheran-School-5l01p65peb8ccskgkkck08s4s-1122.webp'); background-size: cover; background-position: center;">
-                    <div class="hero-content">
-                        <h1 class="hero-title">Ascension Lutheran School</h1>
-                        <p class="hero-subtitle">Providing traditional, Christian education from Preschool through 8th grade</p>
-                        <div class="hero-cta">
+                <section class="info-section">
+                    <div class="section-header">
+                        <h1 class="section-title">Ascension Lutheran School</h1>
+                        <p class="section-subtitle">Providing traditional, Christian education from Preschool through 8th grade</p>
+                        <div class="hero-cta" style="margin-top: 1.5rem;">
                             <a href="tel:+12604862226" class="btn btn-primary">Call for Information</a>
                             <a href="mailto:office@alcsfw.org" class="btn btn-secondary">Email Us</a>
                         </div>
