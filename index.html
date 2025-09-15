@@ -30,11 +30,14 @@
             // Clear localStorage app state
             localStorage.removeItem('alc-last-page');
             
-            // Force hard reload with cache bypass
-            setTimeout(function() {
-                window.location.reload(true);
-            }, 100);
-            return;
+            // Force hard reload with cache bypass - but only if not already done
+            if (!sessionStorage.getItem('cache-cleared-' + currentVersion)) {
+                sessionStorage.setItem('cache-cleared-' + currentVersion, 'true');
+                setTimeout(function() {
+                    window.location.reload(true);
+                }, 100);
+                return;
+            }
         }
     })();
     </script>
@@ -128,7 +131,60 @@
 
         <!-- Page Content Container -->
         <main id="page-container" class="page-container">
-            <!-- Content will be loaded here dynamically -->
+            <!-- Default content will be replaced by JavaScript -->
+            <div class="page-content">
+                <section class="hero-section">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
+                        <p class="hero-subtitle">Join our family in worshipping and serving our glorious God in Fort Wayne, Indiana</p>
+                        <div class="hero-cta">
+                            <a href="#worship" class="btn btn-primary" data-page="worship">Join Us for Worship</a>
+                            <a href="#church" class="btn btn-secondary" data-page="church">Learn More</a>
+                        </div>
+                    </div>
+                </section>
+                <div class="container">
+                    <section class="info-section">
+                        <div class="worship-times">
+                            <h3>Divine Worship</h3>
+                            <div class="time-item">
+                                <span class="time-label">Sunday Morning Services</span>
+                                <span class="time-value">8:00 AM & 10:45 AM</span>
+                            </div>
+                            <div class="time-item">
+                                <span class="time-label">Adult Discipleship Class</span>
+                                <span class="time-value">9:30 AM</span>
+                            </div>
+                            <div class="time-item">
+                                <span class="time-label">Children's Sunday School</span>
+                                <span class="time-value">9:30 AM</span>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="info-section">
+                        <div class="section-header">
+                            <h2 class="section-title">Meet Our Pastor</h2>
+                        </div>
+                        <div class="card">
+                            <div class="card-content" style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+                                <div style="flex: 0 0 200px;">
+                                    <img src="./images/Pastor.png?v=2025011402" alt="Rev. James Gier, Senior Pastor" 
+                                         style="width: 200px; height: 250px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
+                                </div>
+                                <div style="flex: 1; min-width: 300px;">
+                                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Rev. James Gier</h3>
+                                    <p style="color: var(--secondary-color); font-weight: 600; margin-bottom: 1rem;">Senior Pastor</p>
+                                    <p>Pastor Gier was installed as Ascension's third senior pastor in 2019. He was a licensed architect prior to entering the Holy Ministry and is a graduate of Concordia Theological Seminary in Fort Wayne.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="verse-display">
+                        <p class="verse-text">"I am the way, and the truth, and the life. No one comes to the Father except through me."</p>
+                        <p class="verse-reference">John 14:6 (ESV)</p>
+                    </section>
+                </div>
+            </div>
         </main>
 
         <!-- Footer -->
@@ -174,9 +230,9 @@
     </div>
 
     <!-- JavaScript Files with cache busting -->
-    <script src="./js/components.js?v=2025011402"></script>
-    <script src="./js/navigation.js?v=2025011402"></script>
-    <script src="./js/app.js?v=2025011402"></script>
+    <script src="./js/components.js?v=2025011402" defer></script>
+    <script src="./js/navigation.js?v=2025011402" defer></script>
+    <script src="./js/app.js?v=2025011402" defer></script>
     
     <!-- Service Worker Registration -->
     <script>
@@ -202,101 +258,43 @@
             });
         }
 
-        // Emergency content loader - runs very early
+        // Simplified initialization - let the app.js handle the main logic
         document.addEventListener('DOMContentLoaded', () => {
             console.log('🏛️ DOM Content Loaded v2025011402');
             
-            // Immediate content check
+            // Basic setup for navigation links in the default content
+            const setupBasicNavigation = () => {
+                const navLinks = document.querySelectorAll('[data-page]');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const page = link.getAttribute('data-page');
+                        console.log('🏛️ Basic nav clicked:', page);
+                        if (window.app && window.app.loadPage) {
+                            window.app.loadPage(page);
+                        } else {
+                            // Fallback - just update hash
+                            window.location.hash = '#' + page;
+                        }
+                    });
+                });
+            };
+            
+            // Set up basic navigation immediately
+            setupBasicNavigation();
+            
+            // If app doesn't initialize properly after 3 seconds, ensure main app is visible
             setTimeout(() => {
-                const pageContainer = document.getElementById('page-container');
                 const loadingScreen = document.getElementById('loading-screen');
                 const mainApp = document.getElementById('main-app');
                 
-                console.log('🏛️ Emergency check:', {
-                    hasApp: !!window.app,
-                    pageContainer: !!pageContainer,
-                    containerEmpty: pageContainer ? pageContainer.innerHTML.length < 50 : true,
-                    appHidden: mainApp ? mainApp.classList.contains('hidden') : true
-                });
-                
-                // Force show main app
                 if (mainApp && mainApp.classList.contains('hidden')) {
-                    console.log('🏛️ Emergency: Showing main app');
+                    console.log('🏛️ Fallback: Showing main app');
                     if (loadingScreen) loadingScreen.style.display = 'none';
                     mainApp.classList.remove('hidden');
                     mainApp.style.opacity = '1';
                 }
-                
-                // Emergency content load
-                if (pageContainer && pageContainer.innerHTML.length < 50) {
-                    console.log('🏛️ Emergency: Loading content');
-                    pageContainer.innerHTML = \`
-                        <div class="page-content">
-                            <section class="hero-section">
-                                <div class="hero-content">
-                                    <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
-                                    <p class="hero-subtitle">Join our family in worshipping and serving our glorious God in Fort Wayne, Indiana</p>
-                                    <div class="hero-cta">
-                                        <a href="#worship" class="btn btn-primary">Join Us for Worship</a>
-                                        <a href="#church" class="btn btn-secondary">Learn More</a>
-                                    </div>
-                                </div>
-                            </section>
-                            <div class="container">
-                                <section class="info-section">
-                                    <div class="worship-times">
-                                        <h3>Divine Worship</h3>
-                                        <div class="time-item">
-                                            <span class="time-label">Sunday Morning Services</span>
-                                            <span class="time-value">8:00 AM & 10:45 AM</span>
-                                        </div>
-                                        <div class="time-item">
-                                            <span class="time-label">Adult Discipleship Class</span>
-                                            <span class="time-value">9:30 AM</span>
-                                        </div>
-                                        <div class="time-item">
-                                            <span class="time-label">Children's Sunday School</span>
-                                            <span class="time-value">9:30 AM</span>
-                                        </div>
-                                    </div>
-                                </section>
-                                <section class="info-section">
-                                    <div class="section-header">
-                                        <h2 class="section-title">Meet Our Pastor</h2>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-content" style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
-                                            <div style="flex: 0 0 200px;">
-                                                <img src="./images/Pastor.png?v=2025011402" alt="Rev. James Gier, Senior Pastor" 
-                                                     style="width: 200px; height: 250px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
-                                            </div>
-                                            <div style="flex: 1; min-width: 300px;">
-                                                <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Rev. James Gier</h3>
-                                                <p style="color: var(--secondary-color); font-weight: 600; margin-bottom: 1rem;">Senior Pastor</p>
-                                                <p>Pastor Gier was installed as Ascension's third senior pastor in 2019. He was a licensed architect prior to entering the Holy Ministry and is a graduate of Concordia Theological Seminary in Fort Wayne.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                                <section class="verse-display">
-                                    <p class="verse-text">"I am the way, and the truth, and the life. No one comes to the Father except through me."</p>
-                                    <p class="verse-reference">John 14:6 (ESV)</p>
-                                </section>
-                            </div>
-                        </div>
-                    \`;
-                    
-                    // Set up basic navigation
-                    const navLinks = document.querySelectorAll('.nav-link');
-                    navLinks.forEach(link => {
-                        link.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            console.log('🏛️ Basic nav clicked:', link.getAttribute('data-page'));
-                            // Basic page change would go here
-                        });
-                    });
-                }
-            }, 300); // Very fast emergency load
+            }, 3000);
         });
     </script>
 </body>
