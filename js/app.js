@@ -40,20 +40,21 @@ class ChurchApp {
         const loadingScreen = document.getElementById('loading-screen');
         const mainApp = document.getElementById('main-app');
         
+        // Increased from 1500ms to 4000ms (4 seconds) to allow reading the verse
         setTimeout(() => {
             console.log('🏛️ Loading screen timeout triggered');
             if (loadingScreen) {
                 loadingScreen.style.opacity = '0';
                 setTimeout(() => {
                     loadingScreen.style.display = 'none';
-                }, 300);
+                }, 500); // Slightly longer fade out
             }
             
             if (mainApp) {
                 mainApp.classList.remove('hidden');
                 mainApp.style.opacity = '1';
             }
-        }, 1500);
+        }, 4000); // Changed from 1500 to 4000 milliseconds
     }
 
     setupNavigation() {
