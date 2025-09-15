@@ -731,6 +731,46 @@
             });
         }
         
+        // FORCE SHOW PWA INSTALL PROMPTS FOR TESTING
+        console.log('🏛️ PWA Install: Starting forced test mode...');
+        
+        // Force show install prompts immediately for testing (bypass all checks)
+        setTimeout(() => {
+            console.log('🏛️ PWA Install: FORCE SHOWING PROMPTS NOW!');
+            forceShowInstallPromptsNow();
+        }, 3000);
+        
+        function forceShowInstallPromptsNow() {
+            const isMobile = window.innerWidth <= 768;
+            console.log('🏛️ PWA Install: Device width:', window.innerWidth);
+            console.log('🏛️ PWA Install: Is mobile?', isMobile);
+            
+            if (isMobile) {
+                console.log('🏛️ PWA Install: Forcing mobile prompt...');
+                const mobilePrompt = document.getElementById('pwa-install-prompt');
+                console.log('🏛️ PWA Install: Mobile element found?', !!mobilePrompt);
+                if (mobilePrompt) {
+                    mobilePrompt.classList.remove('hidden');
+                    mobilePrompt.style.display = 'block';
+                    mobilePrompt.style.visibility = 'visible';
+                    mobilePrompt.style.opacity = '1';
+                    console.log('🏛️ PWA Install: Mobile prompt should be visible!');
+                }
+            } else {
+                console.log('🏛️ PWA Install: Forcing desktop banner...');
+                const desktopBanner = document.getElementById('desktop-install-banner');
+                console.log('🏛️ PWA Install: Desktop element found?', !!desktopBanner);
+                if (desktopBanner) {
+                    desktopBanner.classList.remove('hidden');
+                    desktopBanner.style.display = 'block';
+                    desktopBanner.style.visibility = 'visible';
+                    desktopBanner.style.opacity = '1';
+                    document.body.classList.add('banner-shown');
+                    console.log('🏛️ PWA Install: Desktop banner should be visible!');
+                }
+            }
+        }
+        
         // Enhanced PWA Install Experience with Debugging
         let deferredPrompt;
         let installPromptShown = false;
@@ -1017,6 +1057,24 @@
             .catch(error => {
                 console.error('🏛️ PWA Install: Manifest error:', error);
             });
+        
+        // Debug - check if elements exist
+        setTimeout(() => {
+            const mobilePrompt = document.getElementById('pwa-install-prompt');
+            const desktopBanner = document.getElementById('desktop-install-banner');
+            console.log('🏛️ PWA Install: Mobile prompt element exists?', !!mobilePrompt);
+            console.log('🏛️ PWA Install: Desktop banner element exists?', !!desktopBanner);
+            
+            if (mobilePrompt) {
+                console.log('🏛️ PWA Install: Mobile prompt classes:', mobilePrompt.className);
+                console.log('🏛️ PWA Install: Mobile prompt styles:', mobilePrompt.style.cssText);
+            }
+            
+            if (desktopBanner) {
+                console.log('🏛️ PWA Install: Desktop banner classes:', desktopBanner.className);
+                console.log('🏛️ PWA Install: Desktop banner styles:', desktopBanner.style.cssText);
+            }
+        }, 1000);
     </script>
 </body>
 </html>
