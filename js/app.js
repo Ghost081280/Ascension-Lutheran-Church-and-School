@@ -1,7 +1,7 @@
-// NEW_app.js - Completely Rebuilt and Simplified with Images
-console.log('🏛️ NEW_app.js loading...');
+// Fixed app.js - Complete Mobile & Desktop Solution
+console.log('🏛️ Fixed app.js loading...');
 
-// PAGE CONTENT OBJECT
+// PAGE CONTENT OBJECT - With Proper Mobile Layouts
 const pages = {
     home: `
         <div class="page-content">
@@ -70,16 +70,18 @@ const pages = {
                         <h2 class="section-title">Meet Our Pastor</h2>
                         <p class="section-subtitle">Shepherding our congregation with wisdom and faith</p>
                     </div>
-                    <div class="card" style="display: flex; align-items: center; gap: 2rem; padding: 0;">
-                        <div style="flex-shrink: 0; padding: 2rem;">
-                            <img src="./images/Pastor.png" alt="Rev. James Gier" style="width: 200px; height: 200px; border-radius: 12px; object-fit: cover; box-shadow: 0 10px 25px rgba(139, 0, 0, 0.2);">
+                    <div class="pastor-section">
+                        <div class="pastor-image-wrapper">
+                            <img src="./images/Pastor.png" alt="Rev. James Gier" class="pastor-photo">
                         </div>
-                        <div style="flex: 1; padding: 2rem 2rem 2rem 0;">
-                            <h3 style="color: var(--primary-color); font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;">Rev. James Gier</h3>
-                            <p style="color: var(--primary-light); font-weight: 600; margin-bottom: 1rem; font-size: 1.1rem;">Senior Pastor</p>
-                            <p style="color: var(--gray-600); margin-bottom: 1rem; line-height: 1.7;">Pastor Gier was a licensed architect prior to entering the Holy Ministry and is a graduate of Concordia Theological Seminary in Fort Wayne. He brings a unique perspective to ministry, combining his background in design with his passion for God's Word.</p>
-                            <p style="color: var(--gray-600); margin-bottom: 1.5rem; line-height: 1.7;">Pastor Gier has been faithfully serving our congregation, providing pastoral care, preaching God's Word, and administering the sacraments with dedication and love.</p>
-                            <button class="card-link" onclick="loadPage('contact')">Contact Pastor Gier →</button>
+                        <div class="pastor-info">
+                            <h3 class="pastor-name">Rev. James Gier</h3>
+                            <p class="pastor-role">Senior Pastor</p>
+                            <div class="pastor-bio">
+                                <p>Pastor Gier was a licensed architect prior to entering the Holy Ministry and is a graduate of Concordia Theological Seminary in Fort Wayne. He brings a unique perspective to ministry, combining his background in design with his passion for God's Word.</p>
+                                <p>Pastor Gier has been faithfully serving our congregation, providing pastoral care, preaching God's Word, and administering the sacraments with dedication and love.</p>
+                            </div>
+                            <button class="pastor-contact" onclick="loadPage('contact')">Contact Pastor Gier →</button>
                         </div>
                     </div>
                 </section>
@@ -344,12 +346,71 @@ const pages = {
     `
 };
 
-// CURRENT PAGE
+// CURRENT PAGE TRACKING
 let currentPage = 'home';
 
-// MAIN LOAD PAGE FUNCTION
+// MOBILE MENU FUNCTIONALITY - COMPLETE FIX
+function toggleMobileMenu() {
+    console.log('🏛️ toggleMobileMenu called');
+    const navMenu = document.getElementById('nav-menu');
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    
+    if (!navMenu || !mobileToggle) {
+        console.error('🏛️ Mobile menu elements not found!');
+        return;
+    }
+    
+    const isOpen = navMenu.classList.contains('active');
+    
+    if (isOpen) {
+        closeMobileMenu();
+    } else {
+        openMobileMenu();
+    }
+}
+
+function openMobileMenu() {
+    const navMenu = document.getElementById('nav-menu');
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    
+    if (!navMenu || !mobileToggle) return;
+    
+    console.log('🏛️ Opening mobile menu');
+    navMenu.classList.add('active');
+    mobileToggle.classList.add('active');
+    mobileToggle.setAttribute('aria-expanded', 'true');
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+    
+    // Focus first menu item for accessibility
+    const firstLink = navMenu.querySelector('.nav-link');
+    if (firstLink) {
+        setTimeout(() => firstLink.focus(), 100);
+    }
+}
+
+function closeMobileMenu() {
+    const navMenu = document.getElementById('nav-menu');
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    
+    if (!navMenu || !mobileToggle) return;
+    
+    console.log('🏛️ Closing mobile menu');
+    navMenu.classList.remove('active');
+    mobileToggle.classList.remove('active');
+    mobileToggle.setAttribute('aria-expanded', 'false');
+    
+    // Restore body scroll
+    document.body.style.overflow = '';
+}
+
+// MAIN LOAD PAGE FUNCTION - ENHANCED
 function loadPage(pageName) {
     console.log('🏛️ loadPage called:', pageName);
+    
+    // Close mobile menu if open
+    closeMobileMenu();
     
     // Find container
     const container = document.getElementById('page-container');
@@ -362,46 +423,173 @@ function loadPage(pageName) {
     const content = pages[pageName];
     if (!content) {
         console.error('🏛️ Page not found:', pageName);
-        container.innerHTML = '<div class="page-content"><div class="container"><h1>Page Not Found</h1><p>Sorry, the page "' + pageName + '" could not be found.</p></div></div>';
+        container.innerHTML = `
+            <div class="page-content">
+                <div class="container">
+                    <div class="hero-section">
+                        <div class="hero-content">
+                            <h1 class="hero-title">Page Not Found</h1>
+                            <p class="hero-subtitle">Sorry, the page "${pageName}" could not be found.</p>
+                            <div class="hero-cta">
+                                <button class="btn btn-primary" onclick="loadPage('home')">Go Home</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
         return;
     }
     
-    // Load content
-    container.innerHTML = content;
-    currentPage = pageName;
-    
-    // Update navigation
-    updateNavigation(pageName);
-    
-    // Update URL
-    window.location.hash = pageName;
-    
-    // Scroll to top
-    window.scrollTo(0, 0);
-    
-    console.log('🏛️ Page loaded:', pageName);
+    // Load content with fade effect
+    container.style.opacity = '0';
+    setTimeout(() => {
+        container.innerHTML = content;
+        container.style.opacity = '1';
+        currentPage = pageName;
+        
+        // Update navigation
+        updateNavigation(pageName);
+        
+        // Update URL
+        window.location.hash = pageName;
+        
+        // Scroll to top smoothly
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        
+        // Announce page change for screen readers
+        if (window.announcePageChange) {
+            window.announcePageChange(pageName);
+        }
+        
+        // Initialize any new components on the page
+        initializePageComponents();
+        
+        console.log('🏛️ Page loaded successfully:', pageName);
+    }, 150);
 }
 
-// UPDATE NAVIGATION
+// UPDATE NAVIGATION STATES
 function updateNavigation(pageName) {
     const navLinks = document.querySelectorAll('.nav-link:not(.donate-link)');
     navLinks.forEach(link => {
         link.classList.remove('active');
-        if (link.textContent.toLowerCase() === pageName || 
-            link.getAttribute('onclick') && link.getAttribute('onclick').includes(pageName)) {
+        
+        // Check if link matches current page
+        const linkText = link.textContent.toLowerCase().trim();
+        const linkOnClick = link.getAttribute('onclick');
+        
+        if (linkText === pageName || 
+            (linkOnClick && linkOnClick.includes(`'${pageName}'`))) {
             link.classList.add('active');
         }
     });
 }
 
-// INITIALIZE
-function initialize() {
-    console.log('🏛️ Initializing...');
+// INITIALIZE PAGE-SPECIFIC COMPONENTS
+function initializePageComponents() {
+    // Setup lazy loading for new images
+    if (window.components && window.components.setupLazyLoading) {
+        window.components.setupLazyLoading();
+    }
     
-    // Load initial page
-    const hash = window.location.hash.substring(1);
-    const initialPage = hash && pages[hash] ? hash : 'home';
-    loadPage(initialPage);
+    // Setup form validation for new forms
+    if (window.components && window.components.setupFormValidation) {
+        window.components.setupFormValidation();
+    }
+    
+    // Add hover effects to new cards
+    const cards = document.querySelectorAll('.card:not(.enhanced)');
+    cards.forEach(card => {
+        card.classList.add('enhanced');
+        card.addEventListener('mouseenter', function() {
+            if (window.innerWidth > 768) {
+                this.style.transform = 'translateY(-4px)';
+            }
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+    
+    // Setup button ripple effects
+    const buttons = document.querySelectorAll('.btn:not(.ripple-enabled), .card-link:not(.ripple-enabled)');
+    buttons.forEach(button => {
+        button.classList.add('ripple-enabled');
+        button.addEventListener('click', createRippleEffect);
+    });
+}
+
+// RIPPLE EFFECT FOR BUTTONS
+function createRippleEffect(e) {
+    if (window.innerWidth <= 768) return; // Skip on mobile for performance
+    
+    const button = e.currentTarget;
+    const ripple = document.createElement('span');
+    const rect = button.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = e.clientX - rect.left - size / 2;
+    const y = e.clientY - rect.top - size / 2;
+    
+    ripple.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        left: ${x}px;
+        top: ${y}px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        transform: scale(0);
+        animation: ripple 0.6s linear;
+        pointer-events: none;
+        z-index: 1;
+    `;
+    
+    button.style.position = 'relative';
+    button.style.overflow = 'hidden';
+    button.appendChild(ripple);
+    
+    setTimeout(() => {
+        if (button.contains(ripple)) {
+            button.removeChild(ripple);
+        }
+    }, 600);
+}
+
+// SETUP EVENT LISTENERS
+function setupEventListeners() {
+    // Mobile menu toggle
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', toggleMobileMenu);
+    }
+    
+    // Close mobile menu on outside click
+    document.addEventListener('click', (e) => {
+        const navMenu = document.getElementById('nav-menu');
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        
+        if (navMenu && mobileToggle && 
+            navMenu.classList.contains('active') &&
+            !navMenu.contains(e.target) && 
+            !mobileToggle.contains(e.target)) {
+            closeMobileMenu();
+        }
+    });
+    
+    // Close mobile menu on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const navMenu = document.getElementById('nav-menu');
+            if (navMenu && navMenu.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        }
+    });
     
     // Handle hash changes
     window.addEventListener('hashchange', function() {
@@ -411,17 +599,129 @@ function initialize() {
         }
     });
     
-    console.log('🏛️ App initialized');
+    // Handle window resize
+    window.addEventListener('resize', debounce(() => {
+        // Close mobile menu on desktop
+        if (window.innerWidth > 768) {
+            closeMobileMenu();
+        }
+        
+        // Reset any transforms on resize
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.style.transform = 'translateY(0)';
+        });
+    }, 250));
+    
+    // Handle page visibility change
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            // Page is hidden
+            closeMobileMenu();
+        }
+    });
 }
 
-// MAKE LOADPAGE GLOBAL
-window.loadPage = loadPage;
+// UTILITY FUNCTIONS
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
 
-// START THE APP
+// ADD RIPPLE ANIMATION CSS IF NOT EXISTS
+function addRippleAnimation() {
+    if (!document.getElementById('ripple-animation')) {
+        const style = document.createElement('style');
+        style.id = 'ripple-animation';
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+}
+
+// PERFORMANCE OPTIMIZATION
+function optimizePerformance() {
+    // Add will-change to elements that will animate
+    const animatedElements = document.querySelectorAll('.card, .btn, .nav-link');
+    animatedElements.forEach(element => {
+        element.style.willChange = 'transform';
+    });
+    
+    // Setup intersection observer for animations
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        // Observe cards and sections
+        const observeElements = document.querySelectorAll('.card, .info-section');
+        observeElements.forEach(el => observer.observe(el));
+    }
+}
+
+// INITIALIZE APPLICATION
+function initialize() {
+    console.log('🏛️ Initializing application...');
+    
+    // Add ripple animation CSS
+    addRippleAnimation();
+    
+    // Setup event listeners
+    setupEventListeners();
+    
+    // Load initial page
+    const hash = window.location.hash.substring(1);
+    const initialPage = hash && pages[hash] ? hash : 'home';
+    loadPage(initialPage);
+    
+    // Initialize page components
+    setTimeout(() => {
+        initializePageComponents();
+        optimizePerformance();
+    }, 500);
+    
+    // Log successful initialization
+    console.log('🏛️ Application initialized successfully');
+}
+
+// MAKE FUNCTIONS GLOBALLY AVAILABLE
+window.loadPage = loadPage;
+window.toggleMobileMenu = toggleMobileMenu;
+
+// INITIALIZE WHEN DOM IS READY
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initialize);
 } else {
     initialize();
 }
 
-console.log('🏛️ NEW_app.js loaded successfully');
+// ERROR HANDLING
+window.addEventListener('error', (e) => {
+    console.error('🏛️ Application error:', e.error);
+});
+
+window.addEventListener('unhandledrejection', (e) => {
+    console.error('🏛️ Unhandled promise rejection:', e.reason);
+});
+
+console.log('🏛️ Fixed app.js loaded successfully');
