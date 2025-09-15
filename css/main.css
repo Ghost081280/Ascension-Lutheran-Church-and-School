@@ -502,21 +502,6 @@ a:hover {
     border-radius: var(--radius-md);
   }
   
-  .quick-actions {
-    bottom: var(--spacing-lg);
-    right: var(--spacing-lg);
-  }
-  
-  .action-btn {
-    width: 48px;
-    height: 48px;
-  }
-  
-  .action-icon {
-    width: 20px;
-    height: 20px;
-  }
-  
   .footer-content {
     grid-template-columns: 1fr;
     text-align: center;
