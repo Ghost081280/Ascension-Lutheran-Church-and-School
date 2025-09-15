@@ -1,11 +1,16 @@
 // Reusable UI Components for Ascension Lutheran Church PWA
+// Version: 2025011402
+
+console.log('🏛️ components.js loading... v2025011402');
 
 class ComponentLibrary {
     constructor() {
+        this.version = '2025011402';
         this.init();
     }
 
     init() {
+        console.log('🏛️ ComponentLibrary init v2025011402');
         this.setupLazyLoading();
         this.setupFormValidation();
         this.setupImageOptimization();
@@ -39,6 +44,7 @@ class ComponentLibrary {
     // Form validation utilities
     setupFormValidation() {
         const forms = document.querySelectorAll('form');
+        console.log('🏛️ Setting up form validation for', forms.length, 'forms');
         forms.forEach(form => {
             form.addEventListener('submit', (e) => {
                 if (!this.validateForm(form)) {
@@ -129,6 +135,7 @@ class ComponentLibrary {
     // Image optimization and placeholder management
     setupImageOptimization() {
         const images = document.querySelectorAll('img');
+        console.log('🏛️ Setting up image optimization for', images.length, 'images');
         images.forEach(img => {
             // Add loading attribute for native lazy loading
             if (!img.hasAttribute('loading')) {
@@ -148,6 +155,7 @@ class ComponentLibrary {
     }
 
     handleImageError(img) {
+        console.log('🏛️ Image failed to load:', img.src);
         // Create a placeholder SVG
         const placeholder = this.createImagePlaceholder(img.alt || 'Image');
         img.src = placeholder;
@@ -171,6 +179,7 @@ class ComponentLibrary {
 
     // Accessibility enhancements
     setupAccessibilityEnhancements() {
+        console.log('🏛️ Setting up accessibility enhancements');
         this.enhanceButtonAccessibility();
         this.addSkipLinks();
         this.manageFocusOutlines();
@@ -182,7 +191,7 @@ class ComponentLibrary {
         buttons.forEach(button => {
             // Ensure buttons have proper ARIA labels
             if (!button.hasAttribute('aria-label') && !button.textContent.trim()) {
-                console.warn('Button missing accessible text:', button);
+                console.warn('🏛️ Button missing accessible text:', button);
             }
 
             // Add proper ARIA states for toggle buttons
@@ -194,6 +203,11 @@ class ComponentLibrary {
     }
 
     addSkipLinks() {
+        // Check if skip link already exists
+        if (document.querySelector('.skip-link')) {
+            return;
+        }
+
         const skipLink = document.createElement('a');
         skipLink.href = '#main-content';
         skipLink.textContent = 'Skip to main content';
@@ -264,6 +278,11 @@ class ComponentLibrary {
     }
 
     announcePageChanges() {
+        // Check if live region already exists
+        if (document.getElementById('page-announcements')) {
+            return;
+        }
+
         // Create ARIA live region for announcements
         const liveRegion = document.createElement('div');
         liveRegion.setAttribute('aria-live', 'polite');
@@ -359,7 +378,9 @@ class ComponentLibrary {
             modal.style.opacity = '0';
             modalContent.style.transform = 'scale(0.9)';
             setTimeout(() => {
-                document.body.removeChild(modal);
+                if (document.body.contains(modal)) {
+                    document.body.removeChild(modal);
+                }
                 document.body.style.overflow = '';
             }, 300);
             if (onClose) onClose();
@@ -367,7 +388,10 @@ class ComponentLibrary {
 
         // Event listeners
         if (showCloseButton) {
-            modal.querySelector('.modal-close').addEventListener('click', closeModal);
+            const closeBtn = modal.querySelector('.modal-close');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeModal);
+            }
         }
         
         backdrop.addEventListener('click', closeModal);
@@ -510,11 +534,142 @@ class ComponentLibrary {
             }
         };
     }
+
+    // Enhanced image loading with cache busting
+    loadImageWithCacheBust(src, version = '2025011402') {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            const cacheBustedSrc = src.includes('?') ? `${src}&v=${version}` : `${src}?v=${version}`;
+            
+            img.onload = () => resolve(img);
+            img.onerror = () => {
+                console.warn('🏛️ Failed to load image:', cacheBustedSrc);
+                reject(new Error(`Failed to load image: ${cacheBustedSrc}`));
+            };
+            
+            img.src = cacheBustedSrc;
+        });
+    }
+
+    // Progressive enhancement for components
+    enhanceComponents() {
+        // Enhance all cards
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            // Add hover effects
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Enhance buttons
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(button => {
+            // Add ripple effect
+            button.addEventListener('click', (e) => {
+                const ripple = document.createElement('span');
+                const rect = button.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    background: rgba(255, 255, 255, 0.3);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                `;
+                
+                button.style.position = 'relative';
+                button.style.overflow = 'hidden';
+                button.appendChild(ripple);
+                
+                setTimeout(() => {
+                    if (button.contains(ripple)) {
+                        button.removeChild(ripple);
+                    }
+                }, 600);
+            });
+        });
+
+        // Add ripple animation if not exists
+        if (!document.getElementById('ripple-animation')) {
+            const style = document.createElement('style');
+            style.id = 'ripple-animation';
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    }
+
+    // Component performance monitoring
+    monitorComponentPerformance() {
+        if ('PerformanceObserver' in window) {
+            const observer = new PerformanceObserver((list) => {
+                list.getEntries().forEach((entry) => {
+                    if (entry.entryType === 'measure') {
+                        console.log('🏛️ Component performance:', entry.name, entry.duration);
+                    }
+                });
+            });
+            
+            observer.observe({ entryTypes: ['measure'] });
+        }
+    }
+
+    // Initialize enhanced features
+    initializeEnhancements() {
+        // Wait for DOM to be fully loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                this.enhanceComponents();
+                this.monitorComponentPerformance();
+            });
+        } else {
+            this.enhanceComponents();
+            this.monitorComponentPerformance();
+        }
+    }
+
+    // Test component functionality
+    testComponents() {
+        console.log('🏛️ Testing components...');
+        
+        const tests = {
+            modals: document.querySelectorAll('.modal').length,
+            toasts: document.querySelectorAll('.toast').length,
+            buttons: document.querySelectorAll('.btn').length,
+            cards: document.querySelectorAll('.card').length,
+            skipLinks: document.querySelectorAll('.skip-link').length,
+            liveRegions: document.querySelectorAll('[aria-live]').length
+        };
+        
+        console.log('🏛️ Component test results:', tests);
+        return tests;
+    }
 }
 
 // Initialize components when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('🏛️ Components DOM ready, initializing...');
     window.components = new ComponentLibrary();
+    window.components.initializeEnhancements();
     
     // Make utility functions available globally
     window.showToast = (message, type, duration) => 
@@ -525,9 +680,19 @@ document.addEventListener('DOMContentLoaded', () => {
         
     window.createLoadingSpinner = (container) => 
         window.components.createLoadingSpinner(container);
+    
+    // Test components after initialization
+    setTimeout(() => {
+        if (window.components) {
+            window.components.testComponents();
+        }
+    }, 1000);
 });
 
 // Export for use in other modules
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = ComponentLibrary;
 }
+
+// Version check for cache verification
+console.log('🏛️ ALC PWA Components.js Version: 2025011402');
