@@ -684,4 +684,4 @@ document.addEventListener('DOMContentLoaded', function() {
     window.app = new ChurchApp();
 });
 
-console.log('🏛️ ALC PWA App.js Version: 2025011405');
+console.log('🏛️ ALC PWA App.js Version: 2025011406');
