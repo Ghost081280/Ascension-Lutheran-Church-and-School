@@ -327,7 +327,7 @@ class ChurchApp {
     getHomeContent() {
         return `
             <div class="page-content">
-                <section class="hero-section">
+                <section class="hero-section" style="background-image: linear-gradient(135deg, rgba(139, 0, 0, 0.8) 0%, rgba(102, 0, 0, 0.9) 100%), url('./images/ascension-lutheran-school-fort-wayne-in-primaryphoto.jpg'); background-size: cover; background-position: center; background-attachment: fixed;">
                     <div class="hero-content">
                         <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
                         <p class="hero-subtitle">Join our family in worshipping and serving our glorious God in Fort Wayne, Indiana</p>
@@ -365,7 +365,8 @@ class ChurchApp {
 
                         <div class="card-grid">
                             <div class="card">
-                                <div style="width: 100%; height: 200px; background: linear-gradient(45deg, #8B0000, #A52A2A); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">⛪</div>
+                                <img src="./images/ascension-lutheran-school-fort-wayne-in-primaryphoto.jpg" alt="Ascension Lutheran Church Building" class="card-image" style="height: 200px; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div style="display: none; width: 100%; height: 200px; background: linear-gradient(45deg, #8B0000, #A52A2A); align-items: center; justify-content: center; color: white; font-size: 3rem;">⛪</div>
                                 <div class="card-content">
                                     <h3 class="card-title">Church</h3>
                                     <p class="card-text">Ascension follows the teaching of the Holy Scripture, firmly accepting the Bible as God's inerrant Word, teaching and confessing the truth proclaimed by God through His Son, Jesus Christ.</p>
