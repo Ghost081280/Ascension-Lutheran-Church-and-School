@@ -193,6 +193,34 @@
     <script src="./js/navigation.js?v=2025011404" defer></script>
     <script src="./js/components.js?v=2025011404" defer></script>
     
+    <!-- Loading Screen Logo Debug Script -->
+    <script>
+    // Debug script for loading screen logo
+    document.addEventListener('DOMContentLoaded', function() {
+        const logoImg = document.querySelector('#loading-screen .logo-img');
+        const logoFallback = document.querySelector('#loading-screen .logo-fallback');
+        
+        if (logoImg) {
+            console.log('🏛️ Loading screen logo element found');
+            console.log('🏛️ Logo src:', logoImg.src);
+            
+            // Test if image can load
+            const testImg = new Image();
+            testImg.onload = function() {
+                console.log('🏛️ Logo loaded successfully');
+                logoImg.style.display = 'block';
+                if (logoFallback) logoFallback.style.display = 'none';
+            };
+            testImg.onerror = function() {
+                console.log('🏛️ Logo failed to load, showing fallback');
+                logoImg.style.display = 'none';
+                if (logoFallback) logoFallback.style.display = 'flex';
+            };
+            testImg.src = logoImg.src;
+        }
+    });
+    </script>
+    
     <!-- Service Worker Registration -->
     <script>
         console.log('🏛️ Ascension Lutheran Church PWA v2025011404');
