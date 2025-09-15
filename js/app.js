@@ -524,7 +524,7 @@ class ChurchApp {
                                     <h3>YouTube Live Services</h3>
                                     <p>Sunday morning worship services and Adult Discipleship classes are available for viewing on our YouTube channel.</p>
                                     <div style="margin: 2rem 0;">
-                                        <a href="https://www.youtube.com/channel/UC_CHANNEL_ID" target="_blank" rel="noopener" class="btn btn-primary">
+                                        <a href="https://www.youtube.com/c/alcsfw" target="_blank" rel="noopener" class="btn btn-primary">
                                             Watch on YouTube
                                         </a>
                                     </div>
