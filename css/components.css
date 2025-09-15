@@ -1,4 +1,4 @@
-/* Component Styles for Ascension Lutheran Church PWA */
+/* Component Styles for Ascension Lutheran Church PWA - Updated with Red Color Scheme */
 
 /* Page Content Styles */
 .page-content {
@@ -84,6 +84,7 @@
   background: var(--secondary-light);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
+  color: var(--white);
 }
 
 .btn-secondary {
@@ -96,6 +97,7 @@
 .btn-secondary:hover {
   background: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.5);
+  color: var(--white);
 }
 
 .btn-outline {
@@ -265,7 +267,7 @@
 
 .contact-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--spacing-md);
   margin-bottom: var(--spacing-lg);
 }
@@ -278,6 +280,8 @@
   width: 24px;
   height: 24px;
   color: var(--primary-color);
+  margin-top: 4px;
+  flex-shrink: 0;
 }
 
 .contact-text {
@@ -418,6 +422,56 @@
   font-size: 0.9rem;
 }
 
+/* Content Lists */
+.content-list {
+  list-style: none;
+  padding: 0;
+}
+
+.content-list li {
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.content-list li:last-child {
+  border-bottom: none;
+}
+
+.content-list li::before {
+  content: '✓';
+  color: var(--primary-color);
+  font-weight: bold;
+  margin-right: var(--spacing-sm);
+}
+
+/* Stewardship Quotes */
+.stewardship-quote {
+  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-light) 100%);
+  color: var(--white);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-xl);
+  margin: var(--spacing-xl) 0;
+  font-style: italic;
+  position: relative;
+}
+
+.stewardship-quote::before {
+  content: '"';
+  position: absolute;
+  top: -10px;
+  left: 15px;
+  font-size: 4rem;
+  opacity: 0.3;
+  font-family: var(--font-display);
+}
+
+.stewardship-reference {
+  font-size: 0.9rem;
+  margin-top: var(--spacing-md);
+  opacity: 0.9;
+  font-weight: 600;
+}
+
 /* Loading States */
 .skeleton {
   background: linear-gradient(90deg, var(--gray-200) 25%, var(--gray-100) 50%, var(--gray-200) 75%);
@@ -516,6 +570,12 @@
     flex-direction: column;
     align-items: center;
     gap: var(--spacing-sm);
+  }
+  
+  .contact-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 }
 
