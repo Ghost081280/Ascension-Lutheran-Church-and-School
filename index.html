@@ -3,6 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Force Cache Clear Script - MUST BE FIRST -->
+    <script>
+    (function() {
+        // Force cache bust by checking version
+        var currentVersion = '2025011402'; // Incremented version
+        var lastVersion = localStorage.getItem('alc-app-version');
+        
+        console.log('🏛️ Version check:', { current: currentVersion, last: lastVersion });
+        
+        if (lastVersion !== currentVersion) {
+            console.log('🏛️ Version mismatch, clearing cache and reloading');
+            localStorage.setItem('alc-app-version', currentVersion);
+            
+            // Clear service worker caches
+            if ('caches' in window) {
+                caches.keys().then(function(names) {
+                    names.forEach(function(name) {
+                        console.log('🏛️ Deleting cache:', name);
+                        caches.delete(name);
+                    });
+                });
+            }
+            
+            // Clear localStorage app state
+            localStorage.removeItem('alc-last-page');
+            
+            // Force hard reload with cache bypass
+            setTimeout(function() {
+                window.location.reload(true);
+            }, 100);
+            return;
+        }
+    })();
+    </script>
+    
     <title>Ascension Lutheran Church & School | Fort Wayne, IN</title>
     <meta name="description" content="Welcome to Ascension Evangelical Lutheran Church in Fort Wayne, Indiana. Join our family in worshipping and serving our glorious God.">
     <meta name="keywords" content="Lutheran Church, Fort Wayne, Christian Education, Family, Worship, Bible Study">
@@ -28,12 +64,12 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="./manifest.json">
     
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="./css/main.css">
-    <link rel="stylesheet" href="./css/components.css">
+    <!-- Stylesheets with cache busting -->
+    <link rel="stylesheet" href="./css/main.css?v=2025011402">
+    <link rel="stylesheet" href="./css/components.css?v=2025011402">
     
     <!-- Preload critical resources -->
-    <link rel="preload" href="./css/main.css" as="style">
+    <link rel="preload" href="./css/main.css?v=2025011402" as="style">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -137,34 +173,26 @@
         </footer>
     </div>
 
-    <!-- JavaScript Files -->
-    <script src="./js/components.js"></script>
-    <script src="./js/navigation.js"></script>
-    <script src="./js/app.js"></script>
+    <!-- JavaScript Files with cache busting -->
+    <script src="./js/components.js?v=2025011402"></script>
+    <script src="./js/navigation.js?v=2025011402"></script>
+    <script src="./js/app.js?v=2025011402"></script>
     
     <!-- Service Worker Registration -->
     <script>
         // Debug info
-        console.log('🏛️ Ascension Lutheran Church PWA');
+        console.log('🏛️ Ascension Lutheran Church PWA v2025011402');
         console.log('📍 Location:', window.location.href);
-        console.log('📁 Base path:', window.location.pathname);
         
-        // Add some error handling for development
+        // Add error handling
         window.addEventListener('error', (e) => {
             console.error('JavaScript Error:', e.error);
-            console.error('Error details:', {
-                message: e.message,
-                filename: e.filename,
-                lineno: e.lineno,
-                colno: e.colno,
-                stack: e.error ? e.error.stack : 'No stack trace'
-            });
         });
 
-        // Service Worker
+        // Service Worker with cache busting
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
+                navigator.serviceWorker.register('./sw.js?v=2025011402')
                     .then((registration) => {
                         console.log('SW registered: ', registration);
                     })
@@ -174,37 +202,34 @@
             });
         }
 
-        // Fallback content loader with immediate execution
+        // Emergency content loader - runs very early
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('🏛️ DOM Content Loaded');
+            console.log('🏛️ DOM Content Loaded v2025011402');
             
-            // Force load content after a short delay if app doesn't initialize
+            // Immediate content check
             setTimeout(() => {
                 const pageContainer = document.getElementById('page-container');
                 const loadingScreen = document.getElementById('loading-screen');
                 const mainApp = document.getElementById('main-app');
                 
-                console.log('🏛️ Checking app state:', {
+                console.log('🏛️ Emergency check:', {
                     hasApp: !!window.app,
                     pageContainer: !!pageContainer,
-                    containerContent: pageContainer ? pageContainer.innerHTML.length : 0,
-                    appHidden: mainApp ? mainApp.classList.contains('hidden') : 'no main app'
+                    containerEmpty: pageContainer ? pageContainer.innerHTML.length < 50 : true,
+                    appHidden: mainApp ? mainApp.classList.contains('hidden') : true
                 });
                 
-                // Show main app if still hidden
+                // Force show main app
                 if (mainApp && mainApp.classList.contains('hidden')) {
-                    console.log('🏛️ Showing main app');
-                    if (loadingScreen) {
-                        loadingScreen.style.display = 'none';
-                    }
+                    console.log('🏛️ Emergency: Showing main app');
+                    if (loadingScreen) loadingScreen.style.display = 'none';
                     mainApp.classList.remove('hidden');
                     mainApp.style.opacity = '1';
-                    mainApp.style.transform = 'translateY(0)';
                 }
                 
-                // Force load content if empty
-                if (pageContainer && (!pageContainer.innerHTML.trim() || pageContainer.innerHTML.length < 50)) {
-                    console.log('🏛️ Force loading home content');
+                // Emergency content load
+                if (pageContainer && pageContainer.innerHTML.length < 50) {
+                    console.log('🏛️ Emergency: Loading content');
                     pageContainer.innerHTML = \`
                         <div class="page-content">
                             <section class="hero-section">
@@ -217,7 +242,6 @@
                                     </div>
                                 </div>
                             </section>
-
                             <div class="container">
                                 <section class="info-section">
                                     <div class="worship-times">
@@ -236,78 +260,43 @@
                                         </div>
                                     </div>
                                 </section>
-
-                                <section class="info-section">
-                                    <div class="section-header">
-                                        <h2 class="section-title">Church • Family • School</h2>
-                                        <p class="section-subtitle">At Ascension, new life finds its expression in a three-fold fellowship and ministry where you will encounter and know the Lord Jesus Christ for your forgiveness, life, and salvation!</p>
-                                    </div>
-
-                                    <div class="card-grid">
-                                        <div class="card">
-                                            <div style="width: 100%; height: 200px; background: linear-gradient(45deg, #8B0000, #A52A2A); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">⛪</div>
-                                            <div class="card-content">
-                                                <h3 class="card-title">Church</h3>
-                                                <p class="card-text">Ascension follows the teaching of the Holy Scripture, firmly accepting the Bible as God's inerrant Word, teaching and confessing the truth proclaimed by God through His Son, Jesus Christ.</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="card">
-                                            <div style="width: 100%; height: 200px; background: linear-gradient(45deg, #CD853F, #DAA520); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">👨‍👩‍👧‍👦</div>
-                                            <div class="card-content">
-                                                <h3 class="card-title">Family</h3>
-                                                <p class="card-text">Ascension is a place for families with many opportunities to study God's Word together. We offer programs for all ages to grow in faith.</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="card">
-                                            <div style="width: 100%; height: 200px; background: linear-gradient(45deg, #8B0000, #660000); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🎓</div>
-                                            <div class="card-content">
-                                                <h3 class="card-title">School</h3>
-                                                <p class="card-text">Providing traditional, Christian education to students in Preschool through 8th grade with academic excellence within our Christ-centered Lutheran worldview.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-
                                 <section class="info-section">
                                     <div class="section-header">
                                         <h2 class="section-title">Meet Our Pastor</h2>
                                     </div>
-                                    
                                     <div class="card">
                                         <div class="card-content" style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
                                             <div style="flex: 0 0 200px;">
-                                                <img src="./images/Pastor.png?v=2025011401" alt="Rev. James Gier, Senior Pastor" 
-                                                     style="width: 200px; height: 250px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);"
-                                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                                <div style="display: none; width: 200px; height: 250px; background: linear-gradient(45deg, var(--primary-color), var(--primary-light)); border-radius: var(--radius-lg); align-items: center; justify-content: center; color: white; font-size: 3rem; box-shadow: var(--shadow-md);">👨‍💼</div>
+                                                <img src="./images/Pastor.png?v=2025011402" alt="Rev. James Gier, Senior Pastor" 
+                                                     style="width: 200px; height: 250px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
                                             </div>
                                             <div style="flex: 1; min-width: 300px;">
                                                 <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Rev. James Gier</h3>
                                                 <p style="color: var(--secondary-color); font-weight: 600; margin-bottom: 1rem;">Senior Pastor</p>
                                                 <p>Pastor Gier was installed as Ascension's third senior pastor in 2019. He was a licensed architect prior to entering the Holy Ministry and is a graduate of Concordia Theological Seminary in Fort Wayne.</p>
-                                                <p>Pastor Gier brings a unique perspective to ministry, combining his architectural background with his theological training to help build both physical and spiritual communities at Ascension.</p>
                                             </div>
                                         </div>
                                     </div>
                                 </section>
-
                                 <section class="verse-display">
-                                    <p class="verse-text">"And the third day, He rose again according to the Scriptures and ascended into heaven and sits at the right hand of the Father."</p>
-                                    <p class="verse-reference">~ The Nicene Creed</p>
-                                </section>
-
-                                <section class="info-section">
-                                    <p style="text-align: center; font-size: 1.2rem; line-height: 1.8; max-width: 800px; margin: 0 auto;">
-                                        In the Gospel of St. John (14:6), Jesus said "I am the way, and the truth, and the life. No one comes to the Father except through me." Jesus is our way back to our Father in heaven. He is the Gospel (Good News) of God to the world. As Evangelical Lutherans, we are loyal to the Gospel of Christ, "for there is no other name under heaven given among men by which we must be saved" (Acts 4:12).
-                                    </p>
+                                    <p class="verse-text">"I am the way, and the truth, and the life. No one comes to the Father except through me."</p>
+                                    <p class="verse-reference">John 14:6 (ESV)</p>
                                 </section>
                             </div>
                         </div>
                     \`;
+                    
+                    // Set up basic navigation
+                    const navLinks = document.querySelectorAll('.nav-link');
+                    navLinks.forEach(link => {
+                        link.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            console.log('🏛️ Basic nav clicked:', link.getAttribute('data-page'));
+                            // Basic page change would go here
+                        });
+                    });
                 }
-            }, 500); // Reduced to 500ms for faster loading
+            }, 300); // Very fast emergency load
         });
     </script>
 </body>
