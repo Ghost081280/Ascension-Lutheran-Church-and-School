@@ -16,7 +16,7 @@ const STATIC_CACHE_URLS = [
   '/js/components.js?v=2025011404',
   '/manifest.json',
   // Add critical images when available
-  '/images/alc-logo.png',
+  '/images/Color Luther Rose - 72 dpi.jpg',
   '/images/Pastor.png',
   '/images/favicon-32x32.png',
   '/images/apple-touch-icon.png',
