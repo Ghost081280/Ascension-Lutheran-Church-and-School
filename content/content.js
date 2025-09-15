@@ -1,6 +1,6 @@
 // Content Management System for Ascension Lutheran Church
 // Edit this file to update all site content
-// Version: 2025.01.15
+// Version: 2025.01.15 - Enhanced with Real Website Content
 
 const SITE_CONTENT = {
   // Site Information
@@ -9,8 +9,15 @@ const SITE_CONTENT = {
     shortName: "Ascension Lutheran",
     tagline: "Church & School",
     location: "Fort Wayne, Indiana",
-    description: "Welcome to Ascension Evangelical Lutheran Church in Fort Wayne, Indiana. Join our family in worshipping and serving our glorious God.",
-    founded: "1977"
+    description: "Welcome to Ascension Evangelical Lutheran Church in Fort Wayne, Indiana. We invite your family to join ours in worshipping and serving our glorious God.",
+    founded: "1977",
+    lcmsDistrict: "Indiana District (26) V-Circuit",
+    membershipStats: {
+      averageWeeklyAttendance: 226,
+      baptizedMembership: 402,
+      confirmedMembership: 333,
+      lastReportYear: 2024
+    }
   },
 
   // Contact Information
@@ -22,7 +29,9 @@ const SITE_CONTENT = {
       zip: "46835"
     },
     phone: "(260) 486-2226",
+    fax: "(260) 486-5793",
     email: "office@alcsfw.org",
+    website: "www.alcsfw.org",
     officeHours: {
       "Monday - Thursday": "9:00 AM - 3:00 PM",
       "Friday": "9:00 AM - 12:00 PM",
@@ -41,22 +50,91 @@ const SITE_CONTENT = {
     sunday: {
       services: ["8:00 AM", "10:45 AM"],
       adultClass: "9:30 AM",
-      sundaySchool: "9:30 AM"
+      sundaySchool: "9:30 AM",
+      holyCommunion: "Offered at both services"
     },
     special: {
       lentAdvent: "Wednesdays 6:30 PM"
+    },
+    onlineWorship: {
+      available: true,
+      description: "Sunday morning worship services and Adult Discipleship classes are available for viewing on our YouTube channel.",
+      note: "Don't miss the Order of Service links to follow along in the bulletin during online worship."
     }
   },
 
-  // Pastor Information
-  pastor: {
-    name: "Rev. James Gier",
-    title: "Senior Pastor",
-    bio: [
-      "Pastor Gier was a licensed architect prior to entering the Holy Ministry and is a graduate of Concordia Theological Seminary in Fort Wayne. He brings a unique perspective to ministry, combining his background in design with his passion for God's Word.",
-      "Pastor Gier has been faithfully serving our congregation, providing pastoral care, preaching God's Word, and administering the sacraments with dedication and love."
-    ],
-    image: "./images/Pastor.png"
+  // Staff and Leadership
+  staff: {
+    seniorPastor: {
+      name: "Rev. James Dale Gier Jr.",
+      title: "Senior Pastor",
+      installedDate: "May 2019",
+      previousService: "Mount Calvary Lutheran Church, Excelsior Springs, Missouri (16 years)",
+      education: [
+        "Ph.D. Missiology program at Concordia Theological Seminary (current)",
+        "Master of Sacred Theology Degree (2016)",
+        "Master of Divinity degree from Concordia Theological Seminary (2002)",
+        "Bachelor's degree in Architecture from University of Idaho (1986)"
+      ],
+      background: "Licensed architect in Washington and Connecticut, member of the American Institute of Architects",
+      bio: [
+        "Pastor Gier was installed as Senior Pastor of Ascension in May of 2019. He previously served 16 years as the pastor of Mount Calvary Lutheran Church in Excelsior Springs, Missouri.",
+        "Prior to his call to the sacred ministry, Pastor Gier worked as a licensed architect in Washington and Connecticut, and held membership in the American Institute of Architects. He brings a unique perspective to ministry, combining his background in design with his passion for God's Word."
+      ],
+      image: "./images/Pastor.png"
+    },
+    associatePastor: {
+      name: "Rev. Zieroth",
+      title: "Associate Pastor",
+      joinedDate: "June 2021",
+      previousRoles: [
+        "Assistant Professor of Pastoral Ministry and Missions at CTSFW",
+        "Dean of Students at CTSFW",
+        "Director of Vicarage and Internship at CTSFW"
+      ],
+      pastoralExperience: "26 years serving congregations in Fort McMurray and St. Albert, Alberta, Canada; Kingsville, Maryland; and Chaska, Minnesota",
+      education: [
+        "Doctor of Ministry degree (2006)",
+        "Master of Divinity degree from CTSFW (1990)",
+        "Bachelor's degree in psychology from Concordia University, Ann Arbor (1986)"
+      ]
+    },
+    deaconess: {
+      name: "Deaconess Pamela Buhler",
+      title: "Commissioned Deaconess",
+      joinedDate: "June 2023",
+      focus: "Family life, college students, and elder care",
+      specialties: [
+        "Creating mini devotional books",
+        "Holy Week family devotional kits",
+        "Godparent's baptismal remembrance packets",
+        "Catechetical books and Bibles for young families",
+        "Church member web pages"
+      ],
+      education: [
+        "Master's degree in Deaconess Studies from CTSFW (2018)",
+        "Bachelor's degree in electrical engineering from University of Massachusetts, Amherst (1997)"
+      ],
+      family: "Married to Buckley Buhler, seven children (five married, one in heaven), six grandchildren"
+    },
+    officeAdministrator: {
+      name: "Colleen",
+      title: "Office Administrator",
+      description: "Serves as administrator for both the church and school. Long-time member of Ascension with husband Scott.",
+      quote: "I love the people of Ascension. We are a family. Ascension is a joyful place where Christ is the center."
+    },
+    musicDirector: {
+      name: "David Mussmann",
+      title: "Music Director",
+      serviceYears: "More than 20 years",
+      education: "Studied organ under Dr. Mallory Bransford at Butler University in Indianapolis",
+      previousService: [
+        "Emmaus Lutheran Church, Indianapolis",
+        "St. Matthew Lutheran Church, Indianapolis",
+        "University Lutheran Church, West Lafayette, Indiana",
+        "St. John Lutheran Church of Wilde Lake, Columbia, Maryland"
+      ]
+    }
   },
 
   // Navigation Menu
@@ -66,6 +144,8 @@ const SITE_CONTENT = {
     { id: "family", label: "Family", url: "#family" },
     { id: "school", label: "School", url: "#school" },
     { id: "worship", label: "Worship", url: "#worship" },
+    { id: "ministries", label: "Ministries", url: "#ministries" },
+    { id: "leadership", label: "Leadership", url: "#leadership" },
     { id: "contact", label: "Contact", url: "#contact" }
   ],
 
@@ -74,7 +154,7 @@ const SITE_CONTENT = {
     home: {
       hero: {
         title: "Welcome to Ascension Lutheran Church",
-        subtitle: "Join our family in worshipping and serving our glorious God in Fort Wayne, Indiana",
+        subtitle: "We invite your family to join ours in worshipping and serving our glorious God in Fort Wayne, Indiana",
         backgroundImage: "./images/ascension-lutheran-school-fort-wayne-in-primaryphoto.jpg",
         buttons: [
           { text: "Join Us for Worship", style: "primary", page: "worship" },
@@ -87,7 +167,8 @@ const SITE_CONTENT = {
           items: [
             { label: "Sunday Morning Services", value: "8:00 AM & 10:45 AM" },
             { label: "Adult Discipleship Class", value: "9:30 AM" },
-            { label: "Children's Sunday School", value: "9:30 AM" }
+            { label: "Children's Sunday School", value: "9:30 AM" },
+            { label: "Holy Communion", value: "Both Services" }
           ]
         },
         ministry: {
@@ -97,14 +178,14 @@ const SITE_CONTENT = {
             {
               title: "Church",
               image: "./images/ascension-lutheran-school-fort-wayne-in-primaryphoto.jpg",
-              text: "Ascension follows the teaching of the Holy Scripture, firmly accepting the Bible as God's inerrant Word, teaching and confessing the truth proclaimed by God through His Son, Jesus Christ.",
+              text: "As Evangelical Lutherans, we are loyal to the Gospel of Christ. This Gospel ministry and mission is to seek, make, and mature disciples for God's eternal kingdom through preaching, baptizing, teaching, and communing.",
               buttonText: "Learn About Our Church →",
               buttonPage: "church"
             },
             {
               title: "Family",
               image: "./images/families.jpg",
-              text: "Ascension is a place for families with many opportunities to study God's Word together. We offer programs for all ages to grow in faith.",
+              text: "Ascension is a place for families with many opportunities to study God's Word together. We offer programs for all ages to grow in faith, including Learn by Heart devotions and family ministries.",
               buttonText: "Explore Family Programs →",
               buttonPage: "family"
             },
@@ -125,6 +206,9 @@ const SITE_CONTENT = {
       verse: {
         text: "I am the way, and the truth, and the life. No one comes to the Father except through me.",
         reference: "John 14:6 (ESV)"
+      },
+      mission: {
+        statement: "This Gospel ministry and mission of the Christian Church is to seek, make, and mature disciples for God's eternal kingdom through preaching, baptizing, teaching, and communing."
       }
     },
 
@@ -133,30 +217,24 @@ const SITE_CONTENT = {
         title: "Our Church",
         subtitle: "Faithful to the Gospel of Christ since 1977"
       },
-      stewardshipQuote: {
-        verses: [
-          "Luke 15:2 – \"And the Pharisees and the scribes grumbled, saying, 'This man receives sinners and eats with them.'\"",
-          "Thanks be to God: Jesus receives us sinners! What the Pharisees can't understand, we praise with all our being. We give thanks for the grace of God, and we live by that grace."
-        ],
-        reference: "LCMS Stewardship Bulletin Sentences"
-      },
       beliefs: {
         title: "What We Believe",
         subtitle: "As Evangelical Lutherans, we are loyal to the Gospel of Christ",
         content: [
-          "Ascension Lutheran Church and School follows the teaching of the Holy Scripture, firmly accepting the Bible as God's inerrant Word, teaching and confessing the truth proclaimed by God through His Son, Jesus Christ, our Lord and Savior. Ascension is a member of the Lutheran Church Missouri Synod.",
-          "We are guided in our interpretation of the Scriptures by the Lutheran Confessions as contained in the Book of Concord, to which we unconditionally subscribe."
+          "In the Gospel of St. John (14:6), Jesus said \"I am the way, and the truth, and the life. No one comes to the Father except through me.\" Jesus is our way back to our Father in heaven. He is the Gospel (Good News) of God to the world.",
+          "As Evangelical Lutherans, we are loyal to the Gospel of Christ, \"for there is no other name under heaven given among men by which we must be saved\" (Acts 4:12).",
+          "This work of the Holy Spirit of God among mankind is centered in the Divine Service, in which the Word of God is first proclaimed and administered through sermons and sacraments. Through this Word and these means, God saves us from our captivity to sin, death, and the devil, and so works in us a new and everlasting life."
         ],
-        points: [
-          "Holy Scripture reveals one God in three persons: Father, Son and Holy Spirit. The three persons are equal in power, authority, and majesty.",
-          "God the Father is the Eternal Father of God the Son. God the Father has made us and all creatures. He provides for all by giving us what we need for this body and life.",
-          "Because of our inherited sin we need to be saved from what we are and what our actions deserve. Salvation is found in our Savior, Jesus Christ.",
-          "By His death on the cross and resurrection He paid the penalty of all sin and guilt."
-        ]
+        niceneCreed: "And the third day, He rose again according to the Scriptures and ascended into heaven and sits at the right hand of the Father. ~ The Nicene Creed"
+      },
+      history: {
+        founded: 1977,
+        lcmsJoined: 1977,
+        description: "Member congregation of the Lutheran Church Missouri Synod, Indiana District"
       },
       verse: {
-        text: "Jesus Christ Is the Great Shepherd of His Sheep.",
-        reference: "Luke 15:4"
+        text: "And the third day, He rose again according to the Scriptures and ascended into heaven and sits at the right hand of the Father.",
+        reference: "The Nicene Creed"
       }
     },
 
@@ -166,24 +244,69 @@ const SITE_CONTENT = {
         subtitle: "Ascension is a place for families with many opportunities to grow in faith together"
       },
       programs: {
-        title: "Family Programs",
+        title: "Family Programs & Ministries",
         content: [
-          "Ascension Lutheran Church is a place for families. Ascension offers many opportunities to study God's Word together.",
+          "Ascension Lutheran Church offers many opportunities to study God's Word. Here are just a few of our ministry opportunities.",
           "As the school year approaches, remember that Jesus is going with you and your family there, too."
+        ],
+        offerings: [
+          {
+            name: "Adult Discipleship Class",
+            schedule: "Every Sunday at 9:30 AM",
+            description: "Visitors are most welcome. Nursery and Sunday School childcare are available for your little ones."
+          },
+          {
+            name: "Sunday School",
+            schedule: "9:30 AM - 10:30 AM every Sunday (except August)",
+            description: "Christian educational opportunities for young members, ages 3 to 18."
+          },
+          {
+            name: "Adult Inquirer's Class (Pastor's Class)",
+            schedule: "Offered each spring and fall",
+            description: "Basic Bible Study of the beliefs of our church and can lead to membership through adult confirmation."
+          },
+          {
+            name: "Women's Bible Study",
+            schedule: "Tuesday 7:00-8:30 PM (Room 144) & Friday 9:00-11:00 AM (Music Practice Room)",
+            description: "Currently studying the Book of Acts. All women are welcome."
+          }
         ]
       },
       learnByHeart: {
-        title: "Learn by Heart",
+        title: "Taking Faith Home / Learn by Heart",
         subtitle: "Weekly Bible and Catechism study and devotion for the whole family",
-        description: "Learn by Heart is updated weekly and includes:",
+        description: "The \"Taking Faith Home\" devotional series is a new resource for families, couples, individuals, and the congregation. The devotions incorporate the Four Key Faith Practices:",
+        practices: [
+          "Caring Conversations",
+          "Family Devotions", 
+          "Family Service",
+          "Family Traditions and Celebrations"
+        ],
         items: [
           "Bible Verse of the Week",
           "Catechism Memory Work",
-          "Hymn of the Week",
+          "Hymn of the Week", 
           "Psalm Meditation of the Week",
           "Daily Bible/Catechism Meditations of the Week"
         ],
-        note: "The Hymn of the Week will be sung in Chapel and is encouraged for use in family daily devotions."
+        note: "Copies of the current and two most recent weeks of the devotional material are available."
+      },
+      specialPrograms: {
+        title: "Special Family Ministries",
+        programs: [
+          {
+            name: "Family Life Mission Printables",
+            description: "Resources to support family faith practices at home"
+          },
+          {
+            name: "Mental Health: Wellness of the Mind",
+            description: "Supporting the mental and spiritual wellness of our families"
+          },
+          {
+            name: "Deaconess Family Ministry",
+            description: "Mini devotional books, Holy Week family devotional kits, and godparent baptismal remembrance packets"
+          }
+        ]
       },
       verse: {
         text: "Train up a child in the way he should go; even when he is old he will not depart from it.",
@@ -205,8 +328,53 @@ const SITE_CONTENT = {
         subtitle: "We proclaim the Gospel to the next generation and provide a quality education so children can grow spiritually, academically, socially, emotionally, and physically",
         content: [
           "Ascension Lutheran Church has established this school to proclaim the Gospel to the next generation and to provide a quality education so children can grow spiritually, academically, socially, emotionally, and physically.",
-          "Ascension Lutheran School will continue to provide its students with an education that emphasizes academic excellence within our Christ-centered Lutheran worldview, so that its graduates are effective thinkers, readers, writers, and problem-solvers who become the next generation of leaders in their home, church, and community."
+          "We provide a well rounded, faith based education where you're involved every step of the way. We are committed to providing the best possible education in an environment that is safe, and amplifies the values you are teaching at home."
         ]
+      },
+      stats: {
+        title: "School Information",
+        enrollment: 94,
+        studentTeacherRatio: "12:1",
+        minorityEnrollment: "14.9%",
+        tuition: "$4,700 (approximate)",
+        acceptanceRate: "98%",
+        applicationDeadline: "Rolling admissions"
+      },
+      programs: {
+        title: "Academic & Extracurricular Programs",
+        academics: [
+          "Preschool through 8th Grade",
+          "Classical Lutheran Education approach",
+          "Faith-based curriculum"
+        ],
+        arts: [
+          "Band",
+          "Choir", 
+          "Handbells",
+          "Strings Program"
+        ],
+        clubs: [
+          "Crochet Club",
+          "Girls Who Code",
+          "Trail Life"
+        ],
+        sports: [
+          "Basketball",
+          "Cross Country",
+          "Soccer", 
+          "Track and Field",
+          "Volleyball"
+        ]
+      },
+      admissions: {
+        title: "Admissions Information",
+        requirements: [
+          "Pastor's adult instruction class required for non-Lutheran families (10-12 weeks)",
+          "School Choice school",
+          "Rolling application process",
+          "Home, church, and school must work together"
+        ],
+        note: "We require that all non-Lutheran families go through pastor's adult instruction class in order to learn and understand what we believe and will be teaching your children."
       },
       verse: {
         text: "But in your hearts honor Christ the Lord as holy, always being prepared to make a defense to anyone who asks you for a reason for the hope that is in you; yet do it with gentleness and respect.",
@@ -233,7 +401,7 @@ const SITE_CONTENT = {
         title: "Online Worship",
         subtitle: "Can't make it in person? Join us online",
         content: [
-          "Sunday morning worship services and Adult Discipleship classes are available for viewing on our YouTube channel.",
+          "Online worship is the place to view the Sunday morning services. This page also includes a recording of the Adult Discipleship Class.",
           "Don't miss the Order of Service links to follow along in the bulletin during online worship."
         ],
         button: {
@@ -244,6 +412,66 @@ const SITE_CONTENT = {
       verse: {
         text: "Let us not give up meeting together, as some are in the habit of doing, but let us encourage one another—and all the more as you see the Day approaching.",
         reference: "Hebrews 10:25 (NIV)"
+      }
+    },
+
+    // NEW PAGES ADDED
+    ministries: {
+      hero: {
+        title: "Ministries & Programs",
+        subtitle: "Serving our community through Christ's love"
+      },
+      musicMinistry: {
+        title: "Music Ministry",
+        subtitle: "Many people participate in praising our Lord Jesus through music",
+        ensembles: [
+          "Adult Voice Choir",
+          "Adult Handbell Choir", 
+          "Children's Choirs",
+          "Brass and Timpani Ensembles",
+          "Woodwind and String Ensembles"
+        ],
+        invitation: "Come join us in praising our Lord Jesus through music."
+      },
+      education: {
+        title: "Educational Ministries",
+        programs: [
+          "Early Childhood Education",
+          "Elementary Education", 
+          "Religious Education",
+          "Youth Programs",
+          "Tutoring/Lessons",
+          "Classical Lutheran Education"
+        ]
+      },
+      missions: {
+        title: "Mission Work",
+        focus: "\"Every One His Witness,\" in taking the message of the Eternal Gospel (Rev 14:6) to a world caught up in the evil and deception of these last days.",
+        recentSpeakers: [
+          "Rev. Dr. Cory Rajeck, International Lutheran Missions",
+          "Rev. David Preus, LCMS Regional Director of Missions, Eurasia",
+          "Seminarian Sergue Trifa, Mission work in Romania and Ukraine",
+          "Rev. Jonah Domenichelli, LCMS Missionary to Germany",
+          "Rev. Charles Ferry, LCMS Regional Director of Missions in Asia"
+        ]
+      },
+      verse: {
+        text: "And this is the victory that has overcome the world—our faith . . . that Jesus is the Son of God",
+        reference: "1 John 5:4–5"
+      }
+    },
+
+    leadership: {
+      hero: {
+        title: "Church Leadership",
+        subtitle: "Faithful servants called to minister to God's people"
+      },
+      staff: {
+        // Will use the detailed staff object from above
+      },
+      verse: {
+        text: "Let the elders who rule well be considered worthy of double honor, especially those who labor in preaching and teaching.",
+        reference: "1 Timothy 5:17 (ESV)"
       }
     },
 
@@ -265,21 +493,38 @@ const SITE_CONTENT = {
               content: "<a href=\"tel:+12604862226\">(260) 486-2226</a>"
             },
             {
+              label: "Fax",
+              content: "(260) 486-5793"
+            },
+            {
               label: "Email",
               content: "<a href=\"mailto:office@alcsfw.org\">office@alcsfw.org</a>"
+            },
+            {
+              label: "Website",
+              content: "<a href=\"https://www.alcsfw.org\" target=\"_blank\">www.alcsfw.org</a>"
             }
           ]
         },
         pastor: {
           title: "Pastor Information",
           content: [
-            "<strong>Rev. James Gier</strong><br>Senior Pastor",
-            "Pastor Gier was a licensed architect prior to entering the Holy Ministry and is a graduate of Concordia Theological Seminary in Fort Wayne."
+            "<strong>Rev. James Dale Gier Jr.</strong><br>Senior Pastor",
+            "Installed as Senior Pastor in May 2019. Previously served 16 years at Mount Calvary Lutheran Church in Excelsior Springs, Missouri.",
+            "Licensed architect background with Master of Divinity from Concordia Theological Seminary."
           ]
         }
       },
       officeHours: {
         title: "Office Hours"
+      },
+      membership: {
+        title: "Becoming a Member",
+        content: [
+          "Interested in becoming a member of Ascension Lutheran Church or having your children attend Ascension School?",
+          "Pastor Gier conducts instructional classes regularly each fall and Pastor Zieroth in the spring, as preparation for those who want to join Ascension or have children in Ascension Lutheran School."
+        ],
+        requirement: "The pastor's class is a requirement for both church membership and school enrollment."
       },
       verse: {
         text: "Come to me, all you who are weary and burdened, and I will give you rest.",
@@ -307,6 +552,7 @@ const SITE_CONTENT = {
         content: [
           "8811 St. Joe Road<br>Fort Wayne, IN 46835",
           "Phone: <a href=\"tel:+12604862226\">(260) 486-2226</a>",
+          "Fax: (260) 486-5793",
           "Email: <a href=\"mailto:office@alcsfw.org\">office@alcsfw.org</a>"
         ]
       },
@@ -314,7 +560,8 @@ const SITE_CONTENT = {
         title: "Worship Times",
         content: [
           "Sunday Divine Worship:<br>8:00 AM & 10:45 AM",
-          "Sunday School & Adult Class:<br>9:30 AM"
+          "Sunday School & Adult Class:<br>9:30 AM",
+          "Holy Communion:<br>Both Services"
         ]
       },
       {
@@ -324,7 +571,8 @@ const SITE_CONTENT = {
     ],
     bottom: [
       "&copy; 2025 Ascension Lutheran Church and School. All rights reserved.",
-      "Visit us at 8811 St. Joe Road, Fort Wayne, IN 46835"
+      "Visit us at 8811 St. Joe Road, Fort Wayne, IN 46835",
+      "Member of the Lutheran Church Missouri Synod"
     ]
   },
 
@@ -333,8 +581,14 @@ const SITE_CONTENT = {
     current: [
       {
         title: "Sunday Worship Services",
-        message: "Join us for worship at 8:00 AM or 10:45 AM every Sunday",
+        message: "Join us for worship at 8:00 AM or 10:45 AM every Sunday with Holy Communion at both services",
         type: "info",
+        active: true
+      },
+      {
+        title: "Learn by Heart Devotions",
+        message: "New weekly family devotional materials available - strengthen your faith at home",
+        type: "info", 
         active: true
       }
     ]
@@ -358,7 +612,9 @@ const SITE_CONTENT = {
 
   // External Links
   external: {
-    donate: "https://secure.myvanco.com/L-YTGK/home"
+    donate: "https://secure.myvanco.com/L-YTGK/home",
+    lcms: "https://www.lcms.org",
+    ctsfw: "https://www.ctsfw.edu"
   }
 };
 
