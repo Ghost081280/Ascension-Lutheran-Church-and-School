@@ -439,6 +439,9 @@ a:hover {
 /* Premium Loading Spinner */
 .loading-spinner {
   margin: var(--spacing-xl) 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .spinner-container {
@@ -446,6 +449,7 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
 }
 
 .spinner {
@@ -455,6 +459,7 @@ a:hover {
   border-top: 3px solid var(--primary-color);
   border-radius: 50%;
   animation: spin 1.2s linear infinite;
+  margin: 0 auto;
 }
 
 .spinner-accent {
@@ -464,6 +469,9 @@ a:hover {
   border: 1px solid rgba(139, 0, 0, 0.08);
   border-radius: 50%;
   animation: spinnerAccent 3s ease-in-out infinite;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* Enhanced Scripture Section */
