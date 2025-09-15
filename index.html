@@ -174,69 +174,140 @@
             });
         }
 
-        // Fallback content loader if JavaScript fails
-        window.addEventListener('load', () => {
+        // Fallback content loader with immediate execution
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🏛️ DOM Content Loaded');
+            
+            // Force load content after a short delay if app doesn't initialize
             setTimeout(() => {
                 const pageContainer = document.getElementById('page-container');
                 const loadingScreen = document.getElementById('loading-screen');
                 const mainApp = document.getElementById('main-app');
                 
-                // Check if content has loaded
-                if (pageContainer && (!pageContainer.innerHTML.trim() || pageContainer.innerHTML.includes('Loading content'))) {
-                    console.log('🏛️ Fallback: Loading default content');
-                    
-                    // Show main app if still hidden
-                    if (mainApp && mainApp.classList.contains('hidden')) {
-                        if (loadingScreen) loadingScreen.style.display = 'none';
-                        mainApp.classList.remove('hidden');
+                console.log('🏛️ Checking app state:', {
+                    hasApp: !!window.app,
+                    pageContainer: !!pageContainer,
+                    containerContent: pageContainer ? pageContainer.innerHTML.length : 0,
+                    appHidden: mainApp ? mainApp.classList.contains('hidden') : 'no main app'
+                });
+                
+                // Show main app if still hidden
+                if (mainApp && mainApp.classList.contains('hidden')) {
+                    console.log('🏛️ Showing main app');
+                    if (loadingScreen) {
+                        loadingScreen.style.display = 'none';
                     }
-                    
-                    // Load basic home content if nothing else loaded
-                    if (pageContainer && !window.app) {
-                        pageContainer.innerHTML = `
-                            <div class="page-content">
-                                <section class="hero-section">
-                                    <div class="hero-content">
-                                        <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
-                                        <p class="hero-subtitle">Join our family in worshipping and serving our glorious God in Fort Wayne, Indiana</p>
+                    mainApp.classList.remove('hidden');
+                    mainApp.style.opacity = '1';
+                    mainApp.style.transform = 'translateY(0)';
+                }
+                
+                // Force load content if empty
+                if (pageContainer && (!pageContainer.innerHTML.trim() || pageContainer.innerHTML.length < 50)) {
+                    console.log('🏛️ Force loading home content');
+                    pageContainer.innerHTML = \`
+                        <div class="page-content">
+                            <section class="hero-section">
+                                <div class="hero-content">
+                                    <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
+                                    <p class="hero-subtitle">Join our family in worshipping and serving our glorious God in Fort Wayne, Indiana</p>
+                                    <div class="hero-cta">
+                                        <a href="#worship" class="btn btn-primary">Join Us for Worship</a>
+                                        <a href="#church" class="btn btn-secondary">Learn More</a>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <div class="container">
+                                <section class="info-section">
+                                    <div class="worship-times">
+                                        <h3>Divine Worship</h3>
+                                        <div class="time-item">
+                                            <span class="time-label">Sunday Morning Services</span>
+                                            <span class="time-value">8:00 AM & 10:45 AM</span>
+                                        </div>
+                                        <div class="time-item">
+                                            <span class="time-label">Adult Discipleship Class</span>
+                                            <span class="time-value">9:30 AM</span>
+                                        </div>
+                                        <div class="time-item">
+                                            <span class="time-label">Children's Sunday School</span>
+                                            <span class="time-value">9:30 AM</span>
+                                        </div>
                                     </div>
                                 </section>
-                                <div class="container">
-                                    <section class="info-section">
-                                        <div class="worship-times">
-                                            <h3>Divine Worship</h3>
-                                            <div class="time-item">
-                                                <span class="time-label">Sunday Morning Services</span>
-                                                <span class="time-value">8:00 AM & 10:45 AM</span>
-                                            </div>
-                                            <div class="time-item">
-                                                <span class="time-label">Adult Discipleship Class</span>
-                                                <span class="time-value">9:30 AM</span>
-                                            </div>
-                                            <div class="time-item">
-                                                <span class="time-label">Children's Sunday School</span>
-                                                <span class="time-value">9:30 AM</span>
+
+                                <section class="info-section">
+                                    <div class="section-header">
+                                        <h2 class="section-title">Church • Family • School</h2>
+                                        <p class="section-subtitle">At Ascension, new life finds its expression in a three-fold fellowship and ministry where you will encounter and know the Lord Jesus Christ for your forgiveness, life, and salvation!</p>
+                                    </div>
+
+                                    <div class="card-grid">
+                                        <div class="card">
+                                            <div style="width: 100%; height: 200px; background: linear-gradient(45deg, #8B0000, #A52A2A); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">⛪</div>
+                                            <div class="card-content">
+                                                <h3 class="card-title">Church</h3>
+                                                <p class="card-text">Ascension follows the teaching of the Holy Scripture, firmly accepting the Bible as God's inerrant Word, teaching and confessing the truth proclaimed by God through His Son, Jesus Christ.</p>
                                             </div>
                                         </div>
-                                    </section>
-                                    <section class="info-section">
-                                        <p style="text-align: center; font-size: 1.2rem; line-height: 1.8; max-width: 800px; margin: 0 auto;">
-                                            <strong>JavaScript appears to be disabled or encountering errors.</strong><br>
-                                            For the full interactive experience, please enable JavaScript in your browser.
-                                        </p>
-                                        <div style="text-align: center; margin: 2rem 0;">
-                                            <p><strong>Contact Us:</strong></p>
-                                            <p>Phone: <a href="tel:+12604862226">(260) 486-2226</a></p>
-                                            <p>Email: <a href="mailto:office@alcsfw.org">office@alcsfw.org</a></p>
-                                            <p>Address: 8811 St. Joe Road, Fort Wayne, IN 46835</p>
+
+                                        <div class="card">
+                                            <div style="width: 100%; height: 200px; background: linear-gradient(45deg, #CD853F, #DAA520); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">👨‍👩‍👧‍👦</div>
+                                            <div class="card-content">
+                                                <h3 class="card-title">Family</h3>
+                                                <p class="card-text">Ascension is a place for families with many opportunities to study God's Word together. We offer programs for all ages to grow in faith.</p>
+                                            </div>
                                         </div>
-                                    </section>
-                                </div>
+
+                                        <div class="card">
+                                            <div style="width: 100%; height: 200px; background: linear-gradient(45deg, #8B0000, #660000); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🎓</div>
+                                            <div class="card-content">
+                                                <h3 class="card-title">School</h3>
+                                                <p class="card-text">Providing traditional, Christian education to students in Preschool through 8th grade with academic excellence within our Christ-centered Lutheran worldview.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section class="info-section">
+                                    <div class="section-header">
+                                        <h2 class="section-title">Meet Our Pastor</h2>
+                                    </div>
+                                    
+                                    <div class="card">
+                                        <div class="card-content" style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+                                            <div style="flex: 0 0 200px;">
+                                                <img src="./images/Pastor.png?v=2025011401" alt="Rev. James Gier, Senior Pastor" 
+                                                     style="width: 200px; height: 250px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);"
+                                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                                <div style="display: none; width: 200px; height: 250px; background: linear-gradient(45deg, var(--primary-color), var(--primary-light)); border-radius: var(--radius-lg); align-items: center; justify-content: center; color: white; font-size: 3rem; box-shadow: var(--shadow-md);">👨‍💼</div>
+                                            </div>
+                                            <div style="flex: 1; min-width: 300px;">
+                                                <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Rev. James Gier</h3>
+                                                <p style="color: var(--secondary-color); font-weight: 600; margin-bottom: 1rem;">Senior Pastor</p>
+                                                <p>Pastor Gier was installed as Ascension's third senior pastor in 2019. He was a licensed architect prior to entering the Holy Ministry and is a graduate of Concordia Theological Seminary in Fort Wayne.</p>
+                                                <p>Pastor Gier brings a unique perspective to ministry, combining his architectural background with his theological training to help build both physical and spiritual communities at Ascension.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section class="verse-display">
+                                    <p class="verse-text">"And the third day, He rose again according to the Scriptures and ascended into heaven and sits at the right hand of the Father."</p>
+                                    <p class="verse-reference">~ The Nicene Creed</p>
+                                </section>
+
+                                <section class="info-section">
+                                    <p style="text-align: center; font-size: 1.2rem; line-height: 1.8; max-width: 800px; margin: 0 auto;">
+                                        In the Gospel of St. John (14:6), Jesus said "I am the way, and the truth, and the life. No one comes to the Father except through me." Jesus is our way back to our Father in heaven. He is the Gospel (Good News) of God to the world. As Evangelical Lutherans, we are loyal to the Gospel of Christ, "for there is no other name under heaven given among men by which we must be saved" (Acts 4:12).
+                                    </p>
+                                </section>
                             </div>
-                        `;
-                    }
+                        </div>
+                    \`;
                 }
-            }, 3000); // Wait 3 seconds for JavaScript to load
+            }, 500); // Reduced to 500ms for faster loading
         });
     </script>
 </body>
