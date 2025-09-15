@@ -731,35 +731,73 @@
             });
         }
         
-        // Enhanced PWA Install Experience
+        // Enhanced PWA Install Experience with Debugging
         let deferredPrompt;
         let installPromptShown = false;
         
+        console.log('🏛️ PWA Install: Starting setup...');
+        console.log('🏛️ PWA Install: HTTPS?', location.protocol === 'https:');
+        console.log('🏛️ PWA Install: Service Worker support?', 'serviceWorker' in navigator);
+        
         // Listen for the beforeinstallprompt event
         window.addEventListener('beforeinstallprompt', (e) => {
-            console.log('🏛️ PWA install prompt available');
+            console.log('🏛️ PWA install prompt available - beforeinstallprompt fired!');
             e.preventDefault();
             deferredPrompt = e;
             
             // Show appropriate install prompt after app loads
             setTimeout(() => {
                 if (!installPromptShown) {
+                    console.log('🏛️ PWA Install: Showing install prompt...');
                     showInstallPrompt();
                 }
-            }, 6000); // Show after 6 seconds
+            }, 3000); // Reduced to 3 seconds for testing
         });
         
         // Check if already installed
         window.addEventListener('appinstalled', () => {
-            console.log('🏛️ PWA was installed');
+            console.log('🏛️ PWA was installed successfully!');
             hideAllInstallPrompts();
             deferredPrompt = null;
         });
         
+        // Force show install prompt for testing (remove this in production)
+        setTimeout(() => {
+            if (!deferredPrompt && !installPromptShown) {
+                console.log('🏛️ PWA Install: No beforeinstallprompt event detected');
+                console.log('🏛️ PWA Install: This might be because:');
+                console.log('🏛️ PWA Install: 1. Not served over HTTPS');
+                console.log('🏛️ PWA Install: 2. App already installed');
+                console.log('🏛️ PWA Install: 3. Browser doesn\'t support PWA install');
+                console.log('🏛️ PWA Install: 4. Manifest file issues');
+                
+                // Force show for testing/demo purposes
+                console.log('🏛️ PWA Install: Force showing for demo...');
+                forceShowInstallPrompt();
+            }
+        }, 5000);
+        
         // Show appropriate install prompt based on device
         function showInstallPrompt() {
-            if (!deferredPrompt || installPromptShown) return;
+            if (installPromptShown) return;
             
+            installPromptShown = true;
+            const isMobile = window.innerWidth <= 768;
+            
+            console.log('🏛️ PWA Install: Device type:', isMobile ? 'Mobile' : 'Desktop');
+            
+            if (isMobile) {
+                showMobileInstallPrompt();
+            } else {
+                showDesktopInstallBanner();
+            }
+        }
+        
+        // Force show for testing when no native prompt available
+        function forceShowInstallPrompt() {
+            if (installPromptShown) return;
+            
+            console.log('🏛️ PWA Install: Force showing install prompt for testing...');
             installPromptShown = true;
             const isMobile = window.innerWidth <= 768;
             
@@ -772,28 +810,38 @@
         
         // Mobile install prompt
         function showMobileInstallPrompt() {
+            console.log('🏛️ PWA Install: Showing mobile install prompt');
             const installPrompt = document.getElementById('pwa-install-prompt');
             if (installPrompt) {
                 installPrompt.classList.remove('hidden');
+                console.log('🏛️ PWA Install: Mobile prompt should be visible now');
                 
-                // Auto-hide after 15 seconds
+                // Auto-hide after 20 seconds for testing
                 setTimeout(() => {
+                    console.log('🏛️ PWA Install: Auto-hiding mobile prompt');
                     hideInstallPrompt();
-                }, 15000);
+                }, 20000);
+            } else {
+                console.error('🏛️ PWA Install: Mobile prompt element not found!');
             }
         }
         
         // Desktop install banner
         function showDesktopInstallBanner() {
+            console.log('🏛️ PWA Install: Showing desktop install banner');
             const installBanner = document.getElementById('desktop-install-banner');
             if (installBanner) {
                 installBanner.classList.remove('hidden');
                 document.body.classList.add('banner-shown');
+                console.log('🏛️ PWA Install: Desktop banner should be visible now');
                 
-                // Auto-hide after 20 seconds
+                // Auto-hide after 25 seconds for testing
                 setTimeout(() => {
+                    console.log('🏛️ PWA Install: Auto-hiding desktop banner');
                     hideDesktopBanner();
-                }, 20000);
+                }, 25000);
+            } else {
+                console.error('🏛️ PWA Install: Desktop banner element not found!');
             }
         }
         
@@ -802,6 +850,7 @@
             const installPrompt = document.getElementById('pwa-install-prompt');
             if (installPrompt) {
                 installPrompt.classList.add('hidden');
+                console.log('🏛️ PWA Install: Mobile prompt hidden');
             }
         }
         
@@ -811,6 +860,7 @@
             if (installBanner) {
                 installBanner.classList.add('hidden');
                 document.body.classList.remove('banner-shown');
+                console.log('🏛️ PWA Install: Desktop banner hidden');
             }
         }
         
@@ -824,7 +874,9 @@
         document.addEventListener('click', (e) => {
             // Mobile install button
             if (e.target.id === 'pwa-install-btn') {
+                console.log('🏛️ PWA Install: Mobile install button clicked');
                 if (deferredPrompt) {
+                    console.log('🏛️ PWA Install: Using native install prompt');
                     deferredPrompt.prompt();
                     deferredPrompt.userChoice.then((choiceResult) => {
                         console.log('🏛️ User choice:', choiceResult.outcome);
@@ -832,14 +884,17 @@
                         hideInstallPrompt();
                     });
                 } else {
-                    // Fallback instructions for iOS Safari
-                    showIOSInstructions();
+                    console.log('🏛️ PWA Install: No native prompt, checking for iOS...');
+                    // Fallback instructions for iOS Safari or manual instructions
+                    showInstallInstructions();
                 }
             }
             
             // Desktop install button
             else if (e.target.id === 'desktop-install-btn') {
+                console.log('🏛️ PWA Install: Desktop install button clicked');
                 if (deferredPrompt) {
+                    console.log('🏛️ PWA Install: Using native install prompt');
                     deferredPrompt.prompt();
                     deferredPrompt.userChoice.then((choiceResult) => {
                         console.log('🏛️ User choice:', choiceResult.outcome);
@@ -847,51 +902,67 @@
                         hideDesktopBanner();
                     });
                 } else {
-                    hideDesktopBanner();
+                    console.log('🏛️ PWA Install: No native prompt available');
+                    showInstallInstructions();
                 }
             }
             
             // Dismiss buttons
             else if (e.target.id === 'pwa-dismiss-btn') {
+                console.log('🏛️ PWA Install: Mobile dismiss button clicked');
                 hideInstallPrompt();
             } else if (e.target.id === 'desktop-dismiss-btn') {
+                console.log('🏛️ PWA Install: Desktop dismiss button clicked');
                 hideDesktopBanner();
             }
         });
         
-        // iOS Safari instructions
-        function showIOSInstructions() {
+        // Universal install instructions
+        function showInstallInstructions() {
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
             const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+            const isChrome = /Chrome/.test(navigator.userAgent);
+            const isEdge = /Edg/.test(navigator.userAgent);
+            
+            let instructions = '';
             
             if (isIOS && isSafari) {
-                alert('To install this app on your iOS device:\n\n1. Tap the Share button in Safari\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add" to confirm');
+                instructions = 'To install this app on your iOS device:\n\n1. Tap the Share button (□↗) in Safari\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add" to confirm\n\nThe app will appear on your home screen!';
+            } else if (isChrome) {
+                instructions = 'To install this app:\n\n1. Click the three dots menu (⋮) in Chrome\n2. Select "Install Ascension Lutheran..."\n3. Click "Install" to confirm\n\nOr look for the install icon in the address bar!';
+            } else if (isEdge) {
+                instructions = 'To install this app:\n\n1. Click the three dots menu (...) in Edge\n2. Select "Apps" > "Install this site as an app"\n3. Click "Install" to confirm';
             } else {
-                hideInstallPrompt();
+                instructions = 'To install this app:\n\n1. Look for an install button in your browser\'s address bar\n2. Or check your browser\'s menu for "Install" or "Add to Home Screen" options\n3. Follow the prompts to install\n\nThis will add the app to your device!';
             }
+            
+            alert(instructions);
+            hideAllInstallPrompts();
         }
         
         // Check if app is already running as PWA
         function isPWA() {
-            return window.matchMedia('(display-mode: standalone)').matches || 
-                   window.navigator.standalone === true;
+            const isPWAMode = window.matchMedia('(display-mode: standalone)').matches || 
+                             window.navigator.standalone === true;
+            console.log('🏛️ PWA Install: Running as PWA?', isPWAMode);
+            return isPWAMode;
         }
         
         // Don't show install prompts if already running as PWA
         if (isPWA()) {
-            console.log('🏛️ Running as installed PWA');
+            console.log('🏛️ PWA Install: Already running as installed PWA, hiding prompts');
             // Add PWA-specific styling
             document.body.classList.add('pwa-mode');
         }
         
         // Handle offline/online status for PWA feel
         window.addEventListener('online', () => {
-            console.log('🏛️ Back online');
+            console.log('🏛️ PWA: Back online');
             document.body.classList.remove('offline-mode');
         });
         
         window.addEventListener('offline', () => {
-            console.log('🏛️ Gone offline');
+            console.log('🏛️ PWA: Gone offline');
             document.body.classList.add('offline-mode');
         });
         
@@ -900,6 +971,7 @@
             if (isPWA()) {
                 const indicator = document.createElement('div');
                 indicator.innerHTML = '📱';
+                indicator.title = 'Running as installed app';
                 indicator.style.cssText = `
                     position: fixed;
                     top: 10px;
@@ -910,19 +982,41 @@
                     border-radius: 50%;
                     font-size: 1rem;
                     z-index: 10001;
-                    opacity: 0.7;
+                    opacity: 0.8;
+                    cursor: pointer;
+                    transition: opacity 0.3s ease;
                 `;
                 document.body.appendChild(indicator);
                 
+                // Fade out after 4 seconds
                 setTimeout(() => {
                     indicator.style.opacity = '0';
                     setTimeout(() => indicator.remove(), 1000);
-                }, 3000);
+                }, 4000);
             }
         }
         
         // Show PWA indicator when app loads
-        setTimeout(addPWAIndicator, 1000);
+        setTimeout(addPWAIndicator, 2000);
+        
+        // Debug manifest loading
+        fetch('./manifest.json')
+            .then(response => {
+                if (response.ok) {
+                    console.log('🏛️ PWA Install: Manifest file loaded successfully');
+                    return response.json();
+                } else {
+                    console.error('🏛️ PWA Install: Manifest file failed to load');
+                }
+            })
+            .then(manifest => {
+                if (manifest) {
+                    console.log('🏛️ PWA Install: Manifest content:', manifest);
+                }
+            })
+            .catch(error => {
+                console.error('🏛️ PWA Install: Manifest error:', error);
+            });
     </script>
 </body>
 </html>
