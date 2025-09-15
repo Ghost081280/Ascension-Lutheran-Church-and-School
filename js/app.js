@@ -185,7 +185,7 @@ class ChurchApp {
         return {
             home: `
                 <div class="page-content">
-                    <section class="hero-section" style="background-image: linear-gradient(135deg, rgba(139, 0, 0, 0.8) 0%, rgba(102, 0, 0, 0.9) 100%), url('./images/ascension-lutheran-school-fort-wayne-in-primaryphoto.jpg'); background-size: cover; background-position: center; background-attachment: fixed;">
+                    <section class="hero-section" style="background: var(--primary-color); background-image: linear-gradient(135deg, rgba(139, 0, 0, 0.8) 0%, rgba(102, 0, 0, 0.9) 100%), url('./images/ascension-lutheran-school-fort-wayne-in-primaryphoto.jpg'); background-size: cover; background-position: center; background-attachment: fixed;">
                         <div class="hero-content">
                             <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
                             <p class="hero-subtitle">Join our family in worshipping and serving our glorious God in Fort Wayne, Indiana</p>
