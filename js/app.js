@@ -1,11 +1,11 @@
-// NEW_app.js - Completely Rebuilt and Simplified
+// NEW_app.js - Completely Rebuilt and Simplified with Images
 console.log('🏛️ NEW_app.js loading...');
 
 // PAGE CONTENT OBJECT
 const pages = {
     home: `
         <div class="page-content">
-            <section class="hero-section">
+            <section class="hero-section" style="background-image: linear-gradient(rgba(139, 0, 0, 0.7), rgba(102, 0, 0, 0.7)), url('./images/ascension-lutheran-school-fort-wayne-in-primaryphoto.jpg'); background-size: cover; background-position: center; background-attachment: fixed;">
                 <div class="hero-content">
                     <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
                     <p class="hero-subtitle">Join our family in worshipping and serving our glorious God in Fort Wayne, Indiana</p>
@@ -40,6 +40,7 @@ const pages = {
                     </div>
                     <div class="card-grid">
                         <div class="card">
+                            <img src="./images/ascension-lutheran-school-fort-wayne-in-primaryphoto.jpg" alt="Church Building" class="card-image">
                             <div class="card-content">
                                 <h3 class="card-title">Church</h3>
                                 <p class="card-text">Ascension follows the teaching of the Holy Scripture, firmly accepting the Bible as God's inerrant Word, teaching and confessing the truth proclaimed by God through His Son, Jesus Christ.</p>
@@ -47,6 +48,7 @@ const pages = {
                             </div>
                         </div>
                         <div class="card">
+                            <img src="./images/families.jpg" alt="Church Families" class="card-image">
                             <div class="card-content">
                                 <h3 class="card-title">Family</h3>
                                 <p class="card-text">Ascension is a place for families with many opportunities to study God's Word together. We offer programs for all ages to grow in faith.</p>
@@ -54,6 +56,7 @@ const pages = {
                             </div>
                         </div>
                         <div class="card">
+                            <img src="./images/Ascension-Lutheran-School-5l01p65peb8ccskgkkck08s4s-1122.webp" alt="Lutheran School" class="card-image">
                             <div class="card-content">
                                 <h3 class="card-title">School</h3>
                                 <p class="card-text">Providing traditional, Christian education to students in Preschool through 8th grade with academic excellence within our Christ-centered Lutheran worldview.</p>
@@ -73,7 +76,7 @@ const pages = {
     church: `
         <div class="page-content">
             <div class="container">
-                <section class="hero-section">
+                <section class="hero-section" style="background-image: linear-gradient(rgba(139, 0, 0, 0.7), rgba(102, 0, 0, 0.7)), url('./images/ascension-lutheran-school-fort-wayne-in-primaryphoto.jpg'); background-size: cover; background-position: center;">
                     <div class="hero-content">
                         <h1 class="hero-title">Our Church</h1>
                         <p class="hero-subtitle">Faithful to the Gospel of Christ since 1977</p>
@@ -114,7 +117,7 @@ const pages = {
     family: `
         <div class="page-content">
             <div class="container">
-                <section class="hero-section">
+                <section class="hero-section" style="background-image: linear-gradient(rgba(139, 0, 0, 0.7), rgba(102, 0, 0, 0.7)), url('./images/families.jpg'); background-size: cover; background-position: center;">
                     <div class="hero-content">
                         <h1 class="hero-title">Family Ministry</h1>
                         <p class="hero-subtitle">Ascension is a place for families with many opportunities to grow in faith together</p>
@@ -159,7 +162,7 @@ const pages = {
     school: `
         <div class="page-content">
             <div class="container">
-                <section class="hero-section">
+                <section class="hero-section" style="background-image: linear-gradient(rgba(139, 0, 0, 0.7), rgba(102, 0, 0, 0.7)), url('./images/Ascension-Lutheran-School-5l01p65peb8ccskgkkck08s4s-1122.webp'); background-size: cover; background-position: center;">
                     <div class="hero-content">
                         <h1 class="hero-title">Ascension Lutheran School</h1>
                         <p class="hero-subtitle">Providing traditional, Christian education from Preschool through 8th grade</p>
