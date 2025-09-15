@@ -1,0 +1,164 @@
+{
+  "name": "Ascension Lutheran Church & School",
+  "short_name": "Ascension Lutheran",
+  "description": "Welcome to Ascension Evangelical Lutheran Church in Fort Wayne, Indiana. Join our family in worshipping and serving our glorious God.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2C5282",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["lifestyle", "education", "social"],
+  "icons": [
+    {
+      "src": "./images/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "./images/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "./images/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "./images/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "./images/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "./images/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "./images/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "./images/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Worship Times",
+      "short_name": "Worship",
+      "description": "View Sunday worship service times",
+      "url": "/#worship",
+      "icons": [
+        {
+          "src": "./images/shortcut-worship.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Contact Church",
+      "short_name": "Contact",
+      "description": "Get church contact information",
+      "url": "/#contact",
+      "icons": [
+        {
+          "src": "./images/shortcut-contact.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "School Info",
+      "short_name": "School",
+      "description": "Learn about our Lutheran school",
+      "url": "/#school",
+      "icons": [
+        {
+          "src": "./images/shortcut-school.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Family Programs",
+      "short_name": "Family",
+      "description": "Explore family ministry opportunities",
+      "url": "/#family",
+      "icons": [
+        {
+          "src": "./images/shortcut-family.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./images/screenshot-mobile-1.png",
+      "sizes": "640x1136",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Home page on mobile"
+    },
+    {
+      "src": "./images/screenshot-mobile-2.png",
+      "sizes": "640x1136",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Worship times on mobile"
+    },
+    {
+      "src": "./images/screenshot-desktop-1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Home page on desktop"
+    },
+    {
+      "src": "./images/screenshot-desktop-2.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Church information on desktop"
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "web",
+      "url": "https://www.alcsfw.org"
+    }
+  ],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "mailto",
+      "url": "mailto:office@alcsfw.org"
+    },
+    {
+      "protocol": "tel",
+      "url": "tel:+12604862226"
+    }
+  ]
+}
