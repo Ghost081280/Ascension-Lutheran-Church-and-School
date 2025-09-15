@@ -1,7 +1,7 @@
-/* COMPREHENSIVE SITE-WIDE CSS FIX - Mobile & Desktop Perfect */
+/* Enhanced components.css - Pastor Section & Mobile Navigation */
 
 /* ========================================
-   MEET THE PASTOR SECTION - RESPONSIVE
+   PASTOR SECTION - FULLY RESPONSIVE
 ======================================== */
 
 .pastor-section {
@@ -87,7 +87,7 @@
 }
 
 /* ========================================
-   MOBILE NAVIGATION - COMPLETE FIX
+   MOBILE NAVIGATION - COMPLETE SYSTEM
 ======================================== */
 
 .mobile-menu-toggle {
@@ -128,7 +128,7 @@
 }
 
 /* ========================================
-   RESPONSIVE BREAKPOINTS - COMPLETE
+   RESPONSIVE DESIGN SYSTEM
 ======================================== */
 
 /* Mobile Styles (up to 767px) */
@@ -277,6 +277,47 @@
 }
 
 /* ========================================
+   ACCESSIBILITY ENHANCEMENTS
+======================================== */
+
+/* Screen reader only text */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Skip link */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--primary-color);
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    text-decoration: none;
+    z-index: 10000;
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+    top: 6px;
+}
+
+/* Focus visible styles */
+.focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* ========================================
    SITE-WIDE MOBILE OPTIMIZATIONS
 ======================================== */
 
@@ -357,87 +398,7 @@
 }
 
 /* ========================================
-   FIX COMMON LAYOUT ISSUES
-======================================== */
-
-/* Prevent horizontal scroll */
-html, body {
-    overflow-x: hidden;
-}
-
-/* Improve image responsiveness */
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Better focus states for accessibility */
-button:focus,
-.nav-link:focus,
-.btn:focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
-}
-
-/* Ensure proper z-index stacking */
-.main-header {
-    z-index: 100;
-}
-
-.nav-menu {
-    z-index: 1000;
-}
-
-.mobile-menu-toggle {
-    z-index: 1001;
-}
-
-.loading-screen {
-    z-index: 9999;
-}
-
-/* ========================================
-   LOADING SCREEN MOBILE FIXES
-======================================== */
-
-@media (max-width: 767px) {
-    .loading-content {
-        max-width: 350px;
-        padding: 2rem 1.5rem;
-        margin: 1rem;
-    }
-    
-    .logo-img {
-        width: 80px;
-        height: 80px;
-    }
-    
-    .loading-title {
-        font-size: 1.8rem;
-    }
-    
-    .loading-subtitle {
-        font-size: 1rem;
-    }
-    
-    .loading-verse {
-        font-size: 0.9rem;
-        line-height: 1.5;
-    }
-    
-    .spinner {
-        width: 30px;
-        height: 30px;
-        border-width: 2px;
-    }
-    
-    .loading-status {
-        font-size: 0.8rem;
-    }
-}
-
-/* ========================================
-   ENHANCED CARD LAYOUTS FOR MOBILE
+   ENHANCED CARD LAYOUTS
 ======================================== */
 
 @media (max-width: 767px) {
@@ -455,21 +416,10 @@ button:focus,
     .card-image {
         height: 180px;
     }
-    
-    /* Special handling for pastor card on mobile */
-    .pastor-section .card {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-    
-    .pastor-section .card img {
-        margin-bottom: var(--spacing-lg);
-    }
 }
 
 /* ========================================
-   IMPROVED FORM ELEMENTS
+   FORM ELEMENTS
 ======================================== */
 
 input[type="text"],
@@ -517,44 +467,95 @@ textarea {
 }
 
 /* ========================================
-   ENHANCED ACCESSIBILITY
+   UTILITY CLASSES
 ======================================== */
 
-/* Screen reader only text */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+/* Layout utilities */
+.flex {
+    display: flex;
 }
 
-/* Skip link */
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 6px;
-    background: var(--primary-color);
-    color: white;
-    padding: 8px;
-    border-radius: 4px;
-    text-decoration: none;
-    z-index: 10000;
-    transition: top 0.2s ease;
+.flex-col {
+    flex-direction: column;
 }
 
-.skip-link:focus {
-    top: 6px;
+.items-center {
+    align-items: center;
 }
 
-/* Focus visible styles */
-.focus-visible {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
+.justify-center {
+    justify-content: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+/* Spacing utilities */
+.mt-auto {
+    margin-top: auto;
+}
+
+.mb-auto {
+    margin-bottom: auto;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Visibility utilities */
+.visible {
+    visibility: visible;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.opacity-0 {
+    opacity: 0;
+}
+
+.opacity-100 {
+    opacity: 1;
+}
+
+/* ========================================
+   DARK MODE SUPPORT
+======================================== */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --white: #1a1a1a;
+        --gray-50: #2d3748;
+        --gray-100: #4a5568;
+        --gray-200: #718096;
+        --gray-800: #f7fafc;
+        --gray-900: #ffffff;
+    }
+    
+    body {
+        background-color: var(--gray-800);
+        color: var(--gray-100);
+    }
+    
+    .card,
+    .worship-times,
+    .contact-info,
+    .pastor-section {
+        background: var(--gray-50);
+        border-color: var(--gray-200);
+    }
 }
 
 /* ========================================
@@ -601,41 +602,14 @@ textarea {
 }
 
 /* ========================================
-   DARK MODE SUPPORT (Optional)
-======================================== */
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --white: #1a1a1a;
-        --gray-50: #2d3748;
-        --gray-100: #4a5568;
-        --gray-200: #718096;
-        --gray-800: #f7fafc;
-        --gray-900: #ffffff;
-    }
-    
-    body {
-        background-color: var(--gray-800);
-        color: var(--gray-100);
-    }
-    
-    .card,
-    .worship-times,
-    .contact-info,
-    .pastor-section {
-        background: var(--gray-50);
-        border-color: var(--gray-200);
-    }
-}
-
-/* ========================================
    PERFORMANCE OPTIMIZATIONS
 ======================================== */
 
 /* GPU acceleration for animations */
 .card,
 .btn,
-.nav-link {
+.nav-link,
+.pastor-section {
     transform: translateZ(0);
     will-change: transform;
 }
@@ -653,4 +627,93 @@ img {
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+}
+
+/* ========================================
+   COMPONENT ANIMATIONS
+======================================== */
+
+/* Fade in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Slide in animation */
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* Scale in animation */
+@keyframes scaleIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Apply animations to elements */
+.card {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.pastor-section {
+    animation: scaleIn 0.8s ease-out;
+}
+
+.nav-menu.active {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* ========================================
+   BROWSER COMPATIBILITY
+======================================== */
+
+/* Fallbacks for older browsers */
+@supports not (backdrop-filter: blur(10px)) {
+    .loading-content {
+        background: rgba(139, 0, 0, 0.9);
+    }
+}
+
+@supports not (object-fit: cover) {
+    .pastor-photo,
+    .card-image {
+        background-size: cover;
+        background-position: center;
+    }
+}
+
+/* Prevent horizontal scroll */
+html, body {
+    overflow-x: hidden;
+}
+
+/* Improve image responsiveness */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Better focus states for accessibility */
+button:focus,
+.nav-link:focus,
+.btn:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
 }
