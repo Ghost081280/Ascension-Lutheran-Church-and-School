@@ -60,7 +60,7 @@ class ChurchApp {
             return;
         }
         
-        // Simulate app loading time
+        // Reduce loading time for better user experience
         setTimeout(() => {
             console.log('🏛️ Loading screen timeout triggered');
             loadingScreen.style.opacity = '0';
@@ -80,7 +80,7 @@ class ChurchApp {
                     mainApp.style.transform = 'translateY(0)';
                 });
             }, 300);
-        }, 2500);
+        }, 1500); // Reduced from 2500ms to 1500ms
     }
 
     setupNavigation() {
