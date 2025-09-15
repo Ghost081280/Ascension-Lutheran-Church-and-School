@@ -219,6 +219,73 @@
             testImg.src = logoImg.src;
         }
     });
+
+    // PWA Install Functionality
+    let deferredPrompt;
+    let installBtn = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        console.log('🏛️ PWA install prompt available');
+        // Prevent the mini-infobar from appearing on mobile
+        e.preventDefault();
+        // Stash the event so it can be triggered later
+        deferredPrompt = e;
+        // Show the install button
+        installBtn = document.getElementById('install-btn');
+        if (installBtn) {
+            installBtn.style.display = 'flex';
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        installBtn = document.getElementById('install-btn');
+        
+        if (installBtn) {
+            installBtn.addEventListener('click', async () => {
+                console.log('🏛️ Install button clicked');
+                if (deferredPrompt) {
+                    // Show the install prompt
+                    deferredPrompt.prompt();
+                    // Wait for the user to respond to the prompt
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log('🏛️ User choice:', outcome);
+                    // Clear the deferredPrompt
+                    deferredPrompt = null;
+                    // Hide the install button
+                    installBtn.style.display = 'none';
+                }
+            });
+        }
+
+        // Check if app is already installed
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('🏛️ Church app was installed');
+            if (installBtn) {
+                installBtn.style.display = 'none';
+            }
+        });
+
+        // For iOS Safari - show install instructions
+        function isIOS() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        }
+
+        function isInStandaloneMode() {
+            return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        }
+
+        if (isIOS() && !isInStandaloneMode()) {
+            // Show iOS install instructions
+            setTimeout(() => {
+                if (installBtn && !deferredPrompt) {
+                    installBtn.style.display = 'flex';
+                    installBtn.onclick = function() {
+                        alert('To install this app on your iPhone/iPad:\n\n1. Tap the Share button in Safari\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add" to install');
+                    };
+                }
+            }, 2000);
+        }
+    });
     </script>
     
     <!-- Service Worker Registration -->
