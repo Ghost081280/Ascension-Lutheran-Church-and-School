@@ -1,18 +1,19 @@
 // Service Worker for Ascension Lutheran Church PWA
 // Provides offline functionality and caching strategies
+// Version: 2025011404
 
-const CACHE_NAME = 'alc-pwa-v2025011401'; // Updated version for cache busting
+const CACHE_NAME = 'alc-pwa-v2025011404'; // Updated version for cache busting
 const OFFLINE_URL = '/offline.html';
 
 // Resources to cache immediately on install
 const STATIC_CACHE_URLS = [
   '/',
   '/index.html',
-  '/css/main.css?v=2025011401',
-  '/css/components.css?v=2025011401',
-  '/js/app.js?v=2025011401',
-  '/js/navigation.js?v=2025011401',
-  '/js/components.js?v=2025011401',
+  '/css/main.css?v=2025011404',
+  '/css/components.css?v=2025011404',
+  '/js/app.js?v=2025011404',
+  '/js/navigation.js?v=2025011404',
+  '/js/components.js?v=2025011404',
   '/manifest.json',
   // Add critical images when available
   '/images/alc-logo.png',
@@ -36,7 +37,7 @@ const RUNTIME_CACHE_URLS = [
 ];
 
 self.addEventListener('install', (event) => {
-  console.log('🏛️ Service Worker: Installing... v2025011401');
+  console.log('🏛️ Service Worker: Installing... v2025011404');
   
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -56,7 +57,7 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
-  console.log('🏛️ Service Worker: Activating... v2025011401');
+  console.log('🏛️ Service Worker: Activating... v2025011404');
   
   event.waitUntil(
     Promise.all([
@@ -391,7 +392,7 @@ self.addEventListener('periodicsync', (event) => {
 async function updateContent() {
   try {
     // Update critical content in background
-    const criticalUrls = ['/', '/css/main.css?v=2025011401', '/js/app.js?v=2025011401'];
+    const criticalUrls = ['/', '/css/main.css?v=2025011404', '/js/app.js?v=2025011404'];
     
     for (const url of criticalUrls) {
       try {
@@ -429,4 +430,4 @@ self.addEventListener('message', (event) => {
   }
 });
 
-console.log('🏛️ Service Worker: Loaded successfully v2025011402');
+console.log('🏛️ Service Worker: Loaded successfully v2025011404');
