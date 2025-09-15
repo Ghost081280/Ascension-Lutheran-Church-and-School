@@ -97,122 +97,95 @@
         .circle-7 { top: 85%; left: 30%; width: 85px; height: 85px; animation-delay: 11s; }
         .circle-8 { top: 80%; left: 70%; width: 75px; height: 75px; animation-delay: 15s; }
         
-        /* Final Polish - Senior Designer Loading Module */
+        /* FIXED - Responsive Loading Module */
         .loading-content {
             text-align: center;
             z-index: 10;
-            max-width: 480px;
-            padding: 3.5rem 3rem;
+            width: 100%;
+            max-width: 420px;
+            padding: 2.5rem 2rem;
             background: linear-gradient(145deg, #ffffff 0%, #fefefe 100%);
-            border-radius: 20px;
+            border-radius: 16px;
             box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.4),
-                0 0 0 3px var(--primary-color),
-                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 0 3px var(--primary-color);
             position: relative;
-            backdrop-filter: blur(10px);
+            margin: 1rem;
         }
         
         .loading-content::before {
             content: '';
             position: absolute;
-            top: 18px;
-            left: 18px;
-            right: 18px;
-            bottom: 18px;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
             border: 1px solid var(--primary-color);
-            border-radius: 16px;
+            border-radius: 12px;
             opacity: 0.25;
         }
         
         .church-logo {
-            margin-bottom: 1.8rem;
-            position: relative;
+            margin-bottom: 1.5rem;
         }
         
         .logo-img {
-            width: 110px;
-            height: 110px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             box-shadow: 
-                0 10px 25px rgba(139, 0, 0, 0.3),
+                0 8px 20px rgba(139, 0, 0, 0.3),
                 0 0 0 3px rgba(255, 255, 255, 0.8),
                 0 0 0 4px var(--primary-color);
-            transition: transform 0.3s ease;
-        }
-        
-        .logo-img:hover {
-            transform: scale(1.02);
         }
         
         .loading-title {
             color: var(--primary-color);
-            font-size: 2.4rem;
+            font-size: 2rem;
             font-weight: 700;
-            margin: 0 0 0.8rem 0;
+            margin: 0 0 0.5rem 0;
             font-family: 'Playfair Display', serif;
-            line-height: 1.1;
-            letter-spacing: -0.5px;
+            line-height: 1.2;
         }
         
         .loading-subtitle {
             color: var(--gray-600);
-            font-size: 1.3rem;
-            margin: 0 0 2.5rem 0;
+            font-size: 1.1rem;
+            margin: 0 0 1.5rem 0;
             font-weight: 500;
-            letter-spacing: 0.5px;
         }
         
         .loading-spinner {
-            margin: 1.5rem auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
+            margin: 1rem auto;
         }
         
         .spinner {
-            width: 45px;
-            height: 45px;
-            border: 4px solid var(--gray-200);
-            border-top: 4px solid var(--primary-color);
-            border-right: 4px solid var(--secondary-color);
+            width: 35px;
+            height: 35px;
+            border: 3px solid var(--gray-200);
+            border-top: 3px solid var(--primary-color);
+            border-right: 3px solid var(--secondary-color);
             border-radius: 50%;
             animation: spin 1.2s linear infinite;
         }
         
         .loading-status {
             color: var(--primary-color);
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            margin: 0;
+            margin: 0.5rem 0 1.5rem 0;
             letter-spacing: 1px;
             text-transform: uppercase;
-            opacity: 0.8;
         }
         
         .loading-verse {
             color: var(--gray-700);
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             font-style: italic;
-            margin: 2rem 0 0 0;
-            line-height: 1.7;
-            max-width: 380px;
-            border-top: 2px solid var(--gray-200);
-            padding-top: 2rem;
-            font-family: 'Playfair Display', serif;
-            position: relative;
-        }
-        
-        .loading-verse::before {
-            content: '"';
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2rem;
-            color: var(--primary-color);
-            opacity: 0.3;
+            margin: 0;
+            line-height: 1.6;
+            border-top: 1px solid var(--gray-200);
+            padding-top: 1.5rem;
             font-family: 'Playfair Display', serif;
         }
         
@@ -352,7 +325,7 @@
                     </div>
                 </div>
                 
-                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu">
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
@@ -467,89 +440,91 @@
         // Fallback - hide loading screen after max 6 seconds
         setTimeout(hideLoadingScreen, 6000);
         
-        // Mobile menu toggle function - FIXED
-        function toggleMobileMenu() {
-            console.log('🏛️ toggleMobileMenu called');
-            const navMenu = document.querySelector('.nav-menu');
-            const mobileToggle = document.querySelector('.mobile-menu-toggle');
-            const hamburgerLines = mobileToggle.querySelectorAll('.hamburger-line');
+        // COMPLETELY FIXED Mobile Navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🏛️ DOM loaded, setting up mobile navigation');
             
-            if (!navMenu || !mobileToggle) {
-                console.error('🏛️ Mobile menu elements not found');
+            const mobileToggle = document.getElementById('mobile-menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            const hamburgerLines = mobileToggle ? mobileToggle.querySelectorAll('.hamburger-line') : [];
+            
+            console.log('🏛️ Navigation elements:', { 
+                toggle: !!mobileToggle, 
+                menu: !!navMenu, 
+                lines: hamburgerLines.length 
+            });
+            
+            if (!mobileToggle || !navMenu) {
+                console.error('🏛️ Missing navigation elements');
                 return;
             }
             
-            const isOpen = navMenu.classList.contains('active');
-            
-            if (isOpen) {
-                // Close menu
-                navMenu.classList.remove('active');
-                mobileToggle.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
+            function toggleMobileMenu() {
+                console.log('🏛️ Toggle mobile menu called');
+                const isOpen = navMenu.classList.contains('active');
                 
-                // Reset hamburger animation
-                if (hamburgerLines.length >= 3) {
+                if (isOpen) {
+                    // Close menu
+                    navMenu.classList.remove('active');
+                    mobileToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                    
+                    // Reset hamburger
                     hamburgerLines[0].style.transform = 'none';
                     hamburgerLines[1].style.opacity = '1';
                     hamburgerLines[2].style.transform = 'none';
-                }
-                
-                console.log('🏛️ Mobile menu closed');
-            } else {
-                // Open menu
-                navMenu.classList.add('active');
-                mobileToggle.setAttribute('aria-expanded', 'true');
-                document.body.style.overflow = 'hidden';
-                
-                // Animate hamburger to X
-                if (hamburgerLines.length >= 3) {
+                    
+                    console.log('🏛️ Menu closed');
+                } else {
+                    // Open menu
+                    navMenu.classList.add('active');
+                    mobileToggle.setAttribute('aria-expanded', 'true');
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Animate hamburger to X
                     hamburgerLines[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
                     hamburgerLines[1].style.opacity = '0';
                     hamburgerLines[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                    
+                    console.log('🏛️ Menu opened');
                 }
-                
-                console.log('🏛️ Mobile menu opened');
-            }
-        }
-        
-        // Make toggleMobileMenu globally available
-        window.toggleMobileMenu = toggleMobileMenu;
-        
-        // Initialize mobile menu functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileToggle = document.querySelector('.mobile-menu-toggle');
-            const navMenu = document.querySelector('.nav-menu');
-            
-            // Add click listener to mobile toggle
-            if (mobileToggle) {
-                mobileToggle.addEventListener('click', toggleMobileMenu);
             }
             
-            // Close mobile menu when clicking nav links
-            const navLinks = document.querySelectorAll('.nav-link');
+            // Add event listeners
+            mobileToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleMobileMenu();
+            });
+            
+            // Close menu when clicking nav links
+            const navLinks = navMenu.querySelectorAll('.nav-link:not(.donate-link)');
             navLinks.forEach(link => {
                 link.addEventListener('click', function() {
-                    if (navMenu && navMenu.classList.contains('active')) {
+                    if (navMenu.classList.contains('active')) {
                         toggleMobileMenu();
                     }
                 });
             });
             
-            // Close mobile menu when clicking outside
+            // Close menu when clicking outside
             document.addEventListener('click', function(e) {
-                if (navMenu && navMenu.classList.contains('active') &&
+                if (navMenu.classList.contains('active') &&
                     !navMenu.contains(e.target) && 
                     !mobileToggle.contains(e.target)) {
                     toggleMobileMenu();
                 }
             });
             
-            // Close mobile menu on escape key
+            // Close menu on escape
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && navMenu && navMenu.classList.contains('active')) {
+                if (e.key === 'Escape' && navMenu.classList.contains('active')) {
                     toggleMobileMenu();
                 }
             });
+            
+            // Make function globally available
+            window.toggleMobileMenu = toggleMobileMenu;
         });
         
         // Fallback in case main app doesn't load
