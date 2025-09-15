@@ -11,6 +11,7 @@ class ChurchApp {
         this.isLoading = false;
         this.installPrompt = null;
         this.version = '2025011402';
+        this.initialized = false;
         
         this.init();
     }
@@ -43,12 +44,19 @@ class ChurchApp {
             pageContainer: !!pageContainer
         });
         
+        // Critical: Ensure we have the basic structure
+        if (!pageContainer) {
+            console.error('🏛️ Critical error: Page container not found');
+            return;
+        }
+        
         this.setupLoadingScreen();
         this.setupNavigation();
         this.setupPWAFeatures();
         this.setupSocialSharing();
         this.loadInitialPage();
         
+        this.initialized = true;
         console.log('🏛️ Ascension Lutheran Church PWA initialized v2025011402');
     }
 
@@ -59,6 +67,11 @@ class ChurchApp {
         
         if (!loadingScreen || !mainApp) {
             console.error('🏛️ Loading screen or main app elements not found');
+            // Force show main app if loading screen setup fails
+            if (mainApp) {
+                mainApp.classList.remove('hidden');
+                mainApp.style.opacity = '1';
+            }
             return;
         }
         
@@ -70,7 +83,7 @@ class ChurchApp {
             
             setTimeout(() => {
                 console.log('🏛️ Hiding loading screen, showing main app');
-                loadingScreen.classList.add('hidden');
+                loadingScreen.style.display = 'none';
                 mainApp.classList.remove('hidden');
                 mainApp.style.opacity = '0';
                 mainApp.style.transform = 'translateY(20px)';
@@ -87,21 +100,30 @@ class ChurchApp {
 
     setupNavigation() {
         console.log('🏛️ Setting up navigation');
-        // Main navigation links
-        const navLinks = document.querySelectorAll('.nav-link');
-        console.log('🏛️ Found nav links:', navLinks.length);
-        
-        navLinks.forEach((link, index) => {
-            console.log(`🏛️ Setting up nav link ${index}:`, link.getAttribute('data-page'));
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
+        // Use a more robust approach to find navigation links
+        const setupNavLinks = () => {
+            const navLinks = document.querySelectorAll('.nav-link, [data-page]');
+            console.log('🏛️ Found nav links:', navLinks.length);
+            
+            navLinks.forEach((link, index) => {
                 const page = link.getAttribute('data-page');
-                console.log('🏛️ Nav link clicked:', page);
-                if (page) {
-                    this.loadPage(page);
-                }
+                console.log(`🏛️ Setting up nav link ${index}:`, page);
+                
+                // Remove existing listeners to avoid duplicates
+                link.removeEventListener('click', this.handleNavClick);
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log('🏛️ Nav link clicked:', page);
+                    if (page) {
+                        this.loadPage(page);
+                    }
+                });
             });
-        });
+        };
+
+        // Set up nav links immediately and also after a delay
+        setupNavLinks();
+        setTimeout(setupNavLinks, 500);
 
         // Mobile menu toggle
         const mobileToggle = document.querySelector('.mobile-menu-toggle');
@@ -110,7 +132,9 @@ class ChurchApp {
             mobileToggle.addEventListener('click', () => {
                 console.log('🏛️ Mobile menu toggle clicked');
                 const navMenu = document.querySelector('.nav-menu');
-                navMenu.classList.toggle('active');
+                if (navMenu) {
+                    navMenu.classList.toggle('active');
+                }
             });
         } else {
             console.log('🏛️ Mobile menu toggle not found');
@@ -222,8 +246,13 @@ class ChurchApp {
 
     loadInitialPage() {
         console.log('🏛️ Loading initial page');
-        // Load home page content
-        this.loadPage('home');
+        
+        // Check URL hash first
+        const hash = window.location.hash.substring(1);
+        const initialPage = hash && ['home', 'church', 'family', 'school', 'worship', 'contact'].includes(hash) ? hash : 'home';
+        
+        console.log('🏛️ Initial page determined:', initialPage);
+        this.loadPage(initialPage);
     }
 
     loadPage(pageName) {
@@ -244,7 +273,9 @@ class ChurchApp {
             this.updatePageTitle(pageName);
             
             // Update URL hash
-            window.location.hash = `#${pageName}`;
+            if (window.location.hash !== `#${pageName}`) {
+                window.location.hash = `#${pageName}`;
+            }
             
             // Announce page change for accessibility
             if (window.announcePageChange) {
@@ -253,8 +284,28 @@ class ChurchApp {
         } catch (error) {
             console.error('Error loading page:', error);
             this.showError('Failed to load page content');
+            
+            // Ensure content is still visible even if there's an error
+            this.ensureContentVisible();
         } finally {
             this.isLoading = false;
+        }
+    }
+
+    ensureContentVisible() {
+        const pageContainer = document.getElementById('page-container');
+        const mainApp = document.getElementById('main-app');
+        
+        if (mainApp && mainApp.classList.contains('hidden')) {
+            console.log('🏛️ Ensuring main app is visible');
+            mainApp.classList.remove('hidden');
+            mainApp.style.opacity = '1';
+        }
+        
+        if (pageContainer && pageContainer.innerHTML.trim().length < 100) {
+            console.log('🏛️ Ensuring default content is present');
+            // The default content should already be in the HTML
+            // If it's missing, we have a bigger problem
         }
     }
 
@@ -439,59 +490,6 @@ class ChurchApp {
                             </div>
                         </div>
                     </section>
-
-                    <section class="info-section">
-                        <div class="section-header">
-                            <h2 class="section-title">Our History</h2>
-                        </div>
-
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <div class="timeline-year">1977</div>
-                                <div class="timeline-content">
-                                    <h4>Mission Begins</h4>
-                                    <p>Ascension Lutheran Church started as a mission outreach to northeast Fort Wayne, Indiana, in the summer of 1977. Rev. David Dubbelde became Ascension's first pastor in September 1980, faithfully serving until 1989.</p>
-                                </div>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="timeline-year">1989</div>
-                                <div class="timeline-content">
-                                    <h4>Pastor Stube Arrives</h4>
-                                    <p>Rev. Dr. John Stube arrived as the church's second pastor. During Pastor Stube's many years of service, the congregation grew significantly, the church added a Lutheran school, and the campus greatly expanded.</p>
-                                </div>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="timeline-year">1997</div>
-                                <div class="timeline-content">
-                                    <h4>School Opens</h4>
-                                    <p>Ascension Lutheran School opened with grades one through six. Grades seven and eight were added during the following two years. Having a Lutheran Day School was a goal of the congregation from the beginning.</p>
-                                </div>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="timeline-year">2010</div>
-                                <div class="timeline-content">
-                                    <h4>Current Sanctuary</h4>
-                                    <p>Ascension dedicated its current sanctuary in June 2010. It was the fourth building project that Ascension completed since the church's founding in 1977.</p>
-                                </div>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="timeline-year">2019</div>
-                                <div class="timeline-content">
-                                    <h4>Pastor Gier</h4>
-                                    <p>Rev. James Gier was installed as Ascension's third senior pastor. Pastor Gier was a licensed architect prior to entering the Holy Ministry and is a graduate of Concordia Theological Seminary in Fort Wayne.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="verse-display">
-                        <p class="verse-text">"Jesus Christ Is the Great Shepherd of His Sheep. For Christ Jesus is the one man who, 'having a hundred sheep, if he has lost one of them,' would 'leave the ninety-nine in the open country, and go after the one that is lost, until he finds it.'"</p>
-                        <p class="verse-reference">Luke 15:4</p>
-                    </section>
                 </div>
             </div>
         `;
@@ -519,46 +517,6 @@ class ChurchApp {
                         </div>
                     </section>
 
-                    <section class="info-section">
-                        <div class="section-header">
-                            <h2 class="section-title">Learn by Heart</h2>
-                            <p class="section-subtitle">Weekly Bible and Catechism study and devotion for the whole family</p>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-content">
-                                <p><strong>Learn by Heart</strong> is updated weekly and includes:</p>
-                                <ul class="content-list">
-                                    <li>Bible Verse of the Week</li>
-                                    <li>Catechism Memory Work</li>
-                                    <li>Hymn of the Week</li>
-                                    <li>Psalm Meditation of the Week</li>
-                                    <li>Daily Bible/Catechism Meditations of the Week</li>
-                                </ul>
-                                
-                                <p>The Hymn of the Week will be sung in Chapel and is encouraged for use in family daily devotions. Catechism questions are taken from the 2018 Luther's Small Catechism with Explanations.</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="info-section">
-                        <div class="worship-times">
-                            <h3>Family Activities Schedule</h3>
-                            <div class="time-item">
-                                <span class="time-label">Children's Sunday School</span>
-                                <span class="time-value">9:30 AM</span>
-                            </div>
-                            <div class="time-item">
-                                <span class="time-label">Adult Discipleship Class</span>
-                                <span class="time-value">9:30 AM</span>
-                            </div>
-                            <div class="time-item">
-                                <span class="time-label">Family Devotions</span>
-                                <span class="time-value">Daily at Home</span>
-                            </div>
-                        </div>
-                    </section>
-
                     <section class="verse-display">
                         <p class="verse-text">"Train up a child in the way he should go; even when he is old he will not depart from it."</p>
                         <p class="verse-reference">Proverbs 22:6 (ESV)</p>
@@ -579,70 +537,6 @@ class ChurchApp {
                             <div class="hero-cta">
                                 <a href="tel:+12604862226" class="btn btn-primary">Call for Information</a>
                                 <a href="mailto:office@alcsfw.org" class="btn btn-secondary">Email Us</a>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="info-section">
-                        <div class="section-header">
-                            <h2 class="section-title">Excellence in Christian Education</h2>
-                            <p class="section-subtitle">We proclaim the Gospel to the next generation and provide a quality education so children can grow spiritually, academically, socially, emotionally, and physically</p>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-content">
-                                <h3>Our Mission</h3>
-                                <p>Ascension Lutheran Church has established this school to proclaim the Gospel to the next generation and to provide a quality education so children can grow spiritually, academically, socially, emotionally, and physically.</p>
-                                
-                                <p>Ascension Lutheran School will continue to provide its students with an education that emphasizes academic excellence within our Christ-centered Lutheran worldview, so that its graduates are effective thinkers, readers, writers, and problem-solvers who become the next generation of leaders in their home, church, and community.</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="info-section">
-                        <div class="section-header">
-                            <h2 class="section-title">Academics & Programs</h2>
-                        </div>
-
-                        <div class="card-grid">
-                            <div class="card">
-                                <div class="card-content">
-                                    <h3>Academic Excellence</h3>
-                                    <p>Through daily instruction, our children learn the basic tenets of the Lutheran Confessions, with an emphasis on Luther's Small Catechism.</p>
-                                    
-                                    <p>To support our mission of providing a quality education, our school sets high goals for its faculty and its curriculum. We're accredited by the National Lutheran Schools Accreditation.</p>
-                                </div>
-                            </div>
-
-                            <div class="card">
-                                <div class="card-content">
-                                    <h3>Music Program</h3>
-                                    <p>Our school has a strong music program, rich in the traditions of the Lutheran Church. Students learn about music through a variety of experiences.</p>
-                                    
-                                    <p>From the classics to modern technology, Ascension offers students learning opportunities that enrich their lives.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="info-section">
-                        <div class="card">
-                            <div class="card-content">
-                                <h3>Enrollment Information</h3>
-                                <p>You will find a family-friendly atmosphere at Ascension. When you schedule your initial visit, please plan to spend about an hour to tour our church and school and visit with our staff.</p>
-                                
-                                <p>During the school year, we also can schedule a "shadow," half-day at school for prospective Kindergarten through eighth grade students.</p>
-
-                                <p><strong>Programs Available:</strong></p>
-                                <ul class="content-list">
-                                    <li>Preschool (3-4 years old)</li>
-                                    <li>Kindergarten through 8th Grade</li>
-                                    <li>Before and After School Care</li>
-                                    <li>Hot Lunch Program</li>
-                                </ul>
-
-                                <p><strong>Leadership:</strong></p>
-                                <p>In early May, Ascension's Board of Christian Education extended a contract to Laurie Behnfeldt to serve as principal and teacher. Mrs. Behnfeldt comes with many years of experience teaching in Lutheran schools, including several years at Ascension.</p>
                             </div>
                         </div>
                     </section>
@@ -685,73 +579,6 @@ class ChurchApp {
                             <div class="time-item">
                                 <span class="time-label">Children's Sunday School</span>
                                 <span class="time-value">9:30 AM</span>
-                            </div>
-                            <div class="time-item">
-                                <span class="time-label">Lent & Advent Services</span>
-                                <span class="time-value">Wednesdays 6:30 PM</span>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="info-section">
-                        <div class="section-header">
-                            <h2 class="section-title">Online Worship</h2>
-                            <p class="section-subtitle">Can't make it in person? Join us online</p>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-content">
-                                <h3>YouTube Live Services</h3>
-                                <p>Sunday morning worship services and Adult Discipleship classes are available for viewing on our YouTube channel.</p>
-                                
-                                <div style="margin: 2rem 0;">
-                                    <a href="https://www.youtube.com/channel/UC_CHANNEL_ID" target="_blank" rel="noopener" class="btn btn-primary">
-                                        Watch on YouTube
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-
-                                <p>Don't miss the Order of Service links to follow along in the bulletin during online worship.</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="info-section">
-                        <div class="section-header">
-                            <h2 class="section-title">What to Expect</h2>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-content">
-                                <p><strong>Warm and friendly atmosphere.</strong> We have a new sanctuary that was completed and dedicated on June 13, 2010. Our day school is also part of our building and includes a large gymnasium. The structure is brick, respectful but not imposing and handicapped accessible.</p>
-                                
-                                <p><strong>Dress comfortably.</strong> When you step into Ascension you will find people dressed in jeans, suits, skirts, dresses and everything in between. It doesn't matter what you wear - just that you're here.</p>
-                                
-                                <p><strong>Service length.</strong> Our worship services generally last about one hour.</p>
-                                
-                                <p><strong>Children welcome.</strong> We love having kids in worship, and each week in both services we have many children from our preschool and grade school. If you are not comfortable with your child in worship or if your child is particularly wiggly, we have a Little Lambs room that is glassed off from the main sanctuary with a speaker so that families can see and hear the worship service.</p>
-                                
-                                <p><strong>Liturgical worship.</strong> We follow the Order of Service printed in the new Lutheran Service Book (2006) and a printed bulletin with an outline of the service available from an usher.</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="info-section">
-                        <div class="section-header">
-                            <h2 class="section-title">Holy Communion</h2>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-content">
-                                <p>Holy Communion is a participation in the very Body and Blood of the Lord, Jesus Christ (1 Cor. 10:16), in which the forgiveness, life, and salvation of Christ are imparted to us.</p>
-                                
-                                <p>However, this great blessing can likewise be a judgment against one who does not acknowledge and hold in faith this truth and so does not properly discern the very Body and Blood of Christ present in this Sacrament (1 Cor 11:27-29).</p>
-                                
-                                <p>For this reason, proper instruction and preparation are necessary for a worthy and blessed reception. At Ascension, all Communicant Members are those who have received such instruction and have been Confirmed in the Christian faith as confessed in the Evangelical Lutheran Church.</p>
-                                
-                                <p><strong>Visitors:</strong> If you are a Communicant Member of a Lutheran Church-Missouri Synod (LCMS) congregation, or of a Lutheran Church body in declared fellowship with the LCMS, and would like to commune at Ascension, please contact the Pastor before your visit, or fill out a Guest Communion Card.</p>
                             </div>
                         </div>
                     </section>
@@ -810,73 +637,6 @@ class ChurchApp {
                                         <a href="mailto:office@alcsfw.org">office@alcsfw.org</a></p>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="contact-info">
-                                <h3>Pastor Information</h3>
-                                <div class="contact-item">
-                                    <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 12C14.21 12 16 10.21 16 8S14.21 4 12 4 8 5.79 8 8 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"/>
-                                    </svg>
-                                    <div>
-                                        <p class="contact-text"><strong>Rev. James Gier</strong><br>
-                                        Senior Pastor</p>
-                                        <p class="contact-text">Pastor Gier was a licensed architect prior to entering the Holy Ministry and is a graduate of Concordia Theological Seminary in Fort Wayne.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="info-section">
-                        <div class="section-header">
-                            <h2 class="section-title">Office Hours</h2>
-                        </div>
-
-                        <div class="worship-times">
-                            <div class="time-item">
-                                <span class="time-label">Monday - Thursday</span>
-                                <span class="time-value">9:00 AM - 3:00 PM</span>
-                            </div>
-                            <div class="time-item">
-                                <span class="time-label">Friday</span>
-                                <span class="time-value">9:00 AM - 12:00 PM</span>
-                            </div>
-                            <div class="time-item">
-                                <span class="time-label">Saturday - Sunday</span>
-                                <span class="time-value">By Appointment</span>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="info-section">
-                        <div class="card">
-                            <div class="card-content">
-                                <h3>Questions About Membership?</h3>
-                                <p>Interested in becoming a member of Ascension Lutheran Church? Whenever you have any questions about the church, what we believe, or have a special need, please contact the church office at (260) 486-2226 and ask to talk with the pastor.</p>
-                                
-                                <p>Pastor Gier and Pastor Zieroth conduct instructional classes regularly for those who want to join Ascension or have children in Ascension Lutheran School.</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="info-section">
-                        <div class="card">
-                            <div class="card-content">
-                                <h3>Get Directions</h3>
-                                <p>We're located on St. Joe Road in northeast Fort Wayne, easily accessible from major highways.</p>
-                                
-                                <div style="margin: 2rem 0;">
-                                    <a href="https://maps.google.com/?q=8811+St+Joe+Road+Fort+Wayne+IN+46835" target="_blank" rel="noopener" class="btn btn-primary">
-                                        Get Directions
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5Z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-
-                                <p><strong>Parking:</strong> Free parking is available in our church lot with easy access to the main entrance.</p>
-                                <p><strong>Accessibility:</strong> Our building is wheelchair accessible with ramps and accessible restrooms.</p>
                             </div>
                         </div>
                     </section>
@@ -1007,6 +767,16 @@ function initializeApp() {
         console.log('🏛️ App initialized successfully v2025011402');
     } catch (error) {
         console.error('🏛️ Error initializing app:', error);
+        
+        // Emergency fallback - ensure main app is visible
+        const loadingScreen = document.getElementById('loading-screen');
+        const mainApp = document.getElementById('main-app');
+        
+        if (loadingScreen) loadingScreen.style.display = 'none';
+        if (mainApp) {
+            mainApp.classList.remove('hidden');
+            mainApp.style.opacity = '1';
+        }
     }
 }
 
@@ -1017,6 +787,14 @@ if (document.readyState === 'loading') {
     console.log('🏛️ DOM already loaded, initializing immediately');
     initializeApp();
 }
+
+// Emergency initialization after 2 seconds if app hasn't loaded
+setTimeout(() => {
+    if (!window.app || !window.app.initialized) {
+        console.log('🏛️ Emergency app initialization');
+        initializeApp();
+    }
+}, 2000);
 
 // Version check for cache verification
 console.log('🏛️ ALC PWA App.js Version: 2025011402');
