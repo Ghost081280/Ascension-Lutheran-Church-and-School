@@ -24,7 +24,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Luxury Loading Screen - LV Inspired */
+        /* Simple, Clean Loading Screen */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -37,7 +37,7 @@
             align-items: center;
             justify-content: center;
             opacity: 1;
-            transition: opacity 1s ease-out, visibility 1s ease-out;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
         }
         
         .loading-screen.hidden {
@@ -54,7 +54,7 @@
             overflow: hidden;
         }
         
-        /* Louis Vuitton Style Pattern */
+        /* LV Pattern Background - Enhanced Movement */
         .decorative-pattern {
             position: relative;
             width: 100%;
@@ -66,7 +66,7 @@
             color: rgba(255, 255, 255, 0.08);
             font-size: 2.5rem;
             font-weight: bold;
-            animation: luxuryFloat 15s linear infinite;
+            animation: luxuryFloat 18s linear infinite;
             user-select: none;
             pointer-events: none;
         }
@@ -75,250 +75,198 @@
             position: absolute;
             border: 2px solid rgba(255, 255, 255, 0.08);
             border-radius: 50%;
-            animation: luxuryPulse 12s ease-in-out infinite;
+            animation: luxuryPulse 15s ease-in-out infinite;
         }
         
-        /* LV Pattern Grid Positions */
-        .cross-1 { top: 10%; left: 10%; width: 40px; height: 40px; animation-delay: 0s; }
-        .cross-2 { top: 10%; left: 30%; width: 40px; height: 40px; animation-delay: 3s; }
-        .cross-3 { top: 10%; left: 50%; width: 40px; height: 40px; animation-delay: 6s; }
-        .cross-4 { top: 10%; left: 70%; width: 40px; height: 40px; animation-delay: 9s; }
-        .cross-5 { top: 40%; left: 20%; width: 40px; height: 40px; animation-delay: 2s; }
-        .cross-6 { top: 40%; left: 60%; width: 40px; height: 40px; animation-delay: 5s; }
-        .cross-7 { top: 70%; left: 15%; width: 40px; height: 40px; animation-delay: 8s; }
-        .cross-8 { top: 70%; left: 55%; width: 40px; height: 40px; animation-delay: 11s; }
+        /* Enhanced Pattern Grid Positions with More Movement */
+        .cross-1 { top: 8%; left: 12%; animation-delay: 0s; }
+        .cross-2 { top: 15%; left: 35%; animation-delay: 4s; }
+        .cross-3 { top: 10%; left: 58%; animation-delay: 8s; }
+        .cross-4 { top: 12%; left: 78%; animation-delay: 12s; }
+        .cross-5 { top: 45%; left: 15%; animation-delay: 2s; }
+        .cross-6 { top: 38%; left: 65%; animation-delay: 6s; }
+        .cross-7 { top: 75%; left: 10%; animation-delay: 10s; }
+        .cross-8 { top: 68%; left: 60%; animation-delay: 14s; }
         
-        .circle-1 { top: 5%; left: 20%; width: 60px; height: 60px; animation-delay: 1s; }
-        .circle-2 { top: 5%; left: 60%; width: 80px; height: 80px; animation-delay: 4s; }
-        .circle-3 { top: 25%; left: 5%; width: 50px; height: 50px; animation-delay: 7s; }
-        .circle-4 { top: 25%; left: 75%; width: 70px; height: 70px; animation-delay: 10s; }
-        .circle-5 { top: 55%; left: 10%; width: 90px; height: 90px; animation-delay: 2.5s; }
-        .circle-6 { top: 55%; left: 70%; width: 55px; height: 55px; animation-delay: 5.5s; }
-        .circle-7 { top: 80%; left: 25%; width: 75px; height: 75px; animation-delay: 8.5s; }
-        .circle-8 { top: 80%; left: 65%; width: 65px; height: 65px; animation-delay: 11.5s; }
+        .circle-1 { top: 3%; left: 25%; width: 70px; height: 70px; animation-delay: 1s; }
+        .circle-2 { top: 8%; left: 70%; width: 90px; height: 90px; animation-delay: 5s; }
+        .circle-3 { top: 30%; left: 3%; width: 60px; height: 60px; animation-delay: 9s; }
+        .circle-4 { top: 25%; left: 82%; width: 80px; height: 80px; animation-delay: 13s; }
+        .circle-5 { top: 60%; left: 8%; width: 100px; height: 100px; animation-delay: 3s; }
+        .circle-6 { top: 55%; left: 75%; width: 65px; height: 65px; animation-delay: 7s; }
+        .circle-7 { top: 85%; left: 30%; width: 85px; height: 85px; animation-delay: 11s; }
+        .circle-8 { top: 80%; left: 70%; width: 75px; height: 75px; animation-delay: 15s; }
         
-        /* Luxury Module */
-        .loading-luxury-module {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 2.5rem 2rem;
-            max-width: 450px;
-            min-height: 500px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            position: relative;
+        /* Clean Loading Content */
+        .loading-content {
             text-align: center;
-            border: 2px solid var(--primary-color);
-        }
-        
-        .luxury-border {
-            position: relative;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .luxury-border::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
-            border: 1px solid var(--primary-color);
-            border-radius: 16px;
-            opacity: 0.3;
+            z-index: 10;
+            max-width: 400px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
         
         .loading-logo-container {
             position: relative;
+            display: inline-block;
             margin-bottom: 1.5rem;
-            margin-top: 0.5rem;
         }
         
         .loading-logo {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            box-shadow: 0 8px 16px rgba(139, 0, 0, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
         
-        .loading-spinner-ring {
+        .loading-spinner {
             position: absolute;
             top: -10px;
             left: -10px;
             width: 100px;
             height: 100px;
-            border: 2px solid var(--primary-color);
-            border-top: 2px solid var(--secondary-color);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
             border-radius: 50%;
-            animation: elegantSpin 2s linear infinite;
-            opacity: 0.7;
+            animation: spin 1.5s linear infinite;
         }
         
-        .loading-church-name {
-            color: var(--primary-color);
+        .loading-title {
+            color: white;
             font-size: 2rem;
             font-weight: 700;
-            font-family: 'Playfair Display', serif;
             margin: 0 0 0.5rem 0;
-            letter-spacing: -0.5px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            font-family: 'Playfair Display', serif;
         }
         
-        .loading-church-type {
-            color: var(--gray-600);
+        .loading-subtitle {
+            color: rgba(255, 255, 255, 0.9);
             font-size: 1.1rem;
+            margin: 0 0 0.25rem 0;
             font-weight: 500;
-            margin: 0 0 0.5rem 0;
         }
         
         .loading-location {
-            color: var(--primary-color);
+            color: rgba(255, 255, 255, 0.8);
             font-size: 1rem;
-            font-weight: 600;
             margin: 0 0 1.5rem 0;
-            opacity: 0.8;
-        }
-        
-        .loading-divider {
-            width: 60px;
-            height: 2px;
-            background: var(--primary-color);
-            margin: 1rem auto;
-            border-radius: 1px;
-        }
-        
-        .loading-verse-container {
-            background: var(--gray-50);
-            border: 1px solid var(--primary-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            position: relative;
-        }
-        
-        .loading-verse-container::before {
-            content: '"';
-            position: absolute;
-            top: -8px;
-            left: 15px;
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            opacity: 0.4;
-            font-family: 'Playfair Display', serif;
+            font-weight: 400;
         }
         
         .loading-verse {
-            color: var(--primary-dark);
-            font-size: 0.95rem;
-            font-style: italic;
-            line-height: 1.6;
-            margin: 0 0 0.8rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 3px solid rgba(255, 255, 255, 0.5);
         }
         
-        .loading-verse-ref {
-            color: var(--primary-color);
+        .verse-text {
+            color: white;
+            font-size: 0.95rem;
+            font-style: italic;
+            line-height: 1.5;
+            margin: 0 0 0.5rem 0;
+        }
+        
+        .verse-reference {
+            color: rgba(255, 255, 255, 0.8);
             font-size: 0.85rem;
             font-weight: 600;
             margin: 0;
         }
         
-        .loading-progress-luxury {
+        .loading-progress {
             width: 100%;
-            height: 3px;
-            background: var(--gray-200);
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
             border-radius: 2px;
             overflow: hidden;
             margin-top: 1.5rem;
         }
         
-        .progress-line {
+        .loading-bar {
             height: 100%;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(90deg, var(--secondary-color), var(--secondary-light));
             border-radius: 2px;
-            animation: luxuryProgress 4s ease-in-out infinite;
+            animation: progress 3s ease-out;
             transform: translateX(-100%);
         }
         
-        /* Animations */
+        /* Animations - Keep the Beautiful LV Pattern */
         @keyframes luxuryFloat {
             0%, 100% { 
                 transform: translate(0, 0) rotate(0deg) scale(1); 
                 opacity: 0.08; 
             }
             25% { 
-                transform: translate(20px, -20px) rotate(90deg) scale(1.1); 
+                transform: translate(30px, -25px) rotate(90deg) scale(1.2); 
                 opacity: 0.15; 
             }
             50% { 
-                transform: translate(-10px, -30px) rotate(180deg) scale(0.9); 
-                opacity: 0.05; 
+                transform: translate(-20px, -40px) rotate(180deg) scale(0.8); 
+                opacity: 0.03; 
             }
             75% { 
-                transform: translate(15px, -15px) rotate(270deg) scale(1.05); 
+                transform: translate(25px, -15px) rotate(270deg) scale(1.1); 
                 opacity: 0.12; 
             }
         }
         
         @keyframes luxuryPulse {
             0%, 100% { 
-                transform: scale(1); 
+                transform: scale(1) translateX(0) translateY(0); 
                 opacity: 0.08; 
                 border-color: rgba(255, 255, 255, 0.08); 
             }
             33% { 
-                transform: scale(1.3); 
-                opacity: 0.15; 
-                border-color: rgba(255, 255, 255, 0.15); 
+                transform: scale(1.4) translateX(15px) translateY(-15px); 
+                opacity: 0.2; 
+                border-color: rgba(255, 255, 255, 0.2); 
             }
             66% { 
-                transform: scale(0.8); 
-                opacity: 0.05; 
-                border-color: rgba(255, 255, 255, 0.05); 
+                transform: scale(0.7) translateX(-10px) translateY(20px); 
+                opacity: 0.02; 
+                border-color: rgba(255, 255, 255, 0.02); 
             }
         }
         
-        @keyframes elegantSpin {
+        @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
         
-        @keyframes luxuryProgress {
+        @keyframes progress {
             0% { transform: translateX(-100%); }
-            100% { transform: translateX(0%); }
+            100% { transform: translateX(0); }
         }
         
         /* Mobile Responsive */
         @media (max-width: 480px) {
-            .loading-luxury-module {
+            .loading-content {
                 margin: 1rem;
-                padding: 2rem 1.5rem;
-                min-height: 450px;
+                padding: 1.5rem;
             }
             
             .loading-logo {
-                width: 70px;
-                height: 70px;
+                width: 60px;
+                height: 60px;
             }
             
-            .loading-spinner-ring {
-                width: 90px;
-                height: 90px;
+            .loading-spinner {
+                width: 80px;
+                height: 80px;
                 top: -10px;
                 left: -10px;
             }
             
-            .loading-church-name {
-                font-size: 1.75rem;
-            }
-            
-            .loading-verse-container {
-                padding: 1.25rem 1rem;
-            }
-            
-            .loading-verse {
-                font-size: 0.9rem;
+            .loading-title {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -351,26 +299,22 @@
                 <div class="pattern-circle circle-8"></div>
             </div>
         </div>
-        <div class="loading-luxury-module">
-            <div class="luxury-border">
-                <div class="loading-logo-container">
-                    <img src="./images/Color Luther Rose - 72 dpi.jpg" alt="Luther Rose Logo" class="loading-logo">
-                    <div class="loading-spinner-ring"></div>
-                </div>
-                <h1 class="loading-church-name">Ascension Lutheran</h1>
-                <p class="loading-church-type">Church & School</p>
-                <p class="loading-location">Fort Wayne, Indiana</p>
-                
-                <div class="loading-divider"></div>
-                
-                <div class="loading-verse-container">
-                    <p class="loading-verse">"I am the way, and the truth, and the life. No one comes to the Father except through me."</p>
-                    <p class="loading-verse-ref">John 14:6</p>
-                </div>
-                
-                <div class="loading-progress-luxury">
-                    <div class="progress-line"></div>
-                </div>
+        <div class="loading-content">
+            <div class="loading-logo-container">
+                <img src="./images/Color Luther Rose - 72 dpi.jpg" alt="Luther Rose Logo" class="loading-logo">
+                <div class="loading-spinner"></div>
+            </div>
+            <h1 class="loading-title">Ascension Lutheran</h1>
+            <p class="loading-subtitle">Church & School</p>
+            <p class="loading-location">Fort Wayne, IN</p>
+            
+            <div class="loading-verse">
+                <p class="verse-text">"I am the way, and the truth, and the life. No one comes to the Father except through me."</p>
+                <p class="verse-reference">John 14:6 (ESV)</p>
+            </div>
+            
+            <div class="loading-progress">
+                <div class="loading-bar"></div>
             </div>
         </div>
     </div>
