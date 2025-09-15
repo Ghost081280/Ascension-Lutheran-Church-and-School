@@ -1,4 +1,4 @@
-/* UPDATED main.css - Enhanced Navigation & Mobile Responsiveness */
+/* FINAL main.css - Perfect Mobile Navigation & Hero Background Fix */
 
 /* CSS Variables */
 :root {
@@ -124,20 +124,21 @@ a:hover {
   padding: 0 var(--spacing-lg);
 }
 
-/* PWA Install Prompt Styles */
+/* Beautiful PWA Install Prompt with Rose Icon */
 .pwa-install-prompt {
   position: fixed;
   bottom: 20px;
   left: 20px;
   right: 20px;
-  max-width: 400px;
+  max-width: 420px;
   margin: 0 auto;
   background: var(--white);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 10px 40px rgba(139, 0, 0, 0.2);
   z-index: 10000;
-  border: 1px solid var(--gray-200);
+  border: 2px solid var(--gray-200);
   transition: all var(--transition-normal);
+  overflow: hidden;
 }
 
 .pwa-install-prompt.hidden {
@@ -150,18 +151,22 @@ a:hover {
   display: flex;
   align-items: center;
   padding: var(--spacing-lg);
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
 }
 
-.pwa-install-icon {
+.pwa-rose-icon {
   flex-shrink: 0;
+  position: relative;
 }
 
-.pwa-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+.pwa-rose {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
+  border: 2px solid var(--primary-color);
+  background: var(--white);
+  padding: 2px;
 }
 
 .pwa-install-text {
@@ -169,14 +174,15 @@ a:hover {
 }
 
 .pwa-install-text h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--gray-900);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary-color);
   margin-bottom: var(--spacing-xs);
+  font-family: var(--font-display);
 }
 
 .pwa-install-text p {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: var(--gray-600);
   margin-bottom: 0;
   line-height: 1.4;
@@ -186,18 +192,19 @@ a:hover {
   display: flex;
   gap: var(--spacing-sm);
   flex-direction: column;
-  min-width: 80px;
+  min-width: 100px;
 }
 
 .pwa-btn {
-  padding: var(--spacing-xs) var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   border: none;
-  border-radius: var(--radius-md);
-  font-size: 0.875rem;
-  font-weight: 500;
+  border-radius: var(--radius-lg);
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
   transition: var(--transition-fast);
   text-align: center;
+  min-height: 36px;
 }
 
 .pwa-btn-primary {
@@ -207,6 +214,7 @@ a:hover {
 
 .pwa-btn-primary:hover {
   background: var(--primary-light);
+  transform: translateY(-1px);
 }
 
 .pwa-btn-secondary {
@@ -217,6 +225,42 @@ a:hover {
 
 .pwa-btn-secondary:hover {
   background: var(--gray-100);
+}
+
+@media (max-width: 480px) {
+  .pwa-install-prompt {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+  }
+  
+  .pwa-install-content {
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+  
+  .pwa-rose {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .pwa-install-text h3 {
+    font-size: 1rem;
+  }
+  
+  .pwa-install-text p {
+    font-size: 0.85rem;
+  }
+  
+  .pwa-install-buttons {
+    flex-direction: row;
+    width: 100%;
+  }
+  
+  .pwa-btn {
+    flex: 1;
+    font-size: 0.85rem;
+  }
 }
 
 /* Navigation */
@@ -242,40 +286,32 @@ a:hover {
   justify-content: space-between;
 }
 
-.nav-brand {
+/* FIXED: Separate clickable logo from text */
+.nav-brand-wrapper {
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
-  cursor: pointer;
-  transition: transform var(--transition-normal);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-xs);
-  text-decoration: none;
-  color: inherit;
-  min-height: 48px; /* Touch target */
-}
-
-.nav-brand:hover {
-  transform: scale(1.02);
-  color: inherit;
-}
-
-.nav-brand:focus {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 2px;
 }
 
 .nav-logo-container {
-  transition: transform 0.2s ease;
+  cursor: pointer;
+  transition: transform var(--transition-normal);
   border-radius: 50%;
   padding: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 48px;
+  min-width: 48px;
 }
 
 .nav-logo-container:hover {
   transform: scale(1.05);
+}
+
+.nav-logo-container:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
 }
 
 .nav-logo {
@@ -288,6 +324,7 @@ a:hover {
 
 .brand-text {
   line-height: 1.2;
+  pointer-events: none; /* Text is not clickable */
 }
 
 .brand-name {
@@ -303,7 +340,7 @@ a:hover {
   margin-bottom: 0;
 }
 
-/* Mobile Menu Toggle */
+/* FIXED: Enhanced Mobile Menu Toggle */
 .mobile-menu-toggle {
   display: none;
   flex-direction: column;
@@ -311,7 +348,7 @@ a:hover {
   border: none;
   cursor: pointer;
   padding: var(--spacing-md);
-  gap: 4px;
+  gap: 5px;
   min-height: 48px;
   min-width: 48px;
   align-items: center;
@@ -320,6 +357,8 @@ a:hover {
   border-radius: var(--radius-md);
   transition: background-color var(--transition-fast);
   position: relative;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mobile-menu-toggle:hover {
@@ -337,17 +376,17 @@ a:hover {
 }
 
 .hamburger-line {
-  width: 25px;
+  width: 26px;
   height: 3px;
   background-color: var(--gray-700);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 2px;
   transform-origin: center;
 }
 
-/* Hamburger Animation */
+/* FIXED: Perfect Hamburger Animation */
 .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+  transform: rotate(45deg) translate(6px, 6px);
   background-color: var(--primary-color);
 }
 
@@ -357,11 +396,11 @@ a:hover {
 }
 
 .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
-  transform: rotate(-45deg) translate(7px, -6px);
+  transform: rotate(-45deg) translate(6px, -6px);
   background-color: var(--primary-color);
 }
 
-/* Navigation Menu */
+/* FIXED: Perfect Mobile Navigation Menu */
 .nav-menu {
   display: flex;
   align-items: center;
@@ -428,7 +467,7 @@ a:hover {
   width: 100%;
 }
 
-/* Hero Section */
+/* FIXED: Hero Section with Mobile Background */
 .hero-section {
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
   color: var(--white);
@@ -436,6 +475,20 @@ a:hover {
   text-align: center;
   position: relative;
   overflow: hidden;
+  /* FIXED: Background image for mobile */
+  background-size: cover;
+  background-position: center;
+  background-attachment: scroll; /* Changed from fixed for mobile compatibility */
+}
+
+/* FIXED: Mobile background image support */
+@media (max-width: 767px) {
+  .hero-section {
+    background-attachment: scroll !important;
+    background-size: cover !important;
+    background-position: center !important;
+    min-height: 60vh;
+  }
 }
 
 .hero-content {
@@ -756,7 +809,7 @@ a:hover {
   font-size: 1.1rem;
 }
 
-/* Enhanced Footer with Better Spacing */
+/* Enhanced Footer */
 .main-footer {
   background: var(--gray-900);
   color: var(--white);
@@ -845,7 +898,7 @@ a:hover {
   padding-right: var(--spacing-xl);
 }
 
-/* RESPONSIVE DESIGN - Mobile First Approach */
+/* RESPONSIVE DESIGN - FIXED Mobile Navigation */
 
 /* Mobile Styles (up to 767px) */
 @media (max-width: 767px) {
@@ -857,25 +910,27 @@ a:hover {
     display: flex;
   }
   
-  /* Mobile navigation menu - FIXED */
+  /* FIXED: Perfect Mobile Navigation Menu */
   .nav-menu {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile */
     background: var(--white);
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
-    padding: 80px var(--spacing-lg) var(--spacing-lg);
-    box-shadow: var(--shadow-xl);
+    padding: 100px var(--spacing-lg) var(--spacing-lg);
+    box-shadow: none;
     transform: translateX(-100%);
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 999;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   
   .nav-menu.active {
@@ -887,7 +942,7 @@ a:hover {
   .nav-link {
     padding: var(--spacing-lg) var(--spacing-md);
     text-align: center;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     font-size: 1.2rem;
     min-height: 56px;
     border-bottom: 1px solid var(--gray-100);
@@ -896,11 +951,13 @@ a:hover {
     align-items: center;
     justify-content: center;
     transition: all var(--transition-fast);
+    touch-action: manipulation;
   }
   
-  .nav-link:hover {
-    background-color: var(--gray-100);
-    transform: translateX(8px);
+  .nav-link:hover, .nav-link:active {
+    background-color: var(--primary-color);
+    color: var(--white);
+    transform: scale(1.02);
   }
   
   .nav-link:last-child:not(.donate-link) {
@@ -923,7 +980,7 @@ a:hover {
   }
   
   .brand-name {
-    font-size: 1.3rem; /* Smaller on mobile */
+    font-size: 1.3rem;
   }
   
   .brand-subtitle {
@@ -979,49 +1036,6 @@ a:hover {
   .social-links {
     align-items: center;
   }
-  
-  .pwa-install-prompt {
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-  }
-  
-  .pwa-install-content {
-    flex-direction: column;
-    text-align: center;
-    padding: var(--spacing-lg);
-  }
-  
-  .pwa-install-buttons {
-    flex-direction: row;
-    width: 100%;
-  }
-  
-  .pwa-btn {
-    flex: 1;
-  }
-}
-
-/* Landscape Mobile (480px to 767px in landscape) */
-@media (max-width: 767px) and (orientation: landscape) {
-  .nav-menu {
-    padding: 60px var(--spacing-md) var(--spacing-md);
-  }
-  
-  .nav-link {
-    padding: var(--spacing-md) var(--spacing-sm);
-    font-size: 1rem;
-    min-height: 44px;
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  .hero-section {
-    padding: var(--spacing-xl) 0;
-  }
-  
-  .info-section {
-    padding: var(--spacing-lg) 0;
-  }
 }
 
 /* Small Mobile (up to 480px) */
@@ -1043,7 +1057,7 @@ a:hover {
   }
   
   .nav-menu {
-    padding: 80px var(--spacing-md) var(--spacing-md);
+    padding: 90px var(--spacing-md) var(--spacing-md);
   }
   
   .nav-logo {
@@ -1085,6 +1099,29 @@ a:hover {
   }
 }
 
+/* Landscape Mobile Support */
+@media (max-width: 767px) and (orientation: landscape) {
+  .nav-menu {
+    padding: 80px var(--spacing-md) var(--spacing-md);
+  }
+  
+  .nav-link {
+    padding: var(--spacing-md) var(--spacing-sm);
+    font-size: 1rem;
+    min-height: 44px;
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .hero-section {
+    padding: var(--spacing-xl) 0;
+    min-height: 50vh;
+  }
+  
+  .info-section {
+    padding: var(--spacing-lg) 0;
+  }
+}
+
 /* Prevent horizontal scroll */
 html, body {
   overflow-x: hidden;
@@ -1104,16 +1141,17 @@ button:focus,
   outline-offset: 2px;
 }
 
-/* Ensure mobile menu works properly - DEEP FIX */
+/* DEEP MOBILE NAVIGATION FIXES */
 @media (max-width: 767px) {
   /* Prevent body scroll when menu is open */
   body.menu-open {
     overflow: hidden;
     position: fixed;
     width: 100%;
+    height: 100%;
   }
   
-  /* Ensure proper layering */
+  /* Ensure proper layering and touch */
   .main-header {
     position: relative;
     z-index: 1000;
@@ -1121,12 +1159,15 @@ button:focus,
   
   .mobile-menu-toggle {
     z-index: 1001;
-    touch-action: manipulation; /* Improve touch responsiveness */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
   }
   
   .nav-menu {
     z-index: 999;
     touch-action: manipulation;
+    -webkit-overflow-scrolling: touch;
   }
   
   /* Ensure all touch targets are properly sized */
@@ -1137,5 +1178,25 @@ button:focus,
     min-height: 48px;
     min-width: 48px;
     touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Enhanced touch feedback */
+  .nav-link:active,
+  .btn:active,
+  .mobile-menu-toggle:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Additional iOS Safari fixes */
+@supports (-webkit-touch-callout: none) {
+  .nav-menu {
+    height: -webkit-fill-available;
+  }
+  
+  .mobile-menu-toggle {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
   }
 }
