@@ -65,6 +65,22 @@ const pages = {
                         </div>
                     </div>
                 </section>
+                <section class="info-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Meet Our Pastor</h2>
+                        <p class="section-subtitle">Shepherding our congregation with wisdom and faith</p>
+                    </div>
+                    <div class="card">
+                        <img src="./images/Pastor.png" alt="Rev. James Gier" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">Rev. James Gier</h3>
+                            <p class="card-text"><strong>Senior Pastor</strong></p>
+                            <p class="card-text">Pastor Gier was a licensed architect prior to entering the Holy Ministry and is a graduate of Concordia Theological Seminary in Fort Wayne. He brings a unique perspective to ministry, combining his background in design with his passion for God's Word.</p>
+                            <p class="card-text">Pastor Gier has been faithfully serving our congregation, providing pastoral care, preaching God's Word, and administering the sacraments with dedication and love.</p>
+                            <button class="card-link" onclick="loadPage('contact')">Contact Pastor Gier →</button>
+                        </div>
+                    </div>
+                </section>
                 <section class="verse-display">
                     <p class="verse-text">"I am the way, and the truth, and the life. No one comes to the Father except through me."</p>
                     <p class="verse-reference">John 14:6 (ESV)</p>
@@ -76,10 +92,10 @@ const pages = {
     church: `
         <div class="page-content">
             <div class="container">
-                <section class="info-section">
-                    <div class="section-header">
-                        <h1 class="section-title">Our Church</h1>
-                        <p class="section-subtitle">Faithful to the Gospel of Christ since 1977</p>
+                <section class="hero-section">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Our Church</h1>
+                        <p class="hero-subtitle">Faithful to the Gospel of Christ since 1977</p>
                     </div>
                 </section>
                 <section class="stewardship-quote">
@@ -117,10 +133,10 @@ const pages = {
     family: `
         <div class="page-content">
             <div class="container">
-                <section class="info-section">
-                    <div class="section-header">
-                        <h1 class="section-title">Family Ministry</h1>
-                        <p class="section-subtitle">Ascension is a place for families with many opportunities to grow in faith together</p>
+                <section class="hero-section">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Family Ministry</h1>
+                        <p class="hero-subtitle">Ascension is a place for families with many opportunities to grow in faith together</p>
                     </div>
                 </section>
                 <section class="info-section">
@@ -162,11 +178,11 @@ const pages = {
     school: `
         <div class="page-content">
             <div class="container">
-                <section class="info-section">
-                    <div class="section-header">
-                        <h1 class="section-title">Ascension Lutheran School</h1>
-                        <p class="section-subtitle">Providing traditional, Christian education from Preschool through 8th grade</p>
-                        <div class="hero-cta" style="margin-top: 1.5rem;">
+                <section class="hero-section">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Ascension Lutheran School</h1>
+                        <p class="hero-subtitle">Providing traditional, Christian education from Preschool through 8th grade</p>
+                        <div class="hero-cta">
                             <a href="tel:+12604862226" class="btn btn-primary">Call for Information</a>
                             <a href="mailto:office@alcsfw.org" class="btn btn-secondary">Email Us</a>
                         </div>
