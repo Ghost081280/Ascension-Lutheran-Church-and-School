@@ -342,7 +342,7 @@ const SITE_CONTENT = {
 
   // Images and Assets
   images: {
-    logo: "./images/Color Luther Rose - 72 dpi.jpg",
+    logo: "./images/Rose_ColorThumb.png",
     pastor: "./images/Pastor.png",
     church: "./images/ascension-lutheran-school-fort-wayne-in-primaryphoto.jpg",
     families: "./images/families.jpg",
