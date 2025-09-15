@@ -1,14 +1,14 @@
 // Main Application JavaScript for Ascension Lutheran Church PWA
-// Version: 2025011409 - COMPLETE WORKING VERSION
+// Version: 2025011410 - FIXED CONTENT LOADING ISSUE
 
-console.log('🏛️ app.js loading... v2025011409');
+console.log('🏛️ app.js loading... v2025011410');
 
 class ChurchApp {
     constructor() {
-        console.log('🏛️ ChurchApp constructor called v2025011409');
+        console.log('🏛️ ChurchApp constructor called v2025011410');
         this.currentPage = null;
         this.isLoading = false;
-        this.version = '2025011409';
+        this.version = '2025011410';
         this.pageContent = {};
         
         this.init();
@@ -38,7 +38,7 @@ class ChurchApp {
             this.loadInitialPage();
             
             console.log('🏛️ Ascension Lutheran Church PWA initialized');
-        }, 300);
+        }, 500); // Increased timeout to ensure DOM is ready
     }
 
     setupLoadingScreen() {
@@ -65,9 +65,10 @@ class ChurchApp {
     setupNavigation() {
         console.log('🏛️ Setting up navigation');
         
+        // Use event delegation for better performance and to handle dynamically added elements
         document.addEventListener('click', (e) => {
             const navLink = e.target.closest('[data-page]');
-            if (navLink) {
+            if (navLink && !navLink.classList.contains('donate-link')) {
                 e.preventDefault();
                 const page = navLink.getAttribute('data-page');
                 console.log('🏛️ Navigation clicked:', page);
@@ -78,7 +79,7 @@ class ChurchApp {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 const navElement = e.target.closest('[data-page]');
-                if (navElement) {
+                if (navElement && !navElement.classList.contains('donate-link')) {
                     e.preventDefault();
                     const page = navElement.getAttribute('data-page');
                     console.log('🏛️ Keyboard navigation:', page);
@@ -123,8 +124,9 @@ class ChurchApp {
             const pageContent = this.getPageContent(pageName);
             console.log('🏛️ Got page content for', pageName, 'Content length:', pageContent ? pageContent.length : 0);
             
-            this.currentPage = pageName;
+            // CRITICAL FIX: Ensure the content is rendered before updating state
             this.renderPage(pageContent);
+            this.currentPage = pageName;
             this.updateActiveNavigation(pageName);
             this.updatePageTitle(pageName);
             
@@ -161,22 +163,73 @@ class ChurchApp {
 
     renderPage(pageContent) {
         console.log('🏛️ Rendering page content, length:', pageContent ? pageContent.length : 0);
-        const container = document.getElementById('page-container');
         
-        if (!container) {
-            console.error('🏛️ Page container not found');
-            return;
+        // CRITICAL FIX: Wait for DOM to be ready and ensure container exists
+        const waitForContainer = () => {
+            return new Promise((resolve) => {
+                const checkContainer = () => {
+                    const container = document.getElementById('page-container');
+                    if (container) {
+                        resolve(container);
+                    } else {
+                        console.log('🏛️ Container not found, retrying...');
+                        setTimeout(checkContainer, 100);
+                    }
+                };
+                checkContainer();
+            });
+        };
+
+        waitForContainer().then((container) => {
+            console.log('🏛️ Container found, updating content...');
+            console.log('🏛️ Content preview:', pageContent ? pageContent.substring(0, 100) + '...' : 'No content');
+            
+            // Add fade-out effect
+            container.style.opacity = '0.5';
+            container.style.transition = 'opacity 0.3s ease';
+            
+            setTimeout(() => {
+                // Update the content
+                container.innerHTML = pageContent || '<div class="page-content"><div class="container"><h1>No Content</h1><p>This page has no content available.</p></div></div>';
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'auto' });
+                
+                // Fade back in
+                container.style.opacity = '1';
+                
+                console.log('🏛️ Page content rendered successfully');
+                console.log('🏛️ Container innerHTML length:', container.innerHTML.length);
+                
+                // Trigger any post-render enhancements
+                this.enhanceRenderedContent(container);
+            }, 150);
+        }).catch((error) => {
+            console.error('🏛️ Failed to find page container:', error);
+        });
+    }
+
+    enhanceRenderedContent(container) {
+        // Re-initialize components for the new content
+        if (window.components) {
+            // Enhance new images
+            const images = container.querySelectorAll('img');
+            images.forEach(img => {
+                if (!img.hasAttribute('loading')) {
+                    img.setAttribute('loading', 'lazy');
+                }
+                
+                img.addEventListener('error', () => {
+                    if (window.components.handleImageError) {
+                        window.components.handleImageError(img);
+                    }
+                });
+            });
+            
+            // Re-setup navigation for any new nav links
+            const navLinks = container.querySelectorAll('[data-page]');
+            console.log('🏛️ Found', navLinks.length, 'navigation links in rendered content');
         }
-        
-        console.log('🏛️ Container found, updating content...');
-        console.log('🏛️ Content preview:', pageContent ? pageContent.substring(0, 100) + '...' : 'No content');
-        
-        container.innerHTML = pageContent || '<div class="page-content"><div class="container"><h1>No Content</h1><p>This page has no content available.</p></div></div>';
-        
-        window.scrollTo({ top: 0, behavior: 'auto' });
-        
-        console.log('🏛️ Page content rendered successfully');
-        console.log('🏛️ Container innerHTML length:', container.innerHTML.length);
     }
 
     updateActiveNavigation(pageName) {
@@ -305,7 +358,7 @@ class ChurchApp {
                             <div class="card">
                                 <div class="card-content" style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
                                     <div style="flex: 0 0 200px;">
-                                        <img src="./images/Pastor.png?v=2025011409" alt="Rev. James Gier, Senior Pastor" 
+                                        <img src="./images/Pastor.png?v=2025011410" alt="Rev. James Gier, Senior Pastor" 
                                              style="width: 200px; height: 250px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
                                     </div>
                                     <div style="flex: 1; min-width: 300px;">
@@ -747,10 +800,16 @@ class ChurchApp {
     }
 }
 
-// Initialize the app
+// Initialize the app when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🏛️ DOM loaded, initializing ChurchApp');
     window.app = new ChurchApp();
 });
 
-console.log('🏛️ ALC PWA App.js Version: 2025011409');
+// Also initialize if DOM is already loaded
+if (document.readyState !== 'loading') {
+    console.log('🏛️ DOM already loaded, initializing ChurchApp immediately');
+    window.app = new ChurchApp();
+}
+
+console.log('🏛️ ALC PWA App.js Version: 2025011410 - FIXED');
