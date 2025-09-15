@@ -44,7 +44,7 @@
             visibility: hidden;
         }
         
-        /* Enhanced Loading Screen - FIXED: Static with elegant border */
+        /* Enhanced Loading Screen - RESTORED Animated Background */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -65,6 +65,56 @@
             visibility: hidden;
         }
         
+        .loading-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .decorative-pattern {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .pattern-cross {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 2.5rem;
+            font-weight: bold;
+            animation: enhancedFloat 25s ease-in-out infinite;
+            user-select: none;
+            pointer-events: none;
+        }
+        
+        .pattern-circle {
+            position: absolute;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: enhancedPulse 20s ease-in-out infinite;
+        }
+        
+        .cross-1 { top: 8%; left: 12%; animation-delay: 0s; }
+        .cross-2 { top: 15%; left: 35%; animation-delay: 6s; }
+        .cross-3 { top: 10%; left: 58%; animation-delay: 12s; }
+        .cross-4 { top: 12%; left: 78%; animation-delay: 18s; }
+        .cross-5 { top: 45%; left: 15%; animation-delay: 3s; }
+        .cross-6 { top: 38%; left: 65%; animation-delay: 9s; }
+        .cross-7 { top: 75%; left: 10%; animation-delay: 15s; }
+        .cross-8 { top: 68%; left: 60%; animation-delay: 21s; }
+        
+        .circle-1 { top: 3%; left: 25%; width: 70px; height: 70px; animation-delay: 1s; }
+        .circle-2 { top: 8%; left: 70%; width: 90px; height: 90px; animation-delay: 7s; }
+        .circle-3 { top: 30%; left: 3%; width: 60px; height: 60px; animation-delay: 13s; }
+        .circle-4 { top: 25%; left: 82%; width: 80px; height: 80px; animation-delay: 19s; }
+        .circle-5 { top: 60%; left: 8%; width: 100px; height: 100px; animation-delay: 4s; }
+        .circle-6 { top: 55%; left: 75%; width: 65px; height: 65px; animation-delay: 10s; }
+        .circle-7 { top: 85%; left: 30%; width: 85px; height: 85px; animation-delay: 16s; }
+        .circle-8 { top: 80%; left: 70%; width: 75px; height: 75px; animation-delay: 22s; }
+        
         .loading-content {
             text-align: center;
             z-index: 10;
@@ -75,7 +125,6 @@
             border-radius: 24px;
             border: 2px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-            /* FIXED: Static, no animation */
         }
         
         .church-logo {
@@ -87,7 +136,6 @@
             height: 90px;
             border-radius: 50%;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            /* FIXED: Static, no animation */
         }
         
         .loading-title {
@@ -141,14 +189,63 @@
         .loading-verse {
             background: rgba(255, 255, 255, 0.15);
             border-radius: 12px;
-            padding: 1rem;
+            padding: 1.2rem;
             margin: 1rem 0;
             border-left: 4px solid rgba(255, 255, 255, 0.6);
             color: white;
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-style: italic;
             line-height: 1.6;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        /* RESTORED Background Animations */
+        @keyframes enhancedFloat {
+            0%, 100% { 
+                transform: translate(0, 0) rotate(0deg) scale(1); 
+                opacity: 0.05; 
+            }
+            25% { 
+                transform: translate(30px, -20px) rotate(90deg) scale(1.2); 
+                opacity: 0.3; 
+            }
+            50% { 
+                transform: translate(-20px, -35px) rotate(180deg) scale(0.8); 
+                opacity: 0.1; 
+            }
+            75% { 
+                transform: translate(25px, -15px) rotate(270deg) scale(1.1); 
+                opacity: 0.25; 
+            }
+        }
+        
+        @keyframes enhancedPulse {
+            0%, 100% { 
+                transform: scale(1) translateX(0) translateY(0); 
+                opacity: 0.1; 
+                border-color: rgba(255, 255, 255, 0.1); 
+            }
+            20% { 
+                transform: scale(1.3) translateX(15px) translateY(-15px); 
+                opacity: 0.4; 
+                border-color: rgba(255, 255, 255, 0.4); 
+            }
+            40% { 
+                transform: scale(0.7) translateX(-10px) translateY(20px); 
+                opacity: 0.08; 
+                border-color: rgba(255, 255, 255, 0.08); 
+            }
+            60% { 
+                transform: scale(1.2) translateX(20px) translateY(-8px); 
+                opacity: 0.35; 
+                border-color: rgba(255, 255, 255, 0.35); 
+            }
+            80% { 
+                transform: scale(0.9) translateX(-8px) translateY(12px); 
+                opacity: 0.15; 
+                border-color: rgba(255, 255, 255, 0.15); 
+            }
         }
         
         @keyframes spin {
@@ -178,12 +275,17 @@
             }
             
             .loading-verse {
-                font-size: 0.9rem;
+                font-size: 0.95rem;
+                padding: 1rem;
             }
             
             .spinner {
                 width: 40px;
                 height: 40px;
+            }
+            
+            .pattern-cross {
+                font-size: 2rem;
             }
         }
     </style>
@@ -198,36 +300,56 @@
     <link rel="stylesheet" href="./css/components.css">
 </head>
 <body class="loading">
-    <!-- Enhanced Loading Screen - FIXED: Static, elegant -->
+    <!-- Enhanced Loading Screen - RESTORED Background Animation -->
     <div id="loading-screen" class="loading-screen">
+        <div class="loading-background">
+            <div class="decorative-pattern">
+                <div class="pattern-cross cross-1">✚</div>
+                <div class="pattern-cross cross-2">✚</div>
+                <div class="pattern-cross cross-3">✚</div>
+                <div class="pattern-cross cross-4">✚</div>
+                <div class="pattern-cross cross-5">✚</div>
+                <div class="pattern-cross cross-6">✚</div>
+                <div class="pattern-cross cross-7">✚</div>
+                <div class="pattern-cross cross-8">✚</div>
+                <div class="pattern-circle circle-1"></div>
+                <div class="pattern-circle circle-2"></div>
+                <div class="pattern-circle circle-3"></div>
+                <div class="pattern-circle circle-4"></div>
+                <div class="pattern-circle circle-5"></div>
+                <div class="pattern-circle circle-6"></div>
+                <div class="pattern-circle circle-7"></div>
+                <div class="pattern-circle circle-8"></div>
+            </div>
+        </div>
         <div class="loading-content">
             <div class="church-logo">
                 <img src="./images/Color Luther Rose - 72 dpi.jpg" alt="Ascension Lutheran Church Logo" class="logo-img">
             </div>
-            <h1 class="loading-title" id="loading-title">Ascension Lutheran Church</h1>
+            <h1 class="loading-title" id="loading-title">Ascension Lutheran</h1>
             <p class="loading-subtitle" id="loading-subtitle">Church & School</p>
             <p class="loading-location" id="loading-location">Fort Wayne, Indiana</p>
             <div class="loading-spinner">
                 <div class="spinner"></div>
             </div>
             <p class="loading-status" id="loading-status">Loading...</p>
-            <p class="loading-verse" id="loading-verse">"I am the way, and the truth, and the life." - John 14:6</p>
+            <div class="loading-verse" id="loading-verse">"I am the way, and the truth, and the life." - John 14:6</div>
         </div>
     </div>
 
-    <!-- PWA Install Prompt -->
+    <!-- Beautiful PWA Install Prompt with Rose Icon -->
     <div id="pwa-install-prompt" class="pwa-install-prompt hidden">
         <div class="pwa-install-content">
-            <div class="pwa-install-icon">
-                <img src="./images/Color Luther Rose - 72 dpi.jpg" alt="App Icon" class="pwa-icon">
+            <div class="pwa-rose-icon">
+                <img src="./images/Color Luther Rose - 72 dpi.jpg" alt="Luther Rose" class="pwa-rose">
             </div>
             <div class="pwa-install-text">
-                <h3>Install Ascension Lutheran App</h3>
-                <p>Get quick access to worship times, events, and church information</p>
+                <h3>Add to Home Screen</h3>
+                <p>Get quick access to worship times and church information</p>
             </div>
             <div class="pwa-install-buttons">
-                <button id="pwa-install-btn" class="pwa-btn pwa-btn-primary">Install</button>
-                <button id="pwa-dismiss-btn" class="pwa-btn pwa-btn-secondary">Not Now</button>
+                <button id="pwa-install-btn" class="pwa-btn pwa-btn-primary">Add App</button>
+                <button id="pwa-dismiss-btn" class="pwa-btn pwa-btn-secondary">Maybe Later</button>
             </div>
         </div>
     </div>
@@ -236,12 +358,13 @@
     <header class="main-header">
         <nav class="navbar">
             <div class="nav-container">
-                <div class="nav-brand" id="nav-brand-home" role="button" tabindex="0" aria-label="Go to home page">
-                    <div class="nav-logo-container">
+                <div class="nav-brand-wrapper">
+                    <!-- ONLY the rose logo is clickable -->
+                    <div class="nav-logo-container" id="nav-logo-home" role="button" tabindex="0" aria-label="Go to home page">
                         <img src="./images/Color Luther Rose - 72 dpi.jpg" alt="Luther Rose Logo" class="nav-logo">
                     </div>
                     <div class="brand-text">
-                        <h1 class="brand-name" id="brand-name">Ascension Lutheran Church</h1>
+                        <h1 class="brand-name" id="brand-name">Ascension Lutheran</h1>
                         <p class="brand-subtitle" id="brand-subtitle">Church & School</p>
                     </div>
                 </div>
@@ -279,7 +402,7 @@
 
     <!-- JavaScript Files - Load content first, then app logic -->
     <script>
-        // Enhanced loading management - SIMPLIFIED
+        // Enhanced loading management - SLOWER for Bible verse reading
         console.log('🏛️ Starting enhanced content-driven site initialization...');
         
         let loadingSteps = {
@@ -301,9 +424,10 @@
             
             if (allLoaded) {
                 console.log('🏛️ All resources loaded, hiding loading screen...');
+                // SLOWER timing for Bible verse reading
                 setTimeout(() => {
                     hideLoadingScreen();
-                }, 800); // Shorter delay for better UX
+                }, 2500); // Extended to 2.5 seconds for verse reading
             }
         }
         
@@ -360,7 +484,7 @@
                     Object.keys(loadingSteps).forEach(key => loadingSteps[key] = true);
                     hideLoadingScreen();
                 }
-            }, 1500);
+            }, 3000); // Longer fallback time
         });
         
         // Emergency fallback
@@ -368,15 +492,15 @@
             console.log('🏛️ Emergency fallback: Force hiding loading screen');
             Object.keys(loadingSteps).forEach(key => loadingSteps[key] = true);
             hideLoadingScreen();
-        }, 4000);
+        }, 6000); // Extended emergency fallback
     </script>
     
     <script src="./content/content.js"></script>
     <script src="./js/app.js"></script>
     
-    <!-- PWA Install Script -->
+    <!-- Enhanced PWA Install Script -->
     <script>
-        // PWA Install Functionality
+        // Enhanced PWA Install Functionality
         let deferredPrompt;
         let installPromptShown = false;
 
@@ -385,9 +509,9 @@
             e.preventDefault();
             deferredPrompt = e;
             
-            // Show custom install prompt after a delay
+            // Show custom install prompt after content loads
             if (!installPromptShown) {
-                setTimeout(showInstallPrompt, 3000);
+                setTimeout(showInstallPrompt, 5000);
             }
         });
 
@@ -399,10 +523,10 @@
             if (installPrompt) {
                 installPrompt.classList.remove('hidden');
                 
-                // Auto-hide after 10 seconds
+                // Auto-hide after 15 seconds
                 setTimeout(() => {
                     hideInstallPrompt();
-                }, 10000);
+                }, 15000);
             }
         }
 
@@ -425,6 +549,9 @@
                         deferredPrompt = null;
                         hideInstallPrompt();
                     });
+                } else {
+                    // Fallback for browsers without install prompt
+                    hideInstallPrompt();
                 }
             } else if (e.target.id === 'pwa-dismiss-btn') {
                 hideInstallPrompt();
@@ -437,7 +564,7 @@
             hideInstallPrompt();
         });
 
-        // Show install prompt for iOS Safari
+        // Enhanced iOS Safari support
         function isIOS() {
             return /iPad|iPhone|iPod/.test(navigator.userAgent);
         }
@@ -454,18 +581,21 @@
                     if (installPrompt) {
                         const textEl = installPrompt.querySelector('p');
                         if (textEl) {
-                            textEl.textContent = 'Tap the share button and select "Add to Home Screen"';
+                            textEl.textContent = 'Tap Share ⬆ then "Add to Home Screen"';
                         }
                         const installBtn = document.getElementById('pwa-install-btn');
                         if (installBtn) {
-                            installBtn.textContent = 'Got it';
+                            installBtn.textContent = 'Got It';
                             installBtn.onclick = hideInstallPrompt;
                         }
                         installPrompt.classList.remove('hidden');
                         installPromptShown = true;
+                        
+                        // Longer display for iOS instructions
+                        setTimeout(hideInstallPrompt, 20000);
                     }
                 }
-            }, 5000);
+            }, 7000);
         }
     </script>
     
@@ -490,16 +620,16 @@
                 const loadingLocation = document.getElementById('loading-location');
                 const loadingVerse = document.getElementById('loading-verse');
 
-                if (loadingTitle) loadingTitle.textContent = content.loading.title;
+                if (loadingTitle) loadingTitle.textContent = 'Ascension Lutheran';
                 if (loadingSubtitle) loadingSubtitle.textContent = content.loading.subtitle;
                 if (loadingLocation) loadingLocation.textContent = content.loading.location;
                 if (loadingVerse) loadingVerse.textContent = `"${content.loading.verse.text}" - ${content.loading.verse.reference}`;
 
-                // Update brand text - FIXED: Full name on desktop
+                // Update brand text - FIXED: Clean titles
                 const brandName = document.getElementById('brand-name');
                 const brandSubtitle = document.getElementById('brand-subtitle');
                 
-                if (brandName) brandName.textContent = content.site.name;
+                if (brandName) brandName.textContent = 'Ascension Lutheran';
                 if (brandSubtitle) brandSubtitle.textContent = content.site.tagline;
 
                 // Populate navigation
@@ -508,7 +638,7 @@
                 // Populate footer
                 populateFooter(content.footer, content.social);
                 
-                // Setup logo click handler for home
+                // Setup ONLY logo click handler
                 setupLogoClickHandler();
 
                 // Mark content as loaded
@@ -581,13 +711,13 @@
             }
             
             function setupLogoClickHandler() {
-                const logoBrand = document.getElementById('nav-brand-home');
-                if (logoBrand) {
-                    // Enhanced click handler with better event management
+                // ONLY the rose logo is clickable now
+                const logoContainer = document.getElementById('nav-logo-home');
+                if (logoContainer) {
                     const handleLogoClick = (e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        console.log('🏛️ Logo clicked - navigating to home');
+                        console.log('🏛️ Rose logo clicked - navigating to home');
                         if (window.ascensionApp) {
                             window.ascensionApp.loadPage('home');
                         }
@@ -597,26 +727,21 @@
                         if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
                             e.stopPropagation();
-                            console.log('🏛️ Logo keyboard activated - navigating to home');
+                            console.log('🏛️ Rose logo keyboard activated');
                             if (window.ascensionApp) {
                                 window.ascensionApp.loadPage('home');
                             }
                         }
                     };
                     
-                    // Remove existing listeners
-                    logoBrand.removeEventListener('click', handleLogoClick);
-                    logoBrand.removeEventListener('keydown', handleLogoKeydown);
-                    
-                    // Add fresh listeners
-                    logoBrand.addEventListener('click', handleLogoClick);
-                    logoBrand.addEventListener('keydown', handleLogoKeydown);
+                    logoContainer.addEventListener('click', handleLogoClick);
+                    logoContainer.addEventListener('keydown', handleLogoKeydown);
                     
                     // Visual feedback
-                    logoBrand.style.cursor = 'pointer';
-                    logoBrand.style.transition = 'transform 0.2s ease';
+                    logoContainer.style.cursor = 'pointer';
+                    logoContainer.style.transition = 'transform 0.2s ease';
                     
-                    console.log('🏛️ Logo click handler setup complete');
+                    console.log('🏛️ Rose logo click handler setup complete');
                 }
             }
 
@@ -640,18 +765,6 @@
         window.addEventListener('error', (e) => {
             console.error('🏛️ Application error:', e.error);
         });
-
-        // Performance monitoring
-        if ('performance' in window) {
-            window.addEventListener('load', () => {
-                setTimeout(() => {
-                    const perf = performance.getEntriesByType('navigation')[0];
-                    if (perf) {
-                        console.log('🏛️ Page load time:', Math.round(perf.loadEventEnd - perf.loadEventStart), 'ms');
-                    }
-                }, 100);
-            });
-        }
     </script>
 </body>
 </html>
