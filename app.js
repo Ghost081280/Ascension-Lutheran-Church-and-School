@@ -1,7 +1,10 @@
 // Main Application JavaScript for Ascension Lutheran Church PWA
 
+console.log('🏛️ app.js loading...');
+
 class ChurchApp {
     constructor() {
+        console.log('🏛️ ChurchApp constructor called');
         this.currentPage = 'home';
         this.isLoading = false;
         this.installPrompt = null;
@@ -10,34 +13,60 @@ class ChurchApp {
     }
 
     init() {
+        console.log('🏛️ ChurchApp init called, readyState:', document.readyState);
         // Wait for DOM to be ready
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => this.setup());
+            document.addEventListener('DOMContentLoaded', () => {
+                console.log('🏛️ DOM loaded, calling setup');
+                this.setup();
+            });
         } else {
+            console.log('🏛️ DOM already ready, calling setup immediately');
             this.setup();
         }
     }
 
     setup() {
+        console.log('🏛️ ChurchApp setup called');
+        
+        // Check if required elements exist
+        const loadingScreen = document.getElementById('loading-screen');
+        const mainApp = document.getElementById('main-app');
+        const pageContainer = document.getElementById('page-container');
+        
+        console.log('🏛️ Elements found:', {
+            loadingScreen: !!loadingScreen,
+            mainApp: !!mainApp,
+            pageContainer: !!pageContainer
+        });
+        
         this.setupLoadingScreen();
+        this.setupNavigation();
         this.setupPWAFeatures();
         this.setupSocialSharing();
-        this.setupNavigation();
         this.loadInitialPage();
         
         console.log('🏛️ Ascension Lutheran Church PWA initialized');
     }
 
     setupLoadingScreen() {
+        console.log('🏛️ Setting up loading screen');
         const loadingScreen = document.getElementById('loading-screen');
         const mainApp = document.getElementById('main-app');
         
+        if (!loadingScreen || !mainApp) {
+            console.error('🏛️ Loading screen or main app elements not found');
+            return;
+        }
+        
         // Simulate app loading time
         setTimeout(() => {
+            console.log('🏛️ Loading screen timeout triggered');
             loadingScreen.style.opacity = '0';
             loadingScreen.style.transform = 'scale(0.9)';
             
             setTimeout(() => {
+                console.log('🏛️ Hiding loading screen, showing main app');
                 loadingScreen.classList.add('hidden');
                 mainApp.classList.remove('hidden');
                 mainApp.style.opacity = '0';
@@ -54,12 +83,17 @@ class ChurchApp {
     }
 
     setupNavigation() {
+        console.log('🏛️ Setting up navigation');
         // Main navigation links
         const navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
+        console.log('🏛️ Found nav links:', navLinks.length);
+        
+        navLinks.forEach((link, index) => {
+            console.log(`🏛️ Setting up nav link ${index}:`, link.getAttribute('data-page'));
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const page = link.getAttribute('data-page');
+                console.log('🏛️ Nav link clicked:', page);
                 if (page) {
                     this.loadPage(page);
                 }
@@ -69,16 +103,22 @@ class ChurchApp {
         // Mobile menu toggle
         const mobileToggle = document.querySelector('.mobile-menu-toggle');
         if (mobileToggle) {
+            console.log('🏛️ Setting up mobile menu toggle');
             mobileToggle.addEventListener('click', () => {
+                console.log('🏛️ Mobile menu toggle clicked');
                 const navMenu = document.querySelector('.nav-menu');
                 navMenu.classList.toggle('active');
             });
+        } else {
+            console.log('🏛️ Mobile menu toggle not found');
         }
     }
 
     setupPWAFeatures() {
+        console.log('🏛️ Setting up PWA features');
         // Install prompt handling
         window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('🏛️ Install prompt event received');
             e.preventDefault();
             this.installPrompt = e;
             this.showInstallButton();
@@ -92,12 +132,14 @@ class ChurchApp {
 
         // App installed handler
         window.addEventListener('appinstalled', () => {
+            console.log('🏛️ App installed');
             this.hideInstallButton();
             this.showToast('App installed successfully!', 'success');
         });
     }
 
     setupSocialSharing() {
+        console.log('🏛️ Setting up social sharing');
         const shareBtn = document.getElementById('share-btn');
         if (shareBtn) {
             shareBtn.addEventListener('click', () => this.shareContent());
@@ -176,18 +218,24 @@ class ChurchApp {
     }
 
     loadInitialPage() {
+        console.log('🏛️ Loading initial page');
         // Load home page content
         this.loadPage('home');
     }
 
     async loadPage(pageName) {
-        if (this.isLoading) return;
+        console.log('🏛️ Loading page:', pageName);
+        if (this.isLoading) {
+            console.log('🏛️ Already loading, skipping');
+            return;
+        }
         
         this.isLoading = true;
         this.currentPage = pageName;
         
         try {
             const content = await this.getPageContent(pageName);
+            console.log('🏛️ Got page content, rendering...');
             this.renderPage(content);
             this.updateActiveNavigation(pageName);
             this.updatePageTitle(pageName);
@@ -208,8 +256,7 @@ class ChurchApp {
     }
 
     async getPageContent(pageName) {
-        // In a real app, this would fetch from an API or load from files
-        // For now, we'll return static content based on the page
+        console.log('🏛️ Getting content for page:', pageName);
         
         const pages = {
             home: this.getHomeContent(),
@@ -246,7 +293,7 @@ class ChurchApp {
 
                         <div class="card-grid">
                             <div class="card">
-                                <img src="./images/worship-service.jpg" alt="Worship Service" class="card-image">
+                                <div style="width: 100%; height: 200px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666;">Worship Service Image</div>
                                 <div class="card-content">
                                     <h3 class="card-title">Divine Worship</h3>
                                     <p class="card-text">Join us for traditional Lutheran worship services every Sunday at 8:00 AM and 10:45 AM.</p>
@@ -260,7 +307,7 @@ class ChurchApp {
                             </div>
 
                             <div class="card">
-                                <img src="./images/family-activities.jpg" alt="Family Activities" class="card-image">
+                                <div style="width: 100%; height: 200px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666;">Family Activities Image</div>
                                 <div class="card-content">
                                     <h3 class="card-title">Family Ministry</h3>
                                     <p class="card-text">Ascension is a place for families with many opportunities to study God's Word together.</p>
@@ -274,7 +321,7 @@ class ChurchApp {
                             </div>
 
                             <div class="card">
-                                <img src="./images/school-students.jpg" alt="School Students" class="card-image">
+                                <div style="width: 100%; height: 200px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666;">School Students Image</div>
                                 <div class="card-content">
                                     <h3 class="card-title">Lutheran School</h3>
                                     <p class="card-text">Providing traditional Christian education to students in Preschool through 8th grade.</p>
@@ -344,46 +391,6 @@ class ChurchApp {
                         </div>
                     </section>
 
-                    <section class="info-section">
-                        <div class="section-header">
-                            <h2 class="section-title">Our History</h2>
-                        </div>
-
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <div class="timeline-year">1977</div>
-                                <div class="timeline-content">
-                                    <h4>Mission Begins</h4>
-                                    <p>Ascension Lutheran Church started as a mission outreach to northeast Fort Wayne, Indiana, in the summer of 1977. First service was held on June 5, 1977.</p>
-                                </div>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="timeline-year">1980</div>
-                                <div class="timeline-content">
-                                    <h4>First Pastor</h4>
-                                    <p>Rev. David Dubbelde became Ascension's first pastor in September 1980, faithfully serving until 1989.</p>
-                                </div>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="timeline-year">1989</div>
-                                <div class="timeline-content">
-                                    <h4>School Established</h4>
-                                    <p>Rev. Dr. John Stube arrived as the second pastor. Under his leadership, Ascension added a Lutheran school and the campus greatly expanded.</p>
-                                </div>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="timeline-year">2019</div>
-                                <div class="timeline-content">
-                                    <h4>Current Leadership</h4>
-                                    <p>Rev. James Gier was installed as Ascension's third senior pastor, bringing architectural background and seminary training to serve our congregation.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
                     <section class="verse-display">
                         <p class="verse-text">"And the third day, He rose again according to the Scriptures and ascended into heaven and sits at the right hand of the Father."</p>
                         <p class="verse-reference">The Nicene Creed</p>
@@ -401,40 +408,6 @@ class ChurchApp {
                         <div class="hero-content">
                             <h1 class="hero-title">Family Ministry</h1>
                             <p class="hero-subtitle">Ascension is a place for families with many opportunities to grow in faith together</p>
-                        </div>
-                    </section>
-
-                    <section class="info-section">
-                        <div class="info-grid">
-                            <div class="info-item">
-                                <div class="info-icon">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 7C14.64 7 14.31 7.14 14.06 7.36L13 8.5V7C13 6.45 12.55 6 12 6S11 6.45 11 7V14.5L7.91 15.64C7.66 15.74 7.5 15.97 7.5 16.25C7.5 16.66 7.84 17 8.25 17H10.5V22H12.5V17H15.5V22H17.5V17H19.75C20.16 17 20.5 16.66 20.5 16.25C20.5 15.97 20.34 15.74 20.09 15.64L21 9Z"/>
-                                    </svg>
-                                </div>
-                                <h3>Children's Sunday School</h3>
-                                <p>Every Sunday at 9:30 AM, children learn Bible stories and Christian values in age-appropriate classes.</p>
-                            </div>
-
-                            <div class="info-item">
-                                <div class="info-icon">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 3L1 9L12 15L21 11.09V17H23V9L12 3ZM5 13.18V17.18L12 21L19 17.18V13.18L12 17L5 13.18Z"/>
-                                    </svg>
-                                </div>
-                                <h3>Adult Discipleship</h3>
-                                <p>Adult Bible study classes at 9:30 AM provide deeper understanding of Scripture and Christian living.</p>
-                            </div>
-
-                            <div class="info-item">
-                                <div class="info-icon">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
-                                    </svg>
-                                </div>
-                                <h3>Family Events</h3>
-                                <p>Special seasonal celebrations, family fun nights, and community outreach opportunities throughout the year.</p>
-                            </div>
                         </div>
                     </section>
 
@@ -463,11 +436,6 @@ class ChurchApp {
                     </section>
 
                     <section class="info-section">
-                        <div class="section-header">
-                            <h2 class="section-title">Excellence in Christian Education</h2>
-                            <p class="section-subtitle">Preparing students spiritually, academically, socially, emotionally, and physically</p>
-                        </div>
-
                         <div class="card">
                             <div class="card-content">
                                 <h3>Enrollment Information</h3>
@@ -596,10 +564,11 @@ class ChurchApp {
     }
 
     renderPage(content) {
+        console.log('🏛️ Rendering page content');
         const container = document.getElementById('page-container');
         
         if (!container) {
-            console.error('Page container not found');
+            console.error('🏛️ Page container not found');
             return;
         }
         
@@ -700,6 +669,24 @@ class ChurchApp {
     }
 }
 
-// Initialize the app and make it globally available
-const app = new ChurchApp();
-window.app = app;
+// Initialize the app when DOM is ready
+console.log('🏛️ About to set up app initialization');
+
+function initializeApp() {
+    console.log('🏛️ Initializing ChurchApp');
+    try {
+        const app = new ChurchApp();
+        window.app = app;
+        console.log('🏛️ App initialized successfully');
+    } catch (error) {
+        console.error('🏛️ Error initializing app:', error);
+    }
+}
+
+if (document.readyState === 'loading') {
+    console.log('🏛️ DOM still loading, adding event listener');
+    document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+    console.log('🏛️ DOM already loaded, initializing immediately');
+    initializeApp();
+}
