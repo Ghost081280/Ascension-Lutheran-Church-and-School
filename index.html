@@ -92,10 +92,7 @@
 
         <!-- Page Content Container -->
         <main id="page-container" class="page-container">
-            <!-- Content will be loaded here -->
-            <div class="loading-placeholder" style="padding: 4rem 2rem; text-align: center; color: #666;">
-                <p>Loading content...</p>
-            </div>
+            <!-- Content will be loaded here dynamically -->
         </main>
 
         <!-- Footer -->
@@ -147,16 +144,23 @@
     
     <!-- Service Worker Registration -->
     <script>
-        // Add some error handling for development
-        window.addEventListener('error', (e) => {
-            console.error('JavaScript Error:', e.error);
-        });
-
         // Debug info
         console.log('🏛️ Ascension Lutheran Church PWA');
         console.log('📍 Location:', window.location.href);
         console.log('📁 Base path:', window.location.pathname);
         
+        // Add some error handling for development
+        window.addEventListener('error', (e) => {
+            console.error('JavaScript Error:', e.error);
+            console.error('Error details:', {
+                message: e.message,
+                filename: e.filename,
+                lineno: e.lineno,
+                colno: e.colno,
+                stack: e.error ? e.error.stack : 'No stack trace'
+            });
+        });
+
         // Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -169,6 +173,71 @@
                     });
             });
         }
+
+        // Fallback content loader if JavaScript fails
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const pageContainer = document.getElementById('page-container');
+                const loadingScreen = document.getElementById('loading-screen');
+                const mainApp = document.getElementById('main-app');
+                
+                // Check if content has loaded
+                if (pageContainer && (!pageContainer.innerHTML.trim() || pageContainer.innerHTML.includes('Loading content'))) {
+                    console.log('🏛️ Fallback: Loading default content');
+                    
+                    // Show main app if still hidden
+                    if (mainApp && mainApp.classList.contains('hidden')) {
+                        if (loadingScreen) loadingScreen.style.display = 'none';
+                        mainApp.classList.remove('hidden');
+                    }
+                    
+                    // Load basic home content if nothing else loaded
+                    if (pageContainer && !window.app) {
+                        pageContainer.innerHTML = `
+                            <div class="page-content">
+                                <section class="hero-section">
+                                    <div class="hero-content">
+                                        <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
+                                        <p class="hero-subtitle">Join our family in worshipping and serving our glorious God in Fort Wayne, Indiana</p>
+                                    </div>
+                                </section>
+                                <div class="container">
+                                    <section class="info-section">
+                                        <div class="worship-times">
+                                            <h3>Divine Worship</h3>
+                                            <div class="time-item">
+                                                <span class="time-label">Sunday Morning Services</span>
+                                                <span class="time-value">8:00 AM & 10:45 AM</span>
+                                            </div>
+                                            <div class="time-item">
+                                                <span class="time-label">Adult Discipleship Class</span>
+                                                <span class="time-value">9:30 AM</span>
+                                            </div>
+                                            <div class="time-item">
+                                                <span class="time-label">Children's Sunday School</span>
+                                                <span class="time-value">9:30 AM</span>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <section class="info-section">
+                                        <p style="text-align: center; font-size: 1.2rem; line-height: 1.8; max-width: 800px; margin: 0 auto;">
+                                            <strong>JavaScript appears to be disabled or encountering errors.</strong><br>
+                                            For the full interactive experience, please enable JavaScript in your browser.
+                                        </p>
+                                        <div style="text-align: center; margin: 2rem 0;">
+                                            <p><strong>Contact Us:</strong></p>
+                                            <p>Phone: <a href="tel:+12604862226">(260) 486-2226</a></p>
+                                            <p>Email: <a href="mailto:office@alcsfw.org">office@alcsfw.org</a></p>
+                                            <p>Address: 8811 St. Joe Road, Fort Wayne, IN 46835</p>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+            }, 3000); // Wait 3 seconds for JavaScript to load
+        });
     </script>
 </body>
 </html>
