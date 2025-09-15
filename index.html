@@ -464,40 +464,51 @@
         // Fallback - hide loading screen after max 5 seconds
         setTimeout(hideLoadingScreen, 5000);
         
-        // Mobile menu functionality fallback
-        window.toggleMobileMenu = window.toggleMobileMenu || function() {
-            console.log('🏛️ Fallback toggleMobileMenu called');
+        // Ensure functions are available immediately for onclick handlers
+        window.toggleMobileMenu = function() {
+            console.log('🏛️ Early toggleMobileMenu called');
             const navMenu = document.getElementById('nav-menu');
-            const isOpen = navMenu && navMenu.classList.contains('active');
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
             
-            if (navMenu) {
-                if (isOpen) {
-                    navMenu.classList.remove('active');
-                    document.body.style.overflow = '';
-                } else {
-                    navMenu.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                }
+            if (!navMenu || !mobileToggle) {
+                console.log('🏛️ Elements not ready yet');
+                return;
+            }
+            
+            const isOpen = navMenu.classList.contains('active');
+            
+            if (isOpen) {
+                navMenu.classList.remove('active');
+                mobileToggle.classList.remove('active');
+                mobileToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            } else {
+                navMenu.classList.add('active');
+                mobileToggle.classList.add('active');
+                mobileToggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
             }
         };
         
-        // Page loading fallback
-        window.loadPage = window.loadPage || function(page) {
-            console.log('🏛️ Fallback loadPage called for:', page);
+        // Ensure page loading is available immediately
+        window.loadPage = function(page) {
+            console.log('🏛️ Early loadPage called for:', page);
             const container = document.getElementById('page-container');
-            if (container) {
-                container.innerHTML = `
-                    <div class="page-content">
-                        <div class="container">
-                            <div class="hero-section">
-                                <div class="hero-content">
-                                    <h1 class="hero-title">Loading ${page}...</h1>
-                                    <p class="hero-subtitle">Please wait while we load the content.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
+            if (!container) {
+                console.log('🏛️ Container not ready yet');
+                return;
+            }
+            
+            // If the main app hasn't loaded yet, try again after a delay
+            if (typeof window.pages === 'undefined') {
+                console.log('🏛️ Main app not loaded, trying again...');
+                setTimeout(() => window.loadPage(page), 100);
+                return;
+            }
+            
+            // Call the main loadPage function if it exists
+            if (window.loadPageMain) {
+                window.loadPageMain(page);
             }
         };
         
