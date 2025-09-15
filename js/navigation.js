@@ -14,18 +14,20 @@ class NavigationController {
     }
 
     setupNavigationListeners() {
-        // Main navigation links
-        const navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const page = link.getAttribute('data-page');
-                if (page && window.app) {
-                    window.app.loadPage(page);
-                    this.closeMobileMenu();
-                }
+        // Main navigation links - wait a bit for DOM to be fully ready
+        setTimeout(() => {
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = link.getAttribute('data-page');
+                    if (page && window.app) {
+                        window.app.loadPage(page);
+                        this.closeMobileMenu();
+                    }
+                });
             });
-        });
+        }, 100);
 
         // Handle browser back/forward buttons
         window.addEventListener('popstate', (e) => {
@@ -59,30 +61,33 @@ class NavigationController {
     }
 
     setupMobileMenu() {
-        const mobileToggle = document.querySelector('.mobile-menu-toggle');
-        const navMenu = document.querySelector('.nav-menu');
-        
-        if (mobileToggle && navMenu) {
-            mobileToggle.addEventListener('click', () => {
-                this.toggleMobileMenu();
-            });
+        // Wait for DOM elements to be available
+        setTimeout(() => {
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (mobileToggle && navMenu) {
+                mobileToggle.addEventListener('click', () => {
+                    this.toggleMobileMenu();
+                });
 
-            // Close mobile menu when clicking outside
-            document.addEventListener('click', (e) => {
-                if (this.mobileMenuOpen && 
-                    !navMenu.contains(e.target) && 
-                    !mobileToggle.contains(e.target)) {
-                    this.closeMobileMenu();
-                }
-            });
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (this.mobileMenuOpen && 
+                        !navMenu.contains(e.target) && 
+                        !mobileToggle.contains(e.target)) {
+                        this.closeMobileMenu();
+                    }
+                });
 
-            // Close mobile menu on escape key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && this.mobileMenuOpen) {
-                    this.closeMobileMenu();
-                }
-            });
-        }
+                // Close mobile menu on escape key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && this.mobileMenuOpen) {
+                        this.closeMobileMenu();
+                    }
+                });
+            }
+        }, 100);
     }
 
     toggleMobileMenu() {
@@ -123,6 +128,9 @@ class NavigationController {
     closeMobileMenu() {
         const navMenu = document.querySelector('.nav-menu');
         const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        
+        if (!navMenu || !mobileToggle) return;
+        
         const hamburgerLines = mobileToggle.querySelectorAll('.hamburger-line');
         
         this.mobileMenuOpen = false;
@@ -140,37 +148,39 @@ class NavigationController {
 
     setupKeyboardNavigation() {
         // Handle arrow key navigation in menu
-        const navLinks = document.querySelectorAll('.nav-link');
-        
-        navLinks.forEach((link, index) => {
-            link.addEventListener('keydown', (e) => {
-                let nextIndex;
-                
-                switch (e.key) {
-                    case 'ArrowDown':
-                        e.preventDefault();
-                        nextIndex = (index + 1) % navLinks.length;
-                        navLinks[nextIndex].focus();
-                        break;
-                        
-                    case 'ArrowUp':
-                        e.preventDefault();
-                        nextIndex = (index - 1 + navLinks.length) % navLinks.length;
-                        navLinks[nextIndex].focus();
-                        break;
-                        
-                    case 'Home':
-                        e.preventDefault();
-                        navLinks[0].focus();
-                        break;
-                        
-                    case 'End':
-                        e.preventDefault();
-                        navLinks[navLinks.length - 1].focus();
-                        break;
-                }
+        setTimeout(() => {
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach((link, index) => {
+                link.addEventListener('keydown', (e) => {
+                    let nextIndex;
+                    
+                    switch (e.key) {
+                        case 'ArrowDown':
+                            e.preventDefault();
+                            nextIndex = (index + 1) % navLinks.length;
+                            navLinks[nextIndex].focus();
+                            break;
+                            
+                        case 'ArrowUp':
+                            e.preventDefault();
+                            nextIndex = (index - 1 + navLinks.length) % navLinks.length;
+                            navLinks[nextIndex].focus();
+                            break;
+                            
+                        case 'Home':
+                            e.preventDefault();
+                            navLinks[0].focus();
+                            break;
+                            
+                        case 'End':
+                            e.preventDefault();
+                            navLinks[navLinks.length - 1].focus();
+                            break;
+                    }
+                });
             });
-        });
+        }, 100);
     }
 
     setupScrollEffects() {
