@@ -1,5 +1,5 @@
 // Main Application JavaScript for Ascension Lutheran Church PWA
-// Version: 2025011404 - Fixed Page Navigation
+// Version: 2025011404 - With Clickable Logo Navigation
 
 console.log('🏛️ app.js loading... v2025011404');
 
@@ -59,14 +59,27 @@ class ChurchApp {
     setupNavigation() {
         console.log('🏛️ Setting up navigation');
         
-        // Set up navigation links
+        // Set up navigation links and logo clicks
         document.addEventListener('click', (e) => {
             const navLink = e.target.closest('[data-page]');
             if (navLink) {
                 e.preventDefault();
                 const page = navLink.getAttribute('data-page');
-                console.log('🏛️ Nav link clicked:', page);
+                console.log('🏛️ Navigation clicked:', page);
                 this.loadPage(page);
+            }
+        });
+
+        // Handle keyboard navigation for logo and nav links
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const navElement = e.target.closest('[data-page]');
+                if (navElement) {
+                    e.preventDefault();
+                    const page = navElement.getAttribute('data-page');
+                    console.log('🏛️ Keyboard navigation:', page);
+                    this.loadPage(page);
+                }
             }
         });
 
@@ -107,6 +120,11 @@ class ChurchApp {
             // Update URL hash
             if (window.location.hash !== `#${pageName}`) {
                 window.location.hash = `#${pageName}`;
+            }
+
+            // Announce page change for accessibility
+            if (window.announcePageChange) {
+                window.announcePageChange(pageName);
             }
         } catch (error) {
             console.error('Error loading page:', error);
