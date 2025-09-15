@@ -151,6 +151,7 @@ a:hover {
   justify-content: center;
   z-index: 9999;
   color: var(--white);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .loading-content {
@@ -210,6 +211,12 @@ a:hover {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  opacity: 0;
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.main-app:not(.hidden) {
+  opacity: 1;
 }
 
 /* Navigation */
@@ -219,6 +226,13 @@ a:hover {
   position: sticky;
   top: 0;
   z-index: 1000;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main-header.scrolled {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .navbar {
@@ -292,6 +306,7 @@ a:hover {
   border-radius: var(--radius-md);
   transition: var(--transition-fast);
   position: relative;
+  cursor: pointer;
 }
 
 .nav-link:hover {
@@ -308,6 +323,8 @@ a:hover {
 .page-container {
   flex: 1;
   min-height: calc(100vh - 200px);
+  opacity: 1;
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
 /* Quick Actions */
@@ -464,6 +481,29 @@ a:hover {
   }
 }
 
+/* Error Styles */
+.error-message {
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.error {
+  border-color: #e53e3e !important;
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1) !important;
+}
+
+/* Loading States */
+.loading-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: var(--gray-600);
+  font-size: 1.1rem;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .nav-container {
@@ -510,6 +550,15 @@ a:hover {
   .social-links {
     align-items: center;
   }
+  
+  .main-header {
+    transform: none !important;
+  }
+  
+  .quick-actions {
+    bottom: var(--spacing-md);
+    right: var(--spacing-md);
+  }
 }
 
 @media (max-width: 480px) {
@@ -532,5 +581,61 @@ a:hover {
   
   .brand-subtitle {
     font-size: 0.8rem;
+  }
+  
+  .nav-container {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .nav-menu {
+    padding: var(--spacing-md);
+  }
+}
+
+/* Focus Management */
+.focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Skip Links */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--primary-color);
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  z-index: 10000;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Print Styles */
+@media print {
+  .main-header,
+  .main-footer,
+  .quick-actions,
+  .loading-screen {
+    display: none !important;
+  }
+  
+  .main-app {
+    box-shadow: none !important;
+  }
+  
+  .page-container {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  * {
+    color: black !important;
+    background: white !important;
   }
 }
