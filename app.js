@@ -22,6 +22,7 @@ class ChurchApp {
         this.setupLoadingScreen();
         this.setupPWAFeatures();
         this.setupSocialSharing();
+        this.setupNavigation();
         this.loadInitialPage();
         
         console.log('🏛️ Ascension Lutheran Church PWA initialized');
@@ -52,6 +53,29 @@ class ChurchApp {
         }, 2500);
     }
 
+    setupNavigation() {
+        // Main navigation links
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = link.getAttribute('data-page');
+                if (page) {
+                    this.loadPage(page);
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        if (mobileToggle) {
+            mobileToggle.addEventListener('click', () => {
+                const navMenu = document.querySelector('.nav-menu');
+                navMenu.classList.toggle('active');
+            });
+        }
+    }
+
     setupPWAFeatures() {
         // Install prompt handling
         window.addEventListener('beforeinstallprompt', (e) => {
@@ -62,7 +86,9 @@ class ChurchApp {
 
         // Install button click handler
         const installBtn = document.getElementById('install-btn');
-        installBtn.addEventListener('click', () => this.installApp());
+        if (installBtn) {
+            installBtn.addEventListener('click', () => this.installApp());
+        }
 
         // App installed handler
         window.addEventListener('appinstalled', () => {
@@ -73,30 +99,36 @@ class ChurchApp {
 
     setupSocialSharing() {
         const shareBtn = document.getElementById('share-btn');
-        shareBtn.addEventListener('click', () => this.shareContent());
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => this.shareContent());
+        }
     }
 
     showInstallButton() {
         const installBtn = document.getElementById('install-btn');
-        installBtn.style.display = 'flex';
-        installBtn.style.opacity = '0';
-        installBtn.style.transform = 'scale(0.8)';
-        
-        requestAnimationFrame(() => {
-            installBtn.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
-            installBtn.style.opacity = '1';
-            installBtn.style.transform = 'scale(1)';
-        });
+        if (installBtn) {
+            installBtn.style.display = 'flex';
+            installBtn.style.opacity = '0';
+            installBtn.style.transform = 'scale(0.8)';
+            
+            requestAnimationFrame(() => {
+                installBtn.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+                installBtn.style.opacity = '1';
+                installBtn.style.transform = 'scale(1)';
+            });
+        }
     }
 
     hideInstallButton() {
         const installBtn = document.getElementById('install-btn');
-        installBtn.style.opacity = '0';
-        installBtn.style.transform = 'scale(0.8)';
-        
-        setTimeout(() => {
-            installBtn.style.display = 'none';
-        }, 300);
+        if (installBtn) {
+            installBtn.style.opacity = '0';
+            installBtn.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                installBtn.style.display = 'none';
+            }, 300);
+        }
     }
 
     async installApp() {
@@ -159,6 +191,14 @@ class ChurchApp {
             this.renderPage(content);
             this.updateActiveNavigation(pageName);
             this.updatePageTitle(pageName);
+            
+            // Update URL hash
+            window.location.hash = `#${pageName}`;
+            
+            // Announce page change for accessibility
+            if (window.announcePageChange) {
+                window.announcePageChange(pageName);
+            }
         } catch (error) {
             console.error('Error loading page:', error);
             this.showError('Failed to load page content');
@@ -398,31 +438,6 @@ class ChurchApp {
                         </div>
                     </section>
 
-                    <section class="info-section">
-                        <div class="section-header">
-                            <h2 class="section-title">Family Faith Formation</h2>
-                            <p class="section-subtitle">Parents are the primary teachers of faith, and we're here to support you</p>
-                        </div>
-
-                        <div class="card-grid">
-                            <div class="card">
-                                <img src="./images/family-bible-study.jpg" alt="Family Bible Study" class="card-image">
-                                <div class="card-content">
-                                    <h3 class="card-title">Home Devotions</h3>
-                                    <p class="card-text">Resources and guidance for families to establish meaningful devotional time at home.</p>
-                                </div>
-                            </div>
-
-                            <div class="card">
-                                <img src="./images/youth-activities.jpg" alt="Youth Activities" class="card-image">
-                                <div class="card-content">
-                                    <h3 class="card-title">Youth Programs</h3>
-                                    <p class="card-text">Age-appropriate activities and learning opportunities for children and teenagers.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
                     <section class="verse-display">
                         <p class="verse-text">"Train up a child in the way he should go; even when he is old he will not depart from it."</p>
                         <p class="verse-reference">Proverbs 22:6 (ESV)</p>
@@ -453,90 +468,6 @@ class ChurchApp {
                             <p class="section-subtitle">Preparing students spiritually, academically, socially, emotionally, and physically</p>
                         </div>
 
-                        <div class="info-grid">
-                            <div class="info-item">
-                                <div class="info-icon">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 3L1 9L12 15L21 11.09V17H23V9L12 3ZM5 13.18V17.18L12 21L19 17.18V13.18L12 17L5 13.18Z"/>
-                                    </svg>
-                                </div>
-                                <h3>Academic Excellence</h3>
-                                <p>Rigorous curriculum ensuring students are prepared for high school success.</p>
-                            </div>
-
-                            <div class="info-item">
-                                <div class="info-icon">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12S7.59 4 12 4 20 7.59 20 12 16.41 20 12 20ZM12.5 7H11V13L16.25 16.15L17 14.92L12.5 12.25V7Z"/>
-                                    </svg>
-                                </div>
-                                <h3>Faith Integration</h3>
-                                <p>Gospel message woven throughout all subjects and school activities.</p>
-                            </div>
-
-                            <div class="info-item">
-                                <div class="info-icon">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 2L3.09 8.26L4 21L12 17L20 21L20.91 8.26L12 2Z"/>
-                                    </svg>
-                                </div>
-                                <h3>Small Class Sizes</h3>
-                                <p>Individual attention with approximately 110 students across all grades.</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="info-section">
-                        <div class="section-header">
-                            <h2 class="section-title">School Staff</h2>
-                        </div>
-
-                        <div class="staff-grid">
-                            <div class="staff-card">
-                                <img src="./images/staff-principal.jpg" alt="Principal" class="staff-photo">
-                                <h4 class="staff-name">Principal</h4>
-                                <p class="staff-title">5th-8th English, 5th-6th Reading, 5th Social Studies</p>
-                                <a href="mailto:principal@alcsfw.org" class="staff-email">principal@alcsfw.org</a>
-                            </div>
-
-                            <div class="staff-card">
-                                <img src="./images/staff-preschool.jpg" alt="Preschool Teacher" class="staff-photo">
-                                <h4 class="staff-name">Preschool Teacher</h4>
-                                <p class="staff-title">Early Childhood Education</p>
-                                <a href="mailto:d.kolter@alcsfw.org" class="staff-email">d.kolter@alcsfw.org</a>
-                            </div>
-
-                            <div class="staff-card">
-                                <img src="./images/staff-kindergarten.jpg" alt="Kindergarten Teacher" class="staff-photo">
-                                <h4 class="staff-name">Kindergarten Teacher</h4>
-                                <p class="staff-title">Kindergarten</p>
-                                <a href="mailto:a.ruse@alcsfw.org" class="staff-email">a.ruse@alcsfw.org</a>
-                            </div>
-
-                            <div class="staff-card">
-                                <img src="./images/staff-elementary.jpg" alt="Elementary Teacher" class="staff-photo">
-                                <h4 class="staff-name">Elementary Teacher</h4>
-                                <p class="staff-title">1st/2nd Grade</p>
-                                <a href="mailto:c.schumacher@alcsfw.org" class="staff-email">c.schumacher@alcsfw.org</a>
-                            </div>
-
-                            <div class="staff-card">
-                                <img src="./images/staff-middle.jpg" alt="Middle School Teacher" class="staff-photo">
-                                <h4 class="staff-name">Middle School Teacher</h4>
-                                <p class="staff-title">3rd/4th Grade and Athletic Director</p>
-                                <a href="mailto:s.parker@alcsfw.org" class="staff-email">s.parker@alcsfw.org</a>
-                            </div>
-
-                            <div class="staff-card">
-                                <img src="./images/staff-upper.jpg" alt="Upper Grades Teacher" class="staff-photo">
-                                <h4 class="staff-name">Upper Grades Teacher</h4>
-                                <p class="staff-title">7th/8th homeroom, 6th and 8th Math, 5-8 Science, 5-8 Music</p>
-                                <a href="mailto:j.neuman@alcsfw.org" class="staff-email">j.neuman@alcsfw.org</a>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="info-section">
                         <div class="card">
                             <div class="card-content">
                                 <h3>Enrollment Information</h3>
@@ -597,76 +528,6 @@ class ChurchApp {
                         </div>
                     </section>
 
-                    <section class="info-section">
-                        <div class="section-header">
-                            <h2 class="section-title">Online Worship</h2>
-                            <p class="section-subtitle">Can't make it in person? Join us online</p>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-content">
-                                <h3>YouTube Live Services</h3>
-                                <p>Sunday morning worship services and Adult Discipleship classes are available for viewing on our YouTube channel.</p>
-                                
-                                <div style="margin: 2rem 0;">
-                                    <a href="https://www.youtube.com/channel/UC_CHANNEL_ID" target="_blank" rel="noopener" class="btn btn-primary">
-                                        Watch on YouTube
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-
-                                <p><strong>What to Expect:</strong></p>
-                                <ul style="margin-left: 2rem;">
-                                    <li>Traditional Lutheran liturgy</li>
-                                    <li>Hymns and contemporary Christian music</li>
-                                    <li>Biblical preaching and teaching</li>
-                                    <li>Holy Communion (1st and 3rd Sundays)</li>
-                                    <li>Warm, welcoming community</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="info-section">
-                        <div class="section-header">
-                            <h2 class="section-title">First Time Visitors</h2>
-                        </div>
-
-                        <div class="info-grid">
-                            <div class="info-item">
-                                <div class="info-icon">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 2L2 7L12 12L22 7L12 2ZM2 17L12 22L22 17M2 12L12 17L22 12"/>
-                                    </svg>
-                                </div>
-                                <h3>What to Wear</h3>
-                                <p>Come as you are! We welcome casual to formal attire. The important thing is that you're here to worship.</p>
-                            </div>
-
-                            <div class="info-item">
-                                <div class="info-icon">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12S7.59 4 12 4 20 7.59 20 12 16.41 20 12 20ZM12.5 7H11V13L16.25 16.15L17 14.92L12.5 12.25V7Z"/>
-                                    </svg>
-                                </div>
-                                <h3>Service Length</h3>
-                                <p>Our worship services typically last about 60-75 minutes, including music, readings, and sermon.</p>
-                            </div>
-
-                            <div class="info-item">
-                                <div class="info-icon">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M16 4C18.2 4 20 5.8 20 8C20 10.2 18.2 12 16 12C13.8 12 12 10.2 12 8C12 5.8 13.8 4 16 4ZM16 14C20.4 14 24 15.8 24 18V20H8V18C8 15.8 11.6 14 16 14ZM9 12C10.9 12 12.5 10.4 12.5 8.5S10.9 5 9 5 5.5 6.6 5.5 8.5 7.1 12 9 12ZM9 13.5C6.2 13.5 0.5 14.9 0.5 17.5V19.5H7V17.5C7 16.4 7.6 15.4 8.5 14.7C8.2 14.6 7.9 14.5 7.5 14.5H9Z"/>
-                                    </svg>
-                                </div>
-                                <h3>Children Welcome</h3>
-                                <p>Children are always welcome in worship! We have quiet activities and childcare available if needed.</p>
-                            </div>
-                        </div>
-                    </section>
-
                     <section class="verse-display">
                         <p class="verse-text">"Let us not give up meeting together, as some are in the habit of doing, but let us encourage one another."</p>
                         <p class="verse-reference">Hebrews 10:25 (NIV)</p>
@@ -722,73 +583,6 @@ class ChurchApp {
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="contact-info">
-                                <h3>Pastor</h3>
-                                <div class="contact-item">
-                                    <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 12C14.21 12 16 10.21 16 8S14.21 4 12 4 8 5.79 8 8 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"/>
-                                    </svg>
-                                    <div>
-                                        <p class="contact-text"><strong>Rev. James Gier</strong><br>
-                                        Senior Pastor</p>
-                                    </div>
-                                </div>
-
-                                <div class="contact-item">
-                                    <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z"/>
-                                    </svg>
-                                    <div>
-                                        <p class="contact-text">For pastoral care, spiritual guidance, or church matters</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="info-section">
-                        <div class="section-header">
-                            <h2 class="section-title">Get Directions</h2>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-content">
-                                <p>We're located on St. Joe Road in northeast Fort Wayne, easily accessible from major highways.</p>
-                                
-                                <div style="margin: 2rem 0;">
-                                    <a href="https://maps.google.com/?q=8811+St+Joe+Road+Fort+Wayne+IN+46835" target="_blank" rel="noopener" class="btn btn-primary">
-                                        Get Directions
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5Z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-
-                                <p><strong>Parking:</strong> Free parking is available in our church lot with easy access to the main entrance.</p>
-                                <p><strong>Accessibility:</strong> Our building is wheelchair accessible with ramps and accessible restrooms.</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="info-section">
-                        <div class="section-header">
-                            <h2 class="section-title">Office Hours</h2>
-                        </div>
-
-                        <div class="worship-times">
-                            <div class="time-item">
-                                <span class="time-label">Monday - Thursday</span>
-                                <span class="time-value">9:00 AM - 3:00 PM</span>
-                            </div>
-                            <div class="time-item">
-                                <span class="time-label">Friday</span>
-                                <span class="time-value">9:00 AM - 12:00 PM</span>
-                            </div>
-                            <div class="time-item">
-                                <span class="time-label">Saturday - Sunday</span>
-                                <span class="time-value">By Appointment</span>
-                            </div>
                         </div>
                     </section>
 
@@ -803,6 +597,11 @@ class ChurchApp {
 
     renderPage(content) {
         const container = document.getElementById('page-container');
+        
+        if (!container) {
+            console.error('Page container not found');
+            return;
+        }
         
         // Add fade out animation
         container.style.opacity = '0';
@@ -889,7 +688,9 @@ class ChurchApp {
             toast.style.opacity = '0';
             toast.style.transform = 'translateY(-20px)';
             setTimeout(() => {
-                document.body.removeChild(toast);
+                if (document.body.contains(toast)) {
+                    document.body.removeChild(toast);
+                }
             }, 300);
         }, 4000);
     }
@@ -899,5 +700,6 @@ class ChurchApp {
     }
 }
 
-// Initialize the app
+// Initialize the app and make it globally available
 const app = new ChurchApp();
+window.app = app;
