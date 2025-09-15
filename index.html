@@ -13,8 +13,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/jpeg" href="./images/Color Luther Rose - 72 dpi.jpg">
-    <link rel="apple-touch-icon" href="./images/Color Luther Rose - 72 dpi.jpg">
+    <link rel="icon" type="image/png" href="./images/Rose_ColorThumb.png">
+    <link rel="apple-touch-icon" href="./images/Rose_ColorThumb.png">
     
     <!-- PWA Manifest -->
     <link rel="manifest" href="./manifest.json">
@@ -53,7 +53,7 @@
         </div>
         <div class="loading-content">
             <div class="church-logo">
-                <img src="./images/Color Luther Rose - 72 dpi.jpg" alt="Ascension Lutheran Church Logo" class="logo-img">
+                <img src="./images/Rose_ColorThumb.png" alt="Ascension Lutheran Church Logo" class="logo-img">
             </div>
             <h1 class="loading-title">Ascension Lutheran</h1>
             <p class="loading-subtitle">Church & School</p>
@@ -72,7 +72,7 @@
             <div class="nav-container">
                 <div class="nav-brand-wrapper">
                     <div class="nav-logo-container" id="nav-logo-home" role="button" tabindex="0" aria-label="Go to home page">
-                        <img src="./images/Color Luther Rose - 72 dpi.jpg" alt="Luther Rose Logo" class="nav-logo">
+                        <img src="./images/Rose_ColorThumb.png" alt="Luther Rose Logo" class="nav-logo">
                     </div>
                     <div class="brand-text">
                         <h1 class="brand-name">Ascension Lutheran</h1>
@@ -109,6 +109,43 @@
     <footer class="main-footer" id="main-footer">
         <!-- Footer will be populated by JavaScript -->
     </footer>
+
+    <!-- Mobile PWA Install Prompt -->
+    <div id="pwa-install-prompt" class="pwa-install-prompt hidden">
+        <div class="pwa-install-content">
+            <div class="pwa-rose-icon">
+                <img src="./images/Rose_ColorThumb.png" alt="Luther Rose" class="pwa-rose">
+            </div>
+            <div class="pwa-install-text">
+                <h3>Install Ascension Lutheran</h3>
+                <p>Get quick access to worship times, announcements, and church info right from your home screen!</p>
+            </div>
+            <div class="pwa-install-buttons">
+                <button id="pwa-install-btn" class="pwa-btn pwa-btn-primary">Install App</button>
+                <button id="pwa-dismiss-btn" class="pwa-btn pwa-btn-secondary">Not Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desktop PWA Install Banner -->
+    <div id="desktop-install-banner" class="desktop-install-banner hidden">
+        <div class="desktop-banner-content">
+            <div class="banner-left">
+                <img src="./images/Rose_ColorThumb.png" alt="Luther Rose" class="banner-logo">
+                <div class="banner-text">
+                    <h4>Install Ascension Lutheran App</h4>
+                    <p>Quick access to worship times and church information</p>
+                </div>
+            </div>
+            <div class="banner-right">
+                <button id="desktop-install-btn" class="banner-install-btn">
+                    <span class="install-icon">📱</span>
+                    Install App
+                </button>
+                <button id="desktop-dismiss-btn" class="banner-dismiss-btn">&times;</button>
+            </div>
+        </div>
+    </div>
 
     <!-- JavaScript Files -->
     <script src="./content/content.js"></script>
