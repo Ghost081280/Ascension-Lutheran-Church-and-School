@@ -341,8 +341,8 @@ class ComponentLibrary {
             background: rgba(0, 0, 0, 0.5);
         `;
 
-        const content = modal.querySelector('.modal-content');
-        content.style.cssText = `
+        const modalContent = modal.querySelector('.modal-content');
+        modalContent.style.cssText = `
             background: white;
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-xl);
@@ -357,7 +357,7 @@ class ComponentLibrary {
         // Close functionality
         const closeModal = () => {
             modal.style.opacity = '0';
-            content.style.transform = 'scale(0.9)';
+            modalContent.style.transform = 'scale(0.9)';
             setTimeout(() => {
                 document.body.removeChild(modal);
                 document.body.style.overflow = '';
@@ -384,7 +384,7 @@ class ComponentLibrary {
         
         requestAnimationFrame(() => {
             modal.style.opacity = '1';
-            content.style.transform = 'scale(1)';
+            modalContent.style.transform = 'scale(1)';
         });
 
         // Focus first focusable element
