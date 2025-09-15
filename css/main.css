@@ -1,4 +1,4 @@
-/* NEW_main.css - Completely Rebuilt CSS */
+/* Updated main.css with Larger Rose Logo */
 
 /* CSS Variables */
 :root {
@@ -121,7 +121,7 @@ a:hover {
   padding: 0 var(--spacing-lg);
 }
 
-/* Navigation */
+/* Navigation - UPDATED LOGO SIZE */
 .main-header {
   background: var(--white);
   box-shadow: var(--shadow-md);
@@ -164,10 +164,11 @@ a:hover {
 }
 
 .nav-logo {
-  width: 50px;
-  height: 50px;
+  width: 60px; /* INCREASED from 50px */
+  height: 60px; /* INCREASED from 50px */
   object-fit: contain;
   border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(139, 0, 0, 0.2);
 }
 
 .brand-text {
@@ -175,14 +176,14 @@ a:hover {
 }
 
 .brand-name {
-  font-size: 1.5rem;
+  font-size: 1.6rem; /* INCREASED from 1.5rem */
   font-weight: 700;
   margin-bottom: 0;
   color: var(--primary-color);
 }
 
 .brand-subtitle {
-  font-size: 0.9rem;
+  font-size: 1rem; /* INCREASED from 0.9rem */
   color: var(--gray-600);
   margin-bottom: 0;
 }
@@ -385,6 +386,20 @@ a:hover {
     width: 100% !important;
     justify-content: center !important;
   }
+  
+  /* Mobile logo adjustments */
+  .nav-logo {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .brand-name {
+    font-size: 1.4rem;
+  }
+  
+  .brand-subtitle {
+    font-size: 0.9rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -393,11 +408,11 @@ a:hover {
   }
   
   .brand-name {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
   }
   
   .brand-subtitle {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   
   .nav-container {
@@ -406,5 +421,10 @@ a:hover {
   
   .nav-menu {
     padding: var(--spacing-md);
+  }
+  
+  .nav-logo {
+    width: 45px;
+    height: 45px;
   }
 }
