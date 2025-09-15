@@ -1,9 +1,6 @@
-/* FINAL components.css - FIXED Pastor Section Mobile Grid */
+/* Ascension Lutheran Church - Components - Clean Rebuild */
 
-/* ========================================
-   PASTOR SECTION - PERFECT MOBILE GRID
-======================================== */
-
+/* Pastor Section */
 .pastor-section {
     background: var(--white);
     border-radius: var(--radius-xl);
@@ -14,7 +11,6 @@
     max-width: 1000px;
     padding: var(--spacing-lg);
     
-    /* FIXED: Mobile-first grid layout */
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
@@ -105,16 +101,12 @@
     color: var(--white);
 }
 
-/* RESPONSIVE BREAKPOINTS */
-
-/* Small Mobile (320px to 480px) */
+/* Responsive Pastor Section */
 @media (max-width: 480px) {
     .pastor-section {
         margin: var(--spacing-md);
         padding: var(--spacing-md);
         gap: var(--spacing-md);
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
     }
     
     .pastor-photo {
@@ -141,14 +133,11 @@
     }
 }
 
-/* Mobile (481px to 767px) */
 @media (min-width: 481px) and (max-width: 767px) {
     .pastor-section {
         margin: var(--spacing-lg) var(--spacing-md);
         padding: var(--spacing-lg);
         gap: var(--spacing-lg);
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
     }
     
     .pastor-photo {
@@ -160,21 +149,11 @@
         font-size: 1.5rem;
     }
     
-    .pastor-role {
-        font-size: 1rem;
-    }
-    
-    .pastor-bio p {
-        font-size: 0.95rem;
-    }
-    
     .pastor-contact {
-        font-size: 1rem;
         max-width: 300px;
     }
 }
 
-/* Tablet (768px to 1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
     .pastor-section {
         padding: var(--spacing-xl);
@@ -226,7 +205,6 @@
     }
 }
 
-/* Desktop (1024px+) */
 @media (min-width: 1024px) {
     .pastor-section {
         padding: var(--spacing-2xl);
@@ -278,232 +256,7 @@
     }
 }
 
-/* Landscape Mobile (up to 767px in landscape) */
-@media (max-width: 767px) and (orientation: landscape) {
-    .pastor-section {
-        grid-template-columns: auto 1fr;
-        grid-template-rows: 1fr;
-        gap: var(--spacing-md);
-        padding: var(--spacing-md);
-        text-align: left;
-        align-items: center;
-    }
-    
-    .pastor-image-wrapper {
-        grid-column: 1;
-        grid-row: 1;
-        justify-content: flex-start;
-    }
-    
-    .pastor-info {
-        grid-column: 2;
-        grid-row: 1;
-        text-align: left;
-        align-items: flex-start;
-    }
-    
-    .pastor-photo {
-        width: 100px;
-        height: 120px;
-    }
-    
-    .pastor-name {
-        font-size: 1.2rem;
-        text-align: left;
-    }
-    
-    .pastor-role {
-        font-size: 0.9rem;
-        text-align: left;
-    }
-    
-    .pastor-bio p {
-        font-size: 0.85rem;
-        text-align: left;
-    }
-    
-    .pastor-contact {
-        width: auto;
-        justify-content: flex-start;
-        font-size: 0.85rem;
-        padding: var(--spacing-sm) var(--spacing-md);
-        max-width: none;
-    }
-}
-
-/* ========================================
-   ENHANCED MOBILE NAVIGATION SYSTEM
-======================================== */
-
-.mobile-menu-toggle {
-    display: none;
-    flex-direction: column;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: var(--spacing-md);
-    gap: 5px;
-    min-height: 48px;
-    min-width: 48px;
-    align-items: center;
-    justify-content: center;
-    z-index: 1001;
-    position: relative;
-    border-radius: var(--radius-md);
-    transition: background-color var(--transition-fast);
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-}
-
-.mobile-menu-toggle:hover {
-    background-color: var(--gray-100);
-}
-
-.mobile-menu-toggle:focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
-}
-
-.mobile-menu-toggle:active {
-    background-color: var(--gray-200);
-    transform: scale(0.95);
-}
-
-.hamburger-line {
-    width: 26px;
-    height: 3px;
-    background-color: var(--gray-700);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 2px;
-    transform-origin: center;
-}
-
-/* Perfect Hamburger Animation */
-.mobile-menu-toggle.active .hamburger-line:nth-child(1) {
-    transform: rotate(45deg) translate(6px, 6px);
-    background-color: var(--primary-color);
-}
-
-.mobile-menu-toggle.active .hamburger-line:nth-child(2) {
-    opacity: 0;
-    transform: scale(0);
-}
-
-.mobile-menu-toggle.active .hamburger-line:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
-    background-color: var(--primary-color);
-}
-
-/* ========================================
-   UNIVERSAL CARD SYSTEM ENHANCEMENTS
-======================================== */
-
-@media (max-width: 480px) {
-    .card-grid {
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-md);
-    }
-    
-    .card {
-        width: 100%;
-        margin: 0;
-    }
-    
-    .card-image {
-        height: 160px;
-    }
-    
-    .card-content {
-        padding: var(--spacing-md);
-    }
-    
-    .card-title {
-        font-size: 1.3rem;
-    }
-    
-    .card-text {
-        font-size: 0.95rem;
-    }
-}
-
-@media (min-width: 481px) and (max-width: 767px) {
-    .card-grid {
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-lg);
-    }
-    
-    .card-image {
-        height: 180px;
-    }
-    
-    .card-content {
-        padding: var(--spacing-lg);
-    }
-}
-
-@media (min-width: 768px) {
-    .card-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: var(--spacing-xl);
-    }
-    
-    .card-image {
-        height: 200px;
-    }
-}
-
-/* ========================================
-   UNIVERSAL SECTION SPACING
-======================================== */
-
-@media (max-width: 480px) {
-    .info-section {
-        padding: var(--spacing-lg) 0;
-    }
-    
-    .section-header {
-        padding: 0;
-        margin-bottom: var(--spacing-lg);
-    }
-    
-    .section-title {
-        font-size: clamp(1.5rem, 6vw, 2rem);
-    }
-    
-    .section-subtitle {
-        font-size: 1rem;
-        padding: 0 var(--spacing-sm);
-    }
-}
-
-@media (min-width: 481px) and (max-width: 767px) {
-    .info-section {
-        padding: var(--spacing-xl) 0;
-    }
-    
-    .section-header {
-        margin-bottom: var(--spacing-xl);
-    }
-}
-
-@media (min-width: 768px) {
-    .info-section {
-        padding: var(--spacing-2xl) 0;
-    }
-    
-    .section-header {
-        margin-bottom: var(--spacing-2xl);
-    }
-}
-
-/* ========================================
-   UNIVERSAL FORM ELEMENTS
-======================================== */
-
+/* Form Elements */
 input[type="text"],
 input[type="email"],
 input[type="tel"],
@@ -549,11 +302,7 @@ textarea {
     }
 }
 
-/* ========================================
-   UNIVERSAL ACCESSIBILITY ENHANCEMENTS
-======================================== */
-
-/* Screen reader only text */
+/* Accessibility Enhancements */
 .sr-only {
     position: absolute;
     width: 1px;
@@ -566,7 +315,6 @@ textarea {
     border: 0;
 }
 
-/* Skip link */
 .skip-link {
     position: absolute;
     top: -40px;
@@ -584,16 +332,12 @@ textarea {
     top: 6px;
 }
 
-/* Focus visible styles */
 .focus-visible {
     outline: 2px solid var(--primary-color);
     outline-offset: 2px;
 }
 
-/* ========================================
-   UNIVERSAL TOUCH TARGETS
-======================================== */
-
+/* Touch Targets */
 .btn, 
 .card-link, 
 .nav-link, 
@@ -620,10 +364,7 @@ input[type="button"] {
     }
 }
 
-/* ========================================
-   UNIVERSAL UTILITY CLASSES
-======================================== */
-
+/* Utility Classes */
 .flex {
     display: flex;
 }
@@ -718,10 +459,7 @@ input[type="button"] {
     }
 }
 
-/* ========================================
-   UNIVERSAL ANIMATIONS
-======================================== */
-
+/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -753,7 +491,6 @@ input[type="button"] {
     }
 }
 
-/* Apply animations to elements */
 .card {
     animation: fadeIn 0.6s ease-out;
 }
@@ -762,10 +499,7 @@ input[type="button"] {
     animation: scaleIn 0.8s ease-out;
 }
 
-/* ========================================
-   UNIVERSAL PERFORMANCE OPTIMIZATIONS
-======================================== */
-
+/* Performance optimizations */
 .card,
 .btn,
 .nav-link,
@@ -788,10 +522,7 @@ img {
     }
 }
 
-/* ========================================
-   UNIVERSAL BROWSER COMPATIBILITY
-======================================== */
-
+/* Browser compatibility */
 @supports not (backdrop-filter: blur(10px)) {
     .loading-content {
         background: rgba(139, 0, 0, 0.9);
@@ -829,10 +560,7 @@ a:focus {
     outline-offset: 2px;
 }
 
-/* ========================================
-   iOS SAFARI SPECIFIC FIXES
-======================================== */
-
+/* iOS Safari specific fixes */
 @supports (-webkit-touch-callout: none) {
     .mobile-menu-toggle,
     .nav-link,
