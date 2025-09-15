@@ -1,21 +1,22 @@
 // Service Worker for Ascension Lutheran Church PWA
 // Provides offline functionality and caching strategies
 
-const CACHE_NAME = 'alc-pwa-v1.0.0';
+const CACHE_NAME = 'alc-pwa-v2025011401'; // Updated version for cache busting
 const OFFLINE_URL = '/offline.html';
 
 // Resources to cache immediately on install
 const STATIC_CACHE_URLS = [
   '/',
   '/index.html',
-  '/css/main.css',
-  '/css/components.css',
-  '/js/app.js',
-  '/js/navigation.js',
-  '/js/components.js',
+  '/css/main.css?v=2025011401',
+  '/css/components.css?v=2025011401',
+  '/js/app.js?v=2025011401',
+  '/js/navigation.js?v=2025011401',
+  '/js/components.js?v=2025011401',
   '/manifest.json',
   // Add critical images when available
   '/images/alc-logo.png',
+  '/images/Pastor.png',
   '/images/favicon-32x32.png',
   '/images/apple-touch-icon.png',
   // Fonts
@@ -35,7 +36,7 @@ const RUNTIME_CACHE_URLS = [
 ];
 
 self.addEventListener('install', (event) => {
-  console.log('🏛️ Service Worker: Installing...');
+  console.log('🏛️ Service Worker: Installing... v2025011401');
   
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -55,7 +56,7 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
-  console.log('🏛️ Service Worker: Activating...');
+  console.log('🏛️ Service Worker: Activating... v2025011401');
   
   event.waitUntil(
     Promise.all([
@@ -218,7 +219,7 @@ async function navigationHandler(request) {
               border-radius: 8px;
               box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             }
-            h1 { color: #2c5282; }
+            h1 { color: #8B0000; }
             .cross { font-size: 3rem; margin: 1rem 0; }
           </style>
         </head>
@@ -390,7 +391,7 @@ self.addEventListener('periodicsync', (event) => {
 async function updateContent() {
   try {
     // Update critical content in background
-    const criticalUrls = ['/', '/css/main.css', '/js/app.js'];
+    const criticalUrls = ['/', '/css/main.css?v=2025011401', '/js/app.js?v=2025011401'];
     
     for (const url of criticalUrls) {
       try {
@@ -428,4 +429,4 @@ self.addEventListener('message', (event) => {
   }
 });
 
-console.log('🏛️ Service Worker: Loaded successfully');
+console.log('🏛️ Service Worker: Loaded successfully v2025011401');
