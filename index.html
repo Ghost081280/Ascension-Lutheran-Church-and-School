@@ -467,20 +467,90 @@
         // Fallback - hide loading screen after max 6 seconds
         setTimeout(hideLoadingScreen, 6000);
         
-        // Mobile menu toggle function
+        // Mobile menu toggle function - FIXED
         function toggleMobileMenu() {
             console.log('🏛️ toggleMobileMenu called');
-            const navMenu = document.getElementById('nav-menu');
+            const navMenu = document.querySelector('.nav-menu');
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            const hamburgerLines = mobileToggle.querySelectorAll('.hamburger-line');
+            
+            if (!navMenu || !mobileToggle) {
+                console.error('🏛️ Mobile menu elements not found');
+                return;
+            }
+            
             const isOpen = navMenu.classList.contains('active');
             
             if (isOpen) {
+                // Close menu
                 navMenu.classList.remove('active');
+                mobileToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+                
+                // Reset hamburger animation
+                if (hamburgerLines.length >= 3) {
+                    hamburgerLines[0].style.transform = 'none';
+                    hamburgerLines[1].style.opacity = '1';
+                    hamburgerLines[2].style.transform = 'none';
+                }
+                
                 console.log('🏛️ Mobile menu closed');
             } else {
+                // Open menu
                 navMenu.classList.add('active');
+                mobileToggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+                
+                // Animate hamburger to X
+                if (hamburgerLines.length >= 3) {
+                    hamburgerLines[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    hamburgerLines[1].style.opacity = '0';
+                    hamburgerLines[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                }
+                
                 console.log('🏛️ Mobile menu opened');
             }
         }
+        
+        // Make toggleMobileMenu globally available
+        window.toggleMobileMenu = toggleMobileMenu;
+        
+        // Initialize mobile menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            // Add click listener to mobile toggle
+            if (mobileToggle) {
+                mobileToggle.addEventListener('click', toggleMobileMenu);
+            }
+            
+            // Close mobile menu when clicking nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (navMenu && navMenu.classList.contains('active')) {
+                        toggleMobileMenu();
+                    }
+                });
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (navMenu && navMenu.classList.contains('active') &&
+                    !navMenu.contains(e.target) && 
+                    !mobileToggle.contains(e.target)) {
+                    toggleMobileMenu();
+                }
+            });
+            
+            // Close mobile menu on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && navMenu && navMenu.classList.contains('active')) {
+                    toggleMobileMenu();
+                }
+            });
+        });
         
         // Fallback in case main app doesn't load
         setTimeout(function() {
