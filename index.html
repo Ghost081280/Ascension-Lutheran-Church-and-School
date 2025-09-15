@@ -7,7 +7,7 @@
     <!-- Force Cache Clear Script - MUST BE FIRST -->
     <script>
     (function() {
-        var currentVersion = '2025011405'; // Updated version for fix
+        var currentVersion = '2025011408'; // Final fixed version
         var lastVersion = localStorage.getItem('alc-app-version');
         
         console.log('🏛️ Version check:', { current: currentVersion, last: lastVersion });
@@ -55,26 +55,71 @@
     <meta property="og:url" content="https://ghost081280.github.io/Ascension-Lutheran-Church-and-School/">
     <meta property="og:type" content="website">
     
-    <!-- Favicon with Luther Rose Logo -->
+    <!-- Favicon with Luther Rose Logo - Fixed Paths -->
     <link rel="icon" type="image/x-icon" href="./images/Color Luther Rose - 72 dpi.jpg">
-    <link rel="icon" type="image/png" sizes="32x32" href="./images/Color Luther Rose - 72 dpi.jpg">
-    <link rel="icon" type="image/png" sizes="16x16" href="./images/Color Luther Rose - 72 dpi.jpg">
-    <link rel="apple-touch-icon" href="./images/Color Luther Rose - 72 dpi.jpg">
-    <link rel="shortcut icon" href="./images/Color Luther Rose - 72 dpi.jpg">
+    <link rel="icon" type="image/jpeg" sizes="32x32" href="./images/Color Luther Rose - 72 dpi.jpg">
+    <link rel="icon" type="image/jpeg" sizes="16x16" href="./images/Color Luther Rose - 72 dpi.jpg">
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/Color Luther Rose - 72 dpi.jpg">
+    <link rel="shortcut icon" type="image/jpeg" href="./images/Color Luther Rose - 72 dpi.jpg">
     
     <!-- Additional favicon formats for better compatibility -->
-    <link rel="icon" sizes="192x192" href="./images/Color Luther Rose - 72 dpi.jpg">
-    <link rel="icon" sizes="128x128" href="./images/Color Luther Rose - 72 dpi.jpg">
+    <link rel="icon" type="image/jpeg" sizes="192x192" href="./images/Color Luther Rose - 72 dpi.jpg">
+    <link rel="icon" type="image/jpeg" sizes="128x128" href="./images/Color Luther Rose - 72 dpi.jpg">
+    <link rel="icon" type="image/jpeg" sizes="96x96" href="./images/Color Luther Rose - 72 dpi.jpg">
+    <link rel="icon" type="image/jpeg" sizes="72x72" href="./images/Color Luther Rose - 72 dpi.jpg">
     
     <!-- PWA Manifest -->
     <link rel="manifest" href="./manifest.json">
     
+    <style>
+        /* Donation link styling */
+        .donate-link {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%) !important;
+            color: white !important;
+            border-radius: 25px !important;
+            padding: 0.5rem 1rem !important;
+            font-weight: 600 !important;
+            box-shadow: 0 2px 10px rgba(255, 107, 107, 0.3) !important;
+            transition: all 0.3s ease !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.3rem !important;
+        }
+        
+        .donate-link:hover {
+            background: linear-gradient(135deg, #ff5252 0%, #ff1744 100%) !important;
+            color: white !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4) !important;
+        }
+        
+        .donate-heart {
+            animation: heartbeat 2s ease-in-out infinite;
+            font-size: 1.1rem;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Mobile responsive for donation link */
+        @media (max-width: 768px) {
+            .donate-link {
+                margin-top: 0.5rem !important;
+                width: 100% !important;
+                justify-content: center !important;
+            }
+        }
+    </style>
+    
     <!-- Stylesheets with cache busting -->
-    <link rel="stylesheet" href="./css/main.css?v=2025011405">
-    <link rel="stylesheet" href="./css/components.css?v=2025011405">
+    <link rel="stylesheet" href="./css/main.css?v=2025011408">
+    <link rel="stylesheet" href="./css/components.css?v=2025011408">
     
     <!-- Preload critical resources -->
-    <link rel="preload" href="./css/main.css?v=2025011405" as="style">
+    <link rel="preload" href="./css/main.css?v=2025011408" as="style">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -142,6 +187,9 @@
                         <a href="#school" class="nav-link" data-page="school">School</a>
                         <a href="#worship" class="nav-link" data-page="worship">Worship</a>
                         <a href="#contact" class="nav-link" data-page="contact">Contact</a>
+                        <a href="https://secure.myvanco.com/L-YTGK/home" target="_blank" rel="noopener" class="nav-link donate-link">
+                            <span class="donate-heart">♥</span> Give
+                        </a>
                     </div>
                 </div>
             </nav>
@@ -195,9 +243,9 @@
     </div>
 
     <!-- JavaScript Files with cache busting -->
-    <script src="./js/app.js?v=2025011405" defer></script>
-    <script src="./js/navigation.js?v=2025011405" defer></script>
-    <script src="./js/components.js?v=2025011405" defer></script>
+    <script src="./js/app.js?v=2025011408" defer></script>
+    <script src="./js/navigation.js?v=2025011408" defer></script>
+    <script src="./js/components.js?v=2025011408" defer></script>
     
     <!-- Loading Screen Logo Debug Script -->
     <script>
@@ -296,11 +344,11 @@
     
     <!-- Service Worker Registration -->
     <script>
-        console.log('🏛️ Ascension Lutheran Church PWA v2025011405');
+        console.log('🏛️ Ascension Lutheran Church PWA v2025011408');
         
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js?v=2025011407')
+                navigator.serviceWorker.register('./sw.js?v=2025011408')
                     .then((registration) => {
                         console.log('SW registered: ', registration);
                     })
