@@ -14,51 +14,51 @@
   "version": "1.0.0",
   "icons": [
     {
-      "src": "./images/Color Luther Rose - 72 dpi.jpg",
+      "src": "./images/Rose_ColorThumb.png",
       "sizes": "72x72",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./images/Color Luther Rose - 72 dpi.jpg",
+      "src": "./images/Rose_ColorThumb.png",
       "sizes": "96x96",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./images/Color Luther Rose - 72 dpi.jpg",
+      "src": "./images/Rose_ColorThumb.png",
       "sizes": "128x128",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./images/Color Luther Rose - 72 dpi.jpg",
+      "src": "./images/Rose_ColorThumb.png",
       "sizes": "144x144",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./images/Color Luther Rose - 72 dpi.jpg",
+      "src": "./images/Rose_ColorThumb.png",
       "sizes": "152x152",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./images/Color Luther Rose - 72 dpi.jpg",
+      "src": "./images/Rose_ColorThumb.png",
       "sizes": "192x192",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "./images/Color Luther Rose - 72 dpi.jpg",
+      "src": "./images/Rose_ColorThumb.png",
       "sizes": "384x384",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./images/Color Luther Rose - 72 dpi.jpg",
+      "src": "./images/Rose_ColorThumb.png",
       "sizes": "512x512",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ],
@@ -70,7 +70,7 @@
       "url": "/#worship",
       "icons": [
         {
-          "src": "./images/Color Luther Rose - 72 dpi.jpg",
+          "src": "./images/Rose_ColorThumb.png",
           "sizes": "96x96"
         }
       ]
@@ -82,7 +82,7 @@
       "url": "/#contact",
       "icons": [
         {
-          "src": "./images/Color Luther Rose - 72 dpi.jpg",
+          "src": "./images/Rose_ColorThumb.png",
           "sizes": "96x96"
         }
       ]
@@ -94,7 +94,7 @@
       "url": "/#school",
       "icons": [
         {
-          "src": "./images/Color Luther Rose - 72 dpi.jpg",
+          "src": "./images/Rose_ColorThumb.png",
           "sizes": "96x96"
         }
       ]
