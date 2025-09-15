@@ -1,64 +1,84 @@
-// EMERGENCY FIX app.js - Prevent Mobile Offline Issues
-console.log('🏛️ EMERGENCY: Content-driven app.js loading...');
+// Ascension Lutheran Church App - Clean Rebuild
+console.log('🏛️ App.js loading...');
 
 class AscensionApp {
   constructor() {
     this.currentPage = 'home';
     this.mobileMenuOpen = false;
     this.content = null;
-    this.initialized = false;
     this.init();
   }
 
   async init() {
-    console.log('🏛️ EMERGENCY: Initializing Ascension App...');
+    console.log('🏛️ Initializing Ascension App...');
     
     try {
-      await this.loadContent();
+      await this.waitForContent();
       this.setupEventListeners();
-      this.loadInitialPage();
-      this.initialized = true;
-      console.log('🏛️ EMERGENCY: App initialized successfully');
+      this.populateNavigation();
+      this.populateFooter();
+      this.loadPage('home');
+      console.log('🏛️ App initialized successfully');
     } catch (error) {
-      console.error('🏛️ EMERGENCY: App initialization failed:', error);
-      // Don't let errors prevent the app from working
-      this.emergencyInit();
+      console.error('🏛️ App initialization failed:', error);
+      this.showFallbackContent();
     }
   }
 
-  emergencyInit() {
-    console.log('🏛️ EMERGENCY: Running emergency initialization');
-    this.setupBasicEventListeners();
-    this.showBasicContent();
-  }
-
-  async loadContent() {
+  async waitForContent() {
     let attempts = 0;
-    const maxAttempts = 5;
+    const maxAttempts = 20;
     
     while (attempts < maxAttempts) {
       if (typeof SITE_CONTENT !== 'undefined') {
         this.content = SITE_CONTENT;
-        console.log('🏛️ EMERGENCY: Content loaded successfully');
+        console.log('🏛️ Content loaded successfully');
         return;
       }
       
       attempts++;
-      console.log(`🏛️ EMERGENCY: Content loading attempt ${attempts}/${maxAttempts}`);
-      await new Promise(resolve => setTimeout(resolve, 200));
+      await new Promise(resolve => setTimeout(resolve, 100));
     }
     
-    console.error('🏛️ EMERGENCY: Content failed to load after maximum attempts');
-    throw new Error('Content not available');
+    throw new Error('Content not available after maximum attempts');
   }
 
   setupEventListeners() {
-    // EMERGENCY: Simplified but functional mobile menu
-    this.setupMobileMenuToggle();
-    this.setupNavigationLinks();
-    this.setupLogoHandler();
+    // Mobile menu toggle
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    if (mobileToggle) {
+      mobileToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.toggleMobileMenu();
+      });
+    }
 
-    // Basic keyboard support
+    // Logo click handler
+    const logoContainer = document.getElementById('nav-logo-home');
+    if (logoContainer) {
+      logoContainer.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.loadPage('home');
+      });
+    }
+
+    // Navigation clicks
+    document.addEventListener('click', (e) => {
+      if (e.target.hasAttribute('data-page')) {
+        e.preventDefault();
+        const page = e.target.getAttribute('data-page');
+        this.loadPage(page);
+      }
+
+      // Close mobile menu on outside click
+      if (this.mobileMenuOpen && 
+          !e.target.closest('.nav-menu') && 
+          !e.target.closest('.mobile-menu-toggle')) {
+        this.closeMobileMenu();
+      }
+    });
+
+    // Keyboard support
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && this.mobileMenuOpen) {
         this.closeMobileMenu();
@@ -72,110 +92,80 @@ class AscensionApp {
         this.loadPage(hash);
       }
     });
+  }
 
-    // Window resize
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 767 && this.mobileMenuOpen) {
-        this.closeMobileMenu();
+  populateNavigation() {
+    const navMenu = document.getElementById('nav-menu');
+    if (!navMenu || !this.content) return;
+
+    const navLinks = this.content.navigation.map(item => 
+      `<a href="javascript:void(0)" class="nav-link" data-page="${item.id}">${item.label}</a>`
+    ).join('');
+
+    const donateButton = `<a href="${this.content.external.donate}" target="_blank" rel="noopener" class="nav-link donate-link">
+      <span class="donate-heart">♥</span> Give
+    </a>`;
+
+    navMenu.innerHTML = navLinks + donateButton;
+
+    // Set home as active
+    const homeLink = navMenu.querySelector('[data-page="home"]');
+    if (homeLink) homeLink.classList.add('active');
+  }
+
+  populateFooter() {
+    const footer = document.getElementById('main-footer');
+    if (!footer || !this.content) return;
+
+    const footerData = this.content.footer;
+    const socialData = this.content.social;
+
+    const sections = footerData.sections.map(section => {
+      if (section.social) {
+        return `
+          <div class="footer-section">
+            <h3>${section.title}</h3>
+            <div class="social-links">
+              <a href="${socialData.facebook}" target="_blank" rel="noopener" class="social-link facebook">
+                Facebook
+              </a>
+              <a href="${socialData.youtube}" target="_blank" rel="noopener" class="social-link youtube">
+                YouTube
+              </a>
+            </div>
+          </div>
+        `;
+      } else {
+        const content = section.content.map(item => `<p>${item}</p>`).join('');
+        return `
+          <div class="footer-section">
+            <h3>${section.title}</h3>
+            ${content}
+          </div>
+        `;
       }
-    });
-  }
+    }).join('');
 
-  setupBasicEventListeners() {
-    // EMERGENCY: Basic functionality without content
-    const mobileToggle = document.getElementById('mobile-menu-toggle');
-    if (mobileToggle) {
-      mobileToggle.addEventListener('click', () => {
-        console.log('🏛️ EMERGENCY: Basic mobile toggle');
-        this.basicToggleMobileMenu();
-      });
-    }
+    const bottom = footerData.bottom.map(text => `<p>${text}</p>`).join('');
 
-    // Basic navigation
-    document.addEventListener('click', (e) => {
-      if (e.target.classList.contains('nav-link') && e.target.hasAttribute('data-page')) {
-        e.preventDefault();
-        const page = e.target.getAttribute('data-page');
-        this.showBasicPage(page);
-      }
-    });
-  }
-
-  setupMobileMenuToggle() {
-    const mobileToggle = document.getElementById('mobile-menu-toggle');
-    if (!mobileToggle) {
-      console.warn('🏛️ EMERGENCY: Mobile toggle not found');
-      return;
-    }
-
-    console.log('🏛️ EMERGENCY: Setting up mobile menu toggle');
-
-    // EMERGENCY: Simple, reliable event handling
-    const handleToggle = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      console.log('🏛️ EMERGENCY: Mobile toggle activated');
-      this.toggleMobileMenu();
-    };
-
-    // Primary event handlers
-    mobileToggle.addEventListener('click', handleToggle);
-    mobileToggle.addEventListener('touchend', (e) => {
-      e.preventDefault();
-      this.toggleMobileMenu();
-    });
-
-    console.log('🏛️ EMERGENCY: Mobile toggle setup complete');
-  }
-
-  setupNavigationLinks() {
-    document.addEventListener('click', (e) => {
-      // Handle navigation
-      if (e.target.hasAttribute('data-page')) {
-        e.preventDefault();
-        const page = e.target.getAttribute('data-page');
-        console.log('🏛️ EMERGENCY: Navigation to:', page);
-        this.loadPage(page);
-      }
-
-      // Close mobile menu on outside click
-      if (this.mobileMenuOpen && 
-          !e.target.closest('.nav-menu') && 
-          !e.target.closest('.mobile-menu-toggle')) {
-        this.closeMobileMenu();
-      }
-    });
-  }
-
-  setupLogoHandler() {
-    const logoContainer = document.getElementById('nav-logo-home');
-    if (logoContainer) {
-      console.log('🏛️ EMERGENCY: Setting up logo handler');
-      
-      const handleLogoClick = (e) => {
-        e.preventDefault();
-        console.log('🏛️ EMERGENCY: Logo clicked');
-        this.loadPage('home');
-      };
-
-      logoContainer.addEventListener('click', handleLogoClick);
-      logoContainer.addEventListener('touchend', handleLogoClick);
-      logoContainer.style.cursor = 'pointer';
-    }
-  }
-
-  loadInitialPage() {
-    const hash = window.location.hash.substring(1);
-    const initialPage = hash && this.content && this.content.pages[hash] ? hash : 'home';
-    this.loadPage(initialPage);
+    footer.innerHTML = `
+      <div class="footer-content">
+        <div class="footer-container">
+          ${sections}
+        </div>
+        <div class="footer-bottom">
+          ${bottom}
+        </div>
+      </div>
+    `;
   }
 
   loadPage(pageName) {
-    console.log('🏛️ EMERGENCY: Loading page:', pageName);
+    console.log('🏛️ Loading page:', pageName);
 
     if (!this.content || !this.content.pages[pageName]) {
-      console.warn('🏛️ EMERGENCY: Page not found, showing basic content');
-      this.showBasicPage(pageName);
+      console.warn('🏛️ Page not found:', pageName);
+      this.showFallbackContent();
       return;
     }
 
@@ -186,7 +176,7 @@ class AscensionApp {
 
     const container = document.getElementById('page-container');
     if (container) {
-      container.style.opacity = '0.3';
+      container.style.opacity = '0.5';
       setTimeout(() => {
         container.innerHTML = pageHTML;
         container.style.opacity = '1';
@@ -195,98 +185,8 @@ class AscensionApp {
         this.updateURL(pageName);
         this.setupPageEventListeners();
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 150);
+      }, 100);
     }
-  }
-
-  showBasicContent() {
-    const container = document.getElementById('page-container');
-    if (container) {
-      container.innerHTML = `
-        <div class="page-content">
-          <section class="hero-section">
-            <div class="hero-content">
-              <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
-              <p class="hero-subtitle">Church & School • Fort Wayne, Indiana</p>
-            </div>
-          </section>
-          <div class="container">
-            <section class="info-section">
-              <div class="worship-times">
-                <h3>Divine Worship</h3>
-                <div class="time-item">
-                  <span class="time-label">Sunday Morning Services</span>
-                  <span class="time-value">8:00 AM & 10:45 AM</span>
-                </div>
-                <div class="time-item">
-                  <span class="time-label">Sunday School</span>
-                  <span class="time-value">9:30 AM</span>
-                </div>
-              </div>
-            </section>
-          </div>
-        </div>
-      `;
-    }
-  }
-
-  showBasicPage(pageName) {
-    const container = document.getElementById('page-container');
-    if (!container) return;
-
-    const basicPages = {
-      home: `
-        <div class="page-content">
-          <section class="hero-section">
-            <div class="hero-content">
-              <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
-              <p class="hero-subtitle">Church & School • Fort Wayne, Indiana</p>
-            </div>
-          </section>
-        </div>
-      `,
-      church: `
-        <div class="page-content">
-          <div class="container">
-            <section class="hero-section">
-              <div class="hero-content">
-                <h1 class="hero-title">Our Church</h1>
-                <p class="hero-subtitle">Faithful to the Gospel of Christ since 1977</p>
-              </div>
-            </section>
-          </div>
-        </div>
-      `,
-      worship: `
-        <div class="page-content">
-          <div class="container">
-            <section class="hero-section">
-              <div class="hero-content">
-                <h1 class="hero-title">Worship With Us</h1>
-                <p class="hero-subtitle">Sunday Services: 8:00 AM & 10:45 AM</p>
-              </div>
-            </section>
-          </div>
-        </div>
-      `,
-      contact: `
-        <div class="page-content">
-          <div class="container">
-            <section class="hero-section">
-              <div class="hero-content">
-                <h1 class="hero-title">Contact Us</h1>
-                <p class="hero-subtitle">8811 St. Joe Road, Fort Wayne, IN 46835<br>(260) 486-2226</p>
-              </div>
-            </section>
-          </div>
-        </div>
-      `
-    };
-
-    const content = basicPages[pageName] || basicPages.home;
-    container.innerHTML = content;
-    this.updateNavigation(pageName);
-    this.updateURL(pageName);
   }
 
   generatePageHTML(pageName, pageData) {
@@ -386,12 +286,11 @@ class AscensionApp {
     `;
   }
 
-  // Component Generators
   generateHeroSection(hero) {
     if (!hero) return '';
 
     const backgroundStyle = hero.backgroundImage ? 
-      `style="background-image: linear-gradient(rgba(139, 0, 0, 0.7), rgba(102, 0, 0, 0.7)), url('${hero.backgroundImage}'); background-size: cover; background-position: center; background-attachment: scroll;"` : '';
+      `style="background-image: linear-gradient(rgba(139, 0, 0, 0.7), rgba(102, 0, 0, 0.7)), url('${hero.backgroundImage}'); background-size: cover; background-position: center;"` : '';
 
     const buttons = hero.buttons ? hero.buttons.map(btn => 
       btn.link ? 
@@ -435,8 +334,7 @@ class AscensionApp {
 
     const cards = section.cards.map(card => `
       <div class="card">
-        <img src="${card.image}" alt="${card.title}" class="card-image" 
-             onerror="this.src='${this.content.images.placeholders[card.title.toLowerCase()]}'">
+        <img src="${card.image}" alt="${card.title}" class="card-image">
         <div class="card-content">
           <h3 class="card-title">${card.title}</h3>
           <p class="card-text">${card.text}</p>
@@ -472,8 +370,7 @@ class AscensionApp {
         </div>
         <div class="pastor-section">
           <div class="pastor-image-wrapper">
-            <img src="${pastor.image}" alt="${pastor.name}" class="pastor-photo" 
-                 onerror="this.src='${this.content.images.placeholders.pastor}'">
+            <img src="${pastor.image}" alt="${pastor.name}" class="pastor-photo">
           </div>
           <div class="pastor-info">
             <h3 class="pastor-name">${pastor.name}</h3>
@@ -516,7 +413,7 @@ class AscensionApp {
         <div class="card">
           <div class="card-content">
             ${content}
-            <h4>More specifically, here's what we believe:</h4>
+            <h4>What we believe:</h4>
             <ul class="content-list">
               ${points}
             </ul>
@@ -719,9 +616,7 @@ class AscensionApp {
     `;
   }
 
-  // EMERGENCY: Simplified Mobile Menu Functions
   toggleMobileMenu() {
-    console.log('🏛️ EMERGENCY: Toggle mobile menu - current state:', this.mobileMenuOpen);
     if (this.mobileMenuOpen) {
       this.closeMobileMenu();
     } else {
@@ -729,65 +624,32 @@ class AscensionApp {
     }
   }
 
-  basicToggleMobileMenu() {
-    const navMenu = document.getElementById('nav-menu');
-    const mobileToggle = document.getElementById('mobile-menu-toggle');
-    
-    if (navMenu && mobileToggle) {
-      if (navMenu.classList.contains('active')) {
-        navMenu.classList.remove('active');
-        mobileToggle.classList.remove('active');
-        document.body.style.overflow = '';
-        this.mobileMenuOpen = false;
-      } else {
-        navMenu.classList.add('active');
-        mobileToggle.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        this.mobileMenuOpen = true;
-      }
-    }
-  }
-
   openMobileMenu() {
     const navMenu = document.getElementById('nav-menu');
     const mobileToggle = document.getElementById('mobile-menu-toggle');
     
-    if (!navMenu || !mobileToggle) {
-      console.warn('🏛️ EMERGENCY: Mobile menu elements not found');
-      return;
-    }
+    if (!navMenu || !mobileToggle) return;
 
-    console.log('🏛️ EMERGENCY: Opening mobile menu');
     this.mobileMenuOpen = true;
-    
     navMenu.classList.add('active');
     mobileToggle.classList.add('active');
     mobileToggle.setAttribute('aria-expanded', 'true');
     
     document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
   }
 
   closeMobileMenu() {
     const navMenu = document.getElementById('nav-menu');
     const mobileToggle = document.getElementById('mobile-menu-toggle');
     
-    if (!navMenu || !mobileToggle) {
-      console.warn('🏛️ EMERGENCY: Mobile menu elements not found');
-      return;
-    }
+    if (!navMenu || !mobileToggle) return;
 
-    console.log('🏛️ EMERGENCY: Closing mobile menu');
     this.mobileMenuOpen = false;
-    
     navMenu.classList.remove('active');
     mobileToggle.classList.remove('active');
     mobileToggle.setAttribute('aria-expanded', 'false');
     
     document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.width = '';
   }
 
   updateNavigation(pageName) {
@@ -809,42 +671,40 @@ class AscensionApp {
   setupPageEventListeners() {
     const buttons = document.querySelectorAll('[data-page]');
     buttons.forEach(button => {
-      const handleClick = (e) => {
-        e.preventDefault();
-        const page = button.getAttribute('data-page');
-        this.loadPage(page);
-      };
+      const newButton = button.cloneNode(true);
+      button.parentNode.replaceChild(newButton, button);
       
-      button.addEventListener('click', handleClick);
-      button.addEventListener('touchend', handleClick);
+      newButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        const page = newButton.getAttribute('data-page');
+        this.loadPage(page);
+      });
     });
+  }
 
-    this.setupLogoHandler();
+  showFallbackContent() {
+    const container = document.getElementById('page-container');
+    if (container) {
+      container.innerHTML = `
+        <div class="page-content">
+          <section class="hero-section">
+            <div class="hero-content">
+              <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
+              <p class="hero-subtitle">Church & School • Fort Wayne, Indiana</p>
+              <p>Sunday Services: 8:00 AM & 10:45 AM</p>
+            </div>
+          </section>
+        </div>
+      `;
+    }
   }
 }
 
-// EMERGENCY: Initialize app when DOM is ready
+// Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('🏛️ EMERGENCY: DOM ready, starting Ascension App...');
-  try {
-    window.ascensionApp = new AscensionApp();
-  } catch (error) {
-    console.error('🏛️ EMERGENCY: Failed to start app:', error);
-    // Show basic content even if app fails
-    document.getElementById('page-container').innerHTML = `
-      <div class="page-content">
-        <section class="hero-section">
-          <div class="hero-content">
-            <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
-            <p class="hero-subtitle">Church & School • Fort Wayne, Indiana</p>
-            <p>Sunday Services: 8:00 AM & 10:45 AM</p>
-          </div>
-        </section>
-      </div>
-    `;
-  }
+  console.log('🏛️ DOM ready, starting app...');
+  window.ascensionApp = new AscensionApp();
 });
 
 // Make functions available globally
 window.loadPage = (page) => window.ascensionApp?.loadPage(page);
-window.toggleMobileMenu = () => window.ascensionApp?.toggleMobileMenu();
