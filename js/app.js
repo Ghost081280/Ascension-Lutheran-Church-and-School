@@ -1,14 +1,14 @@
 // Main Application JavaScript for Ascension Lutheran Church PWA
-// Version: 2025011404 - With Clickable Logo Navigation
+// Version: 2025011405 - FIXED: Page content not switching properly
 
-console.log('🏛️ app.js loading... v2025011404');
+console.log('🏛️ app.js loading... v2025011405');
 
 class ChurchApp {
     constructor() {
-        console.log('🏛️ ChurchApp constructor called v2025011404');
+        console.log('🏛️ ChurchApp constructor called v2025011405');
         this.currentPage = 'home';
         this.isLoading = false;
-        this.version = '2025011404';
+        this.version = '2025011405';
         this.pageContent = this.initializePageContent();
         
         this.init();
@@ -88,7 +88,7 @@ class ChurchApp {
         window.addEventListener('popstate', () => {
             const hash = window.location.hash.substring(1) || 'home';
             console.log('🏛️ Popstate event:', hash);
-            this.loadPage(hash);
+            this.loadPage(hash, false); // Don't update URL since we're responding to URL change
         });
     }
 
@@ -97,30 +97,38 @@ class ChurchApp {
         const hash = window.location.hash.substring(1);
         const initialPage = hash && this.pageContent[hash] ? hash : 'home';
         console.log('🏛️ Initial page determined:', initialPage);
-        this.loadPage(initialPage);
+        this.loadPage(initialPage, false); // Don't update URL on initial load
     }
 
-    loadPage(pageName) {
-        console.log('🏛️ Loading page:', pageName);
+    loadPage(pageName, updateURL = true) {
+        console.log('🏛️ Loading page:', pageName, 'Current page:', this.currentPage);
         
         if (this.isLoading) {
             console.log('🏛️ Already loading, skipping');
             return;
         }
         
+        // Don't reload the same page
+        if (this.currentPage === pageName) {
+            console.log('🏛️ Same page, skipping reload');
+            return;
+        }
+        
         this.isLoading = true;
-        this.currentPage = pageName;
         
         try {
             const pageContent = this.getPageContent(pageName);
-            console.log('🏛️ Got page content for', pageName);
+            console.log('🏛️ Got page content for', pageName, 'Content length:', pageContent.length);
+            
+            this.currentPage = pageName;
             this.renderPage(pageContent);
             this.updateActiveNavigation(pageName);
             this.updatePageTitle(pageName);
             
             // Update URL hash
-            if (window.location.hash !== `#${pageName}`) {
-                window.location.hash = `#${pageName}`;
+            if (updateURL && window.location.hash !== `#${pageName}`) {
+                console.log('🏛️ Updating URL hash to:', pageName);
+                window.history.pushState(null, null, `#${pageName}`);
             }
 
             // Announce page change for accessibility
@@ -128,7 +136,7 @@ class ChurchApp {
                 window.announcePageChange(pageName);
             }
         } catch (error) {
-            console.error('Error loading page:', error);
+            console.error('🏛️ Error loading page:', error);
         } finally {
             this.isLoading = false;
         }
@@ -136,11 +144,13 @@ class ChurchApp {
 
     getPageContent(pageName) {
         console.log('🏛️ Getting content for page:', pageName);
-        return this.pageContent[pageName] || this.pageContent.home;
+        const content = this.pageContent[pageName] || this.pageContent.home;
+        console.log('🏛️ Content found:', !!content, 'Length:', content.length);
+        return content;
     }
 
     renderPage(pageContent) {
-        console.log('🏛️ Rendering page content');
+        console.log('🏛️ Rendering page content, length:', pageContent.length);
         const container = document.getElementById('page-container');
         
         if (!container) {
@@ -148,22 +158,23 @@ class ChurchApp {
             return;
         }
         
-        // Smooth transition
-        container.style.opacity = '0';
+        // Force immediate content update without transition for debugging
+        container.innerHTML = pageContent;
         
-        setTimeout(() => {
-            container.innerHTML = pageContent;
-            container.style.opacity = '1';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }, 150);
+        // Scroll to top immediately
+        window.scrollTo({ top: 0, behavior: 'auto' });
+        
+        console.log('🏛️ Page content rendered successfully');
     }
 
     updateActiveNavigation(pageName) {
+        console.log('🏛️ Updating active navigation for:', pageName);
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('data-page') === pageName) {
                 link.classList.add('active');
+                console.log('🏛️ Set active class on:', link.textContent.trim());
             }
         });
     }
@@ -179,9 +190,11 @@ class ChurchApp {
         };
         
         document.title = titles[pageName] || titles.home;
+        console.log('🏛️ Updated page title to:', document.title);
     }
 
     initializePageContent() {
+        console.log('🏛️ Initializing page content...');
         return {
             home: `
                 <div class="page-content">
@@ -258,7 +271,7 @@ class ChurchApp {
                             <div class="card">
                                 <div class="card-content" style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
                                     <div style="flex: 0 0 200px;">
-                                        <img src="./images/Pastor.png?v=2025011404" alt="Rev. James Gier, Senior Pastor" 
+                                        <img src="./images/Pastor.png?v=2025011405" alt="Rev. James Gier, Senior Pastor" 
                                              style="width: 200px; height: 250px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
                                     </div>
                                     <div style="flex: 1; min-width: 300px;">
@@ -671,4 +684,4 @@ document.addEventListener('DOMContentLoaded', function() {
     window.app = new ChurchApp();
 });
 
-console.log('🏛️ ALC PWA App.js Version: 2025011404');
+console.log('🏛️ ALC PWA App.js Version: 2025011405');
