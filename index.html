@@ -7,7 +7,7 @@
     <!-- Force Cache Clear Script - MUST BE FIRST -->
     <script>
     (function() {
-        var currentVersion = '2025011404'; // Incremented version
+        var currentVersion = '2025011405'; // Updated version for fix
         var lastVersion = localStorage.getItem('alc-app-version');
         
         console.log('🏛️ Version check:', { current: currentVersion, last: lastVersion });
@@ -64,11 +64,11 @@
     <link rel="manifest" href="./manifest.json">
     
     <!-- Stylesheets with cache busting -->
-    <link rel="stylesheet" href="./css/main.css?v=2025011404">
-    <link rel="stylesheet" href="./css/components.css?v=2025011404">
+    <link rel="stylesheet" href="./css/main.css?v=2025011405">
+    <link rel="stylesheet" href="./css/components.css?v=2025011405">
     
     <!-- Preload critical resources -->
-    <link rel="preload" href="./css/main.css?v=2025011404" as="style">
+    <link rel="preload" href="./css/main.css?v=2025011405" as="style">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -189,9 +189,9 @@
     </div>
 
     <!-- JavaScript Files with cache busting -->
-    <script src="./js/app.js?v=2025011404" defer></script>
-    <script src="./js/navigation.js?v=2025011404" defer></script>
-    <script src="./js/components.js?v=2025011404" defer></script>
+    <script src="./js/app.js?v=2025011405" defer></script>
+    <script src="./js/navigation.js?v=2025011405" defer></script>
+    <script src="./js/components.js?v=2025011405" defer></script>
     
     <!-- Loading Screen Logo Debug Script -->
     <script>
@@ -290,11 +290,11 @@
     
     <!-- Service Worker Registration -->
     <script>
-        console.log('🏛️ Ascension Lutheran Church PWA v2025011404');
+        console.log('🏛️ Ascension Lutheran Church PWA v2025011405');
         
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js?v=2025011404')
+                navigator.serviceWorker.register('./sw.js?v=2025011405')
                     .then((registration) => {
                         console.log('SW registered: ', registration);
                     })
