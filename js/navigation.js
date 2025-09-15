@@ -1,17 +1,17 @@
 // Navigation functionality for Ascension Lutheran Church PWA
-// Version: 2025011404 - Simplified for mobile menu only
+// Version: 2025011410 - Simplified for mobile menu only
 
-console.log('🏛️ navigation.js loading... v2025011404');
+console.log('🏛️ navigation.js loading... v2025011410');
 
 class NavigationController {
     constructor() {
         this.mobileMenuOpen = false;
-        this.version = '2025011404';
+        this.version = '2025011410';
         this.init();
     }
 
     init() {
-        console.log('🏛️ NavigationController init v2025011404');
+        console.log('🏛️ NavigationController init v2025011410');
         this.setupMobileMenu();
         this.setupScrollEffects();
     }
@@ -157,4 +157,4 @@ document.addEventListener('DOMContentLoaded', () => {
     window.navigation = new NavigationController();
 });
 
-console.log('🏛️ ALC PWA Navigation.js Version: 2025011404');
+console.log('🏛️ ALC PWA Navigation.js Version: 2025011410');
