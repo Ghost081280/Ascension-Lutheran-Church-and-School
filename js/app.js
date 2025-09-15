@@ -1,7 +1,7 @@
-// Fixed app.js - Complete Mobile & Desktop Solution
+// Fixed app.js - Complete Mobile & Desktop Solution with ALL Content Restored
 console.log('🏛️ Fixed app.js loading...');
 
-// PAGE CONTENT OBJECT - With Proper Mobile Layouts
+// PAGE CONTENT OBJECT - With ALL Original Content Restored
 const pages = {
     home: `
         <div class="page-content">
@@ -405,7 +405,7 @@ function closeMobileMenu() {
     document.body.style.overflow = '';
 }
 
-// MAIN LOAD PAGE FUNCTION - ENHANCED
+// MAIN LOAD PAGE FUNCTION - ENHANCED AND FIXED
 function loadPage(pageName) {
     console.log('🏛️ loadPage called:', pageName);
     
@@ -442,7 +442,9 @@ function loadPage(pageName) {
     }
     
     // Load content with fade effect
-    container.style.opacity = '0';
+    container.style.opacity = '0.3';
+    container.style.transition = 'opacity 0.2s ease-in-out';
+    
     setTimeout(() => {
         container.innerHTML = content;
         container.style.opacity = '1';
@@ -451,8 +453,10 @@ function loadPage(pageName) {
         // Update navigation
         updateNavigation(pageName);
         
-        // Update URL
-        window.location.hash = pageName;
+        // Update URL without triggering hashchange
+        if (window.location.hash !== '#' + pageName) {
+            history.pushState(null, null, '#' + pageName);
+        }
         
         // Scroll to top smoothly
         window.scrollTo({
@@ -466,15 +470,19 @@ function loadPage(pageName) {
         }
         
         // Initialize any new components on the page
-        initializePageComponents();
+        setTimeout(() => {
+            initializePageComponents();
+        }, 100);
         
         console.log('🏛️ Page loaded successfully:', pageName);
-    }, 150);
+    }, 100);
 }
 
-// UPDATE NAVIGATION STATES
+// UPDATE NAVIGATION STATES - FIXED
 function updateNavigation(pageName) {
+    console.log('🏛️ Updating navigation for:', pageName);
     const navLinks = document.querySelectorAll('.nav-link:not(.donate-link)');
+    
     navLinks.forEach(link => {
         link.classList.remove('active');
         
@@ -485,6 +493,7 @@ function updateNavigation(pageName) {
         if (linkText === pageName || 
             (linkOnClick && linkOnClick.includes(`'${pageName}'`))) {
             link.classList.add('active');
+            console.log('🏛️ Set active:', linkText);
         }
     });
 }
@@ -560,12 +569,17 @@ function createRippleEffect(e) {
     }, 600);
 }
 
-// SETUP EVENT LISTENERS
+// SETUP EVENT LISTENERS - FIXED
 function setupEventListeners() {
+    console.log('🏛️ Setting up event listeners...');
+    
     // Mobile menu toggle
     const mobileToggle = document.querySelector('.mobile-menu-toggle');
     if (mobileToggle) {
+        // Remove any existing listeners
+        mobileToggle.removeEventListener('click', toggleMobileMenu);
         mobileToggle.addEventListener('click', toggleMobileMenu);
+        console.log('🏛️ Mobile toggle listener added');
     }
     
     // Close mobile menu on outside click
@@ -594,6 +608,7 @@ function setupEventListeners() {
     // Handle hash changes
     window.addEventListener('hashchange', function() {
         const newHash = window.location.hash.substring(1);
+        console.log('🏛️ Hash change to:', newHash);
         if (newHash && pages[newHash] && newHash !== currentPage) {
             loadPage(newHash);
         }
@@ -679,39 +694,43 @@ function optimizePerformance() {
     }
 }
 
-// INITIALIZE APPLICATION
+// INITIALIZE APPLICATION - FIXED
 function initialize() {
     console.log('🏛️ Initializing application...');
     
     // Add ripple animation CSS
     addRippleAnimation();
     
-    // Setup event listeners
+    // Setup event listeners first
     setupEventListeners();
     
-    // Load initial page
+    // Load initial page based on hash or default to home
     const hash = window.location.hash.substring(1);
     const initialPage = hash && pages[hash] ? hash : 'home';
+    console.log('🏛️ Loading initial page:', initialPage);
     loadPage(initialPage);
     
-    // Initialize page components
+    // Initialize page components after a short delay
     setTimeout(() => {
         initializePageComponents();
         optimizePerformance();
-    }, 500);
+    }, 300);
     
     // Log successful initialization
     console.log('🏛️ Application initialized successfully');
 }
 
-// MAKE FUNCTIONS GLOBALLY AVAILABLE
-window.loadPage = loadPage;
+// MAKE FUNCTIONS GLOBALLY AVAILABLE - ENSURE THEY OVERRIDE EARLY FUNCTIONS
+window.loadPageMain = loadPage; // Keep reference to main function
+window.loadPage = loadPage; // Override the early function
 window.toggleMobileMenu = toggleMobileMenu;
+window.pages = pages; // Make pages available globally for debugging
 
 // INITIALIZE WHEN DOM IS READY
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initialize);
 } else {
+    // DOM is already loaded
     initialize();
 }
 
