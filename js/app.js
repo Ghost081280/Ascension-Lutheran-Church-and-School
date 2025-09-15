@@ -682,11 +682,22 @@ class ChurchApp {
     attachPageEventListeners() {
         // Add click listeners to any internal navigation links
         const pageLinks = document.querySelectorAll('[data-page]');
-        pageLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
+        console.log('🏛️ Attaching listeners to', pageLinks.length, 'page links');
+        pageLinks.forEach((link, index) => {
+            const page = link.getAttribute('data-page');
+            console.log(`🏛️ Attaching listener to link ${index} for page:`, page);
+            
+            // Remove existing listener and add new one
+            const newLink = link.cloneNode(true);
+            link.parentNode.replaceChild(newLink, link);
+            
+            newLink.addEventListener('click', (e) => {
                 e.preventDefault();
-                const page = link.getAttribute('data-page');
-                this.loadPage(page);
+                console.log('🏛️ Page link clicked:', page);
+                if (page) {
+                    window.location.hash = '#' + page;
+                    this.loadPage(page);
+                }
             });
         });
     }
