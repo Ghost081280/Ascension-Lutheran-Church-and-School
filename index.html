@@ -19,331 +19,23 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="./manifest.json">
     
-    <!-- Critical CSS - Inline to prevent FOUC -->
-    <style>
-        /* CRITICAL LOADING STYLES */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #1A202C;
-            background-color: #F7FAFC;
-            overflow-x: hidden;
-        }
-        
-        /* EMERGENCY: Don't hide content during loading on mobile */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #8B0000 0%, #660000 100%);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 1;
-            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
-        }
-        
-        .loading-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-        
-        .loading-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-        
-        .decorative-pattern {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .pattern-cross {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.1);
-            font-size: 2.5rem;
-            font-weight: bold;
-            animation: enhancedFloat 25s ease-in-out infinite;
-            user-select: none;
-            pointer-events: none;
-        }
-        
-        .pattern-circle {
-            position: absolute;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: enhancedPulse 20s ease-in-out infinite;
-        }
-        
-        .cross-1 { top: 8%; left: 12%; animation-delay: 0s; }
-        .cross-2 { top: 15%; left: 35%; animation-delay: 6s; }
-        .cross-3 { top: 10%; left: 58%; animation-delay: 12s; }
-        .cross-4 { top: 12%; left: 78%; animation-delay: 18s; }
-        .cross-5 { top: 45%; left: 15%; animation-delay: 3s; }
-        .cross-6 { top: 38%; left: 65%; animation-delay: 9s; }
-        .cross-7 { top: 75%; left: 10%; animation-delay: 15s; }
-        .cross-8 { top: 68%; left: 60%; animation-delay: 21s; }
-        
-        .circle-1 { top: 3%; left: 25%; width: 70px; height: 70px; animation-delay: 1s; }
-        .circle-2 { top: 8%; left: 70%; width: 90px; height: 90px; animation-delay: 7s; }
-        .circle-3 { top: 30%; left: 3%; width: 60px; height: 60px; animation-delay: 13s; }
-        .circle-4 { top: 25%; left: 82%; width: 80px; height: 80px; animation-delay: 19s; }
-        .circle-5 { top: 60%; left: 8%; width: 100px; height: 100px; animation-delay: 4s; }
-        .circle-6 { top: 55%; left: 75%; width: 65px; height: 65px; animation-delay: 10s; }
-        .circle-7 { top: 85%; left: 30%; width: 85px; height: 85px; animation-delay: 16s; }
-        .circle-8 { top: 80%; left: 70%; width: 75px; height: 75px; animation-delay: 22s; }
-        
-        .loading-content {
-            text-align: center;
-            z-index: 10;
-            max-width: 400px;
-            padding: 2.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border-radius: 24px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-        }
-        
-        .church-logo {
-            margin-bottom: 1.5rem;
-        }
-        
-        .logo-img {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-        }
-        
-        .loading-title {
-            color: white;
-            font-size: 2rem;
-            font-weight: 700;
-            margin: 0 0 0.5rem 0;
-            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
-            font-family: 'Playfair Display', Georgia, serif;
-        }
-        
-        .loading-subtitle {
-            color: rgba(255, 255, 255, 0.95);
-            font-size: 1.1rem;
-            margin: 0 0 0.25rem 0;
-            font-weight: 500;
-        }
-        
-        .loading-location {
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 1rem;
-            margin: 0 0 1.5rem 0;
-            font-weight: 400;
-        }
-        
-        .loading-spinner {
-            margin: 1.5rem auto;
-            display: flex;
-            justify-content: center;
-        }
-        
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255, 255, 255, 0.2);
-            border-top: 4px solid white;
-            border-radius: 50%;
-            animation: spin 1.2s linear infinite;
-        }
-        
-        .loading-status {
-            color: white;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin: 0.5rem 0 1.5rem 0;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            opacity: 0.9;
-        }
-        
-        .loading-verse {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 1.2rem;
-            margin: 1rem 0;
-            border-left: 4px solid rgba(255, 255, 255, 0.6);
-            color: white;
-            font-size: 1rem;
-            font-style: italic;
-            line-height: 1.6;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-        
-        /* Background Animations */
-        @keyframes enhancedFloat {
-            0%, 100% { 
-                transform: translate(0, 0) rotate(0deg) scale(1); 
-                opacity: 0.05; 
-            }
-            25% { 
-                transform: translate(30px, -20px) rotate(90deg) scale(1.2); 
-                opacity: 0.3; 
-            }
-            50% { 
-                transform: translate(-20px, -35px) rotate(180deg) scale(0.8); 
-                opacity: 0.1; 
-            }
-            75% { 
-                transform: translate(25px, -15px) rotate(270deg) scale(1.1); 
-                opacity: 0.25; 
-            }
-        }
-        
-        @keyframes enhancedPulse {
-            0%, 100% { 
-                transform: scale(1) translateX(0) translateY(0); 
-                opacity: 0.1; 
-                border-color: rgba(255, 255, 255, 0.1); 
-            }
-            20% { 
-                transform: scale(1.3) translateX(15px) translateY(-15px); 
-                opacity: 0.4; 
-                border-color: rgba(255, 255, 255, 0.4); 
-            }
-            40% { 
-                transform: scale(0.7) translateX(-10px) translateY(20px); 
-                opacity: 0.08; 
-                border-color: rgba(255, 255, 255, 0.08); 
-            }
-            60% { 
-                transform: scale(1.2) translateX(20px) translateY(-8px); 
-                opacity: 0.35; 
-                border-color: rgba(255, 255, 255, 0.35); 
-            }
-            80% { 
-                transform: scale(0.9) translateX(-8px) translateY(12px); 
-                opacity: 0.15; 
-                border-color: rgba(255, 255, 255, 0.15); 
-            }
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Mobile responsive loading */
-        @media (max-width: 480px) {
-            .loading-content {
-                margin: 1.5rem;
-                padding: 2rem 1.5rem;
-                max-width: 350px;
-            }
-            
-            .logo-img {
-                width: 80px;
-                height: 80px;
-            }
-            
-            .loading-title {
-                font-size: 1.8rem;
-            }
-            
-            .loading-subtitle {
-                font-size: 1rem;
-            }
-            
-            .loading-verse {
-                font-size: 0.95rem;
-                padding: 1rem;
-            }
-            
-            .spinner {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .pattern-cross {
-                font-size: 2rem;
-            }
-        }
-    </style>
-    
-    <!-- Fonts - Preload for performance -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- CSS Files - Load after fonts -->
+    <!-- CSS Files -->
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/components.css">
 </head>
 <body>
-    <!-- Enhanced Loading Screen -->
+    <!-- Simple Loading Screen -->
     <div id="loading-screen" class="loading-screen">
-        <div class="loading-background">
-            <div class="decorative-pattern">
-                <div class="pattern-cross cross-1">✚</div>
-                <div class="pattern-cross cross-2">✚</div>
-                <div class="pattern-cross cross-3">✚</div>
-                <div class="pattern-cross cross-4">✚</div>
-                <div class="pattern-cross cross-5">✚</div>
-                <div class="pattern-cross cross-6">✚</div>
-                <div class="pattern-cross cross-7">✚</div>
-                <div class="pattern-cross cross-8">✚</div>
-                <div class="pattern-circle circle-1"></div>
-                <div class="pattern-circle circle-2"></div>
-                <div class="pattern-circle circle-3"></div>
-                <div class="pattern-circle circle-4"></div>
-                <div class="pattern-circle circle-5"></div>
-                <div class="pattern-circle circle-6"></div>
-                <div class="pattern-circle circle-7"></div>
-                <div class="pattern-circle circle-8"></div>
-            </div>
-        </div>
         <div class="loading-content">
-            <div class="church-logo">
-                <img src="./images/Color Luther Rose - 72 dpi.jpg" alt="Ascension Lutheran Church Logo" class="logo-img">
-            </div>
-            <h1 class="loading-title" id="loading-title">Ascension Lutheran</h1>
-            <p class="loading-subtitle" id="loading-subtitle">Church & School</p>
-            <p class="loading-location" id="loading-location">Fort Wayne, Indiana</p>
-            <div class="loading-spinner">
-                <div class="spinner"></div>
-            </div>
-            <p class="loading-status" id="loading-status">Loading...</p>
-            <div class="loading-verse" id="loading-verse">"I am the way, and the truth, and the life." - John 14:6</div>
-        </div>
-    </div>
-
-    <!-- Beautiful PWA Install Prompt with Rose Icon -->
-    <div id="pwa-install-prompt" class="pwa-install-prompt hidden">
-        <div class="pwa-install-content">
-            <div class="pwa-rose-icon">
-                <img src="./images/Color Luther Rose - 72 dpi.jpg" alt="Luther Rose" class="pwa-rose">
-            </div>
-            <div class="pwa-install-text">
-                <h3>Add to Home Screen</h3>
-                <p>Get quick access to worship times and church information</p>
-            </div>
-            <div class="pwa-install-buttons">
-                <button id="pwa-install-btn" class="pwa-btn pwa-btn-primary">Add App</button>
-                <button id="pwa-dismiss-btn" class="pwa-btn pwa-btn-secondary">Maybe Later</button>
-            </div>
+            <img src="./images/Color Luther Rose - 72 dpi.jpg" alt="Ascension Lutheran Church Logo" width="80" height="80" style="border-radius: 50%; margin-bottom: 1rem;">
+            <h1>Ascension Lutheran</h1>
+            <p>Church & School</p>
+            <div class="spinner"></div>
         </div>
     </div>
 
@@ -352,17 +44,16 @@
         <nav class="navbar">
             <div class="nav-container">
                 <div class="nav-brand-wrapper">
-                    <!-- ONLY the rose logo is clickable -->
                     <div class="nav-logo-container" id="nav-logo-home" role="button" tabindex="0" aria-label="Go to home page">
                         <img src="./images/Color Luther Rose - 72 dpi.jpg" alt="Luther Rose Logo" class="nav-logo">
                     </div>
                     <div class="brand-text">
-                        <h1 class="brand-name" id="brand-name">Ascension Lutheran</h1>
-                        <p class="brand-subtitle" id="brand-subtitle">Church & School</p>
+                        <h1 class="brand-name">Ascension Lutheran</h1>
+                        <p class="brand-subtitle">Church & School</p>
                     </div>
                 </div>
                 
-                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" type="button">
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
@@ -377,12 +68,11 @@
 
     <!-- Page Content Container -->
     <main id="page-container" class="page-container">
-        <!-- Content will be loaded here by JavaScript -->
         <div class="page-content">
             <section class="hero-section">
                 <div class="hero-content">
-                    <h1 class="hero-title">Loading...</h1>
-                    <p class="hero-subtitle">Please wait while we load the content.</p>
+                    <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
+                    <p class="hero-subtitle">Church & School • Fort Wayne, Indiana</p>
                 </div>
             </section>
         </div>
@@ -393,316 +83,85 @@
         <!-- Footer will be populated by JavaScript -->
     </footer>
 
-    <!-- JavaScript Files - EMERGENCY FIX FOR MOBILE -->
-    <script>
-        // EMERGENCY: Force loading screen to hide and prevent offline mode
-        console.log('🏛️ EMERGENCY: Starting mobile-friendly initialization...');
-        
-        let forceHideTimer;
-        let loadingSteps = {
-            content: false,
-            dom: false,
-            assets: false
-        };
-        
-        function emergencyHideLoading() {
-            console.log('🏛️ EMERGENCY: Force hiding loading screen');
-            const loadingScreen = document.getElementById('loading-screen');
-            const body = document.body;
-            
-            if (loadingScreen) {
-                loadingScreen.classList.add('hidden');
-                body.classList.remove('loading');
-                
-                setTimeout(() => {
-                    if (loadingScreen.style) {
-                        loadingScreen.style.display = 'none';
-                    }
-                }, 800);
-            }
-        }
-        
-        function updateLoadingStatus() {
-            const statusElement = document.getElementById('loading-status');
-            if (statusElement) {
-                statusElement.textContent = 'Loading...';
-            }
-            checkLoadingComplete();
-        }
-        
-        function checkLoadingComplete() {
-            const allLoaded = Object.values(loadingSteps).every(step => step);
-            
-            if (allLoaded) {
-                console.log('🏛️ All resources loaded, hiding loading screen...');
-                clearTimeout(forceHideTimer);
-                setTimeout(() => {
-                    emergencyHideLoading();
-                }, 1500);
-            }
-        }
-        
-        // EMERGENCY: Force hide after maximum 3 seconds
-        forceHideTimer = setTimeout(() => {
-            console.log('🏛️ EMERGENCY: Force hiding loading screen after 3 seconds');
-            emergencyHideLoading();
-        }, 3000);
-        
-        // DOM ready check
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => {
-                loadingSteps.dom = true;
-                updateLoadingStatus();
-            });
-        } else {
-            loadingSteps.dom = true;
-        }
-        
-        // Check for critical assets
-        const checkAssets = () => {
-            const logo = document.querySelector('.logo-img');
-            if (logo && logo.complete) {
-                loadingSteps.assets = true;
-                updateLoadingStatus();
-            } else if (logo) {
-                logo.onload = () => {
-                    loadingSteps.assets = true;
-                    updateLoadingStatus();
-                };
-                logo.onerror = () => {
-                    loadingSteps.assets = true;
-                    updateLoadingStatus();
-                };
-            } else {
-                setTimeout(checkAssets, 100);
-            }
-        };
-        checkAssets();
-        
-        // Window load fallback
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                if (!Object.values(loadingSteps).every(step => step)) {
-                    console.log('🏛️ Window load fallback: Force hiding loading screen');
-                    emergencyHideLoading();
-                }
-            }, 1000);
-        });
-    </script>
-    
+    <!-- JavaScript Files -->
     <script src="./content/content.js"></script>
     <script src="./js/app.js"></script>
     
-    <!-- Enhanced PWA Install Script -->
-    <script>
-        // Simplified PWA Install - don't interfere with main functionality
-        let deferredPrompt;
-        let installPromptShown = false;
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            console.log('🏛️ PWA install prompt available');
-            e.preventDefault();
-            deferredPrompt = e;
-            
-            // Show after everything is loaded and working
-            if (!installPromptShown) {
-                setTimeout(showInstallPrompt, 8000);
-            }
-        });
-
-        function showInstallPrompt() {
-            if (!deferredPrompt || installPromptShown) return;
-            
-            installPromptShown = true;
-            const installPrompt = document.getElementById('pwa-install-prompt');
-            if (installPrompt) {
-                installPrompt.classList.remove('hidden');
-                setTimeout(() => {
-                    hideInstallPrompt();
-                }, 15000);
-            }
+    <!-- Simple Loading Script -->
+    <style>
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #8B0000 0%, #660000 100%);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            transition: opacity 0.5s ease;
         }
-
-        function hideInstallPrompt() {
-            const installPrompt = document.getElementById('pwa-install-prompt');
-            if (installPrompt) {
-                installPrompt.classList.add('hidden');
-            }
+        
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
-
-        // Install button click
-        document.addEventListener('click', (e) => {
-            if (e.target.id === 'pwa-install-btn') {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    deferredPrompt.userChoice.then((choiceResult) => {
-                        deferredPrompt = null;
-                        hideInstallPrompt();
-                    });
-                } else {
-                    hideInstallPrompt();
-                }
-            } else if (e.target.id === 'pwa-dismiss-btn') {
-                hideInstallPrompt();
-            }
-        });
-    </script>
+        
+        .loading-content h1 {
+            font-size: 2rem;
+            margin: 0.5rem 0;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .loading-content p {
+            margin: 0 0 1.5rem 0;
+            font-size: 1.1rem;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
     
-    <!-- Initialize Application -->
     <script>
-        // EMERGENCY: Simplified initialization
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🏛️ DOM ready - initializing content...');
-            
-            function populateStaticContent() {
-                if (typeof SITE_CONTENT === 'undefined') {
-                    setTimeout(populateStaticContent, 100);
-                    return;
-                }
-
-                const content = SITE_CONTENT;
-                console.log('🏛️ Content available, populating static elements...');
-
-                // Update loading screen content
-                const loadingTitle = document.getElementById('loading-title');
-                const loadingSubtitle = document.getElementById('loading-subtitle');
-                const loadingLocation = document.getElementById('loading-location');
-                const loadingVerse = document.getElementById('loading-verse');
-
-                if (loadingTitle) loadingTitle.textContent = 'Ascension Lutheran';
-                if (loadingSubtitle) loadingSubtitle.textContent = content.loading.subtitle;
-                if (loadingLocation) loadingLocation.textContent = content.loading.location;
-                if (loadingVerse) loadingVerse.textContent = `"${content.loading.verse.text}" - ${content.loading.verse.reference}`;
-
-                // Update brand text
-                const brandName = document.getElementById('brand-name');
-                const brandSubtitle = document.getElementById('brand-subtitle');
-                
-                if (brandName) brandName.textContent = 'Ascension Lutheran';
-                if (brandSubtitle) brandSubtitle.textContent = content.site.tagline;
-
-                // Populate navigation
-                populateNavigation(content.navigation, content.external.donate);
-
-                // Populate footer
-                populateFooter(content.footer, content.social);
-                
-                // Setup ONLY logo click handler
-                setupLogoClickHandler();
-
-                // Mark content as loaded
-                loadingSteps.content = true;
-                updateLoadingStatus();
-
-                console.log('🏛️ Static content populated successfully');
+        // Simple loading manager - no complex detection
+        let loadingTimer;
+        
+        function hideLoading() {
+            const loadingScreen = document.getElementById('loading-screen');
+            if (loadingScreen) {
+                loadingScreen.classList.add('hidden');
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
             }
-
-            function populateNavigation(navItems, donateLink) {
-                const navMenu = document.getElementById('nav-menu');
-                if (!navMenu) return;
-
-                const navLinks = navItems.map(item => 
-                    `<a href="javascript:void(0)" class="nav-link" data-page="${item.id}">${item.label}</a>`
-                ).join('');
-
-                const donateButton = `<a href="${donateLink}" target="_blank" rel="noopener" class="nav-link donate-link">
-                    <span class="donate-heart">♥</span> Give
-                </a>`;
-
-                navMenu.innerHTML = navLinks + donateButton;
-
-                const homeLink = navMenu.querySelector('[data-page="home"]');
-                if (homeLink) homeLink.classList.add('active');
-            }
-
-            function populateFooter(footerData, socialData) {
-                const footer = document.getElementById('main-footer');
-                if (!footer) return;
-
-                const sections = footerData.sections.map(section => {
-                    if (section.social) {
-                        return `
-                            <div class="footer-section">
-                                <h3>${section.title}</h3>
-                                <div class="social-links">
-                                    <a href="${socialData.facebook}" target="_blank" rel="noopener" class="social-link facebook">
-                                        Facebook
-                                    </a>
-                                    <a href="${socialData.youtube}" target="_blank" rel="noopener" class="social-link youtube">
-                                        YouTube
-                                    </a>
-                                </div>
-                            </div>
-                        `;
-                    } else {
-                        const content = section.content.map(item => `<p>${item}</p>`).join('');
-                        return `
-                            <div class="footer-section">
-                                <h3>${section.title}</h3>
-                                ${content}
-                            </div>
-                        `;
-                    }
-                }).join('');
-
-                const bottom = footerData.bottom.map(text => `<p>${text}</p>`).join('');
-
-                footer.innerHTML = `
-                    <div class="footer-content">
-                        <div class="footer-container">
-                            ${sections}
-                        </div>
-                        <div class="footer-bottom">
-                            ${bottom}
-                        </div>
-                    </div>
-                `;
-            }
-            
-            function setupLogoClickHandler() {
-                // ONLY the rose logo is clickable
-                const logoContainer = document.getElementById('nav-logo-home');
-                if (logoContainer) {
-                    const handleLogoClick = (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        console.log('🏛️ Rose logo clicked - navigating to home');
-                        if (window.ascensionApp) {
-                            window.ascensionApp.loadPage('home');
-                        }
-                    };
-                    
-                    logoContainer.addEventListener('click', handleLogoClick);
-                    logoContainer.addEventListener('touchend', handleLogoClick);
-                    logoContainer.style.cursor = 'pointer';
-                    
-                    console.log('🏛️ Rose logo click handler setup complete');
-                }
-            }
-
-            populateStaticContent();
-        });
-
-        // EMERGENCY: Don't register service worker if it's causing issues
-        // Commented out to prevent offline mode problems
-        /*
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(registration => {
-                        console.log('🏛️ Service Worker registered successfully');
-                    })
-                    .catch(error => {
-                        console.log('🏛️ Service Worker registration failed:', error);
-                    });
-            });
         }
-        */
-
-        // Error handling
-        window.addEventListener('error', (e) => {
-            console.error('🏛️ Application error:', e.error);
-            // Don't let errors prevent the site from loading
+        
+        // Hide loading after reasonable time or when everything is ready
+        loadingTimer = setTimeout(hideLoading, 2000);
+        
+        window.addEventListener('load', () => {
+            clearTimeout(loadingTimer);
+            setTimeout(hideLoading, 500);
+        });
+        
+        // Initialize app when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM ready, initializing app...');
         });
     </script>
 </body>
