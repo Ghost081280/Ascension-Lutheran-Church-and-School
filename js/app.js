@@ -1,15 +1,15 @@
 // Main Application JavaScript for Ascension Lutheran Church PWA
-// Version: 2025011405 - FIXED: Page content not switching properly
+// Version: 2025011409 - COMPLETE WORKING VERSION
 
-console.log('🏛️ app.js loading... v2025011405');
+console.log('🏛️ app.js loading... v2025011409');
 
 class ChurchApp {
     constructor() {
-        console.log('🏛️ ChurchApp constructor called v2025011405');
-        this.currentPage = 'home';
+        console.log('🏛️ ChurchApp constructor called v2025011409');
+        this.currentPage = null;
         this.isLoading = false;
-        this.version = '2025011405';
-        this.pageContent = this.initializePageContent();
+        this.version = '2025011409';
+        this.pageContent = {};
         
         this.init();
     }
@@ -28,11 +28,17 @@ class ChurchApp {
     setup() {
         console.log('🏛️ ChurchApp setup called');
         
-        this.setupLoadingScreen();
-        this.setupNavigation();
-        this.loadInitialPage();
+        // Initialize page content first
+        this.initializePageContent();
         
-        console.log('🏛️ Ascension Lutheran Church PWA initialized');
+        // Wait for DOM to be fully ready
+        setTimeout(() => {
+            this.setupLoadingScreen();
+            this.setupNavigation();
+            this.loadInitialPage();
+            
+            console.log('🏛️ Ascension Lutheran Church PWA initialized');
+        }, 300);
     }
 
     setupLoadingScreen() {
@@ -40,27 +46,25 @@ class ChurchApp {
         const loadingScreen = document.getElementById('loading-screen');
         const mainApp = document.getElementById('main-app');
         
-        // Reduced from 4000ms to 3200ms (3.2 seconds) - optimal reading time
         setTimeout(() => {
             console.log('🏛️ Loading screen timeout triggered');
             if (loadingScreen) {
                 loadingScreen.style.opacity = '0';
                 setTimeout(() => {
                     loadingScreen.style.display = 'none';
-                }, 600); // Slightly longer elegant fade
+                }, 600);
             }
             
             if (mainApp) {
                 mainApp.classList.remove('hidden');
                 mainApp.style.opacity = '1';
             }
-        }, 3200); // Optimized timing for readability without feeling slow
+        }, 3200);
     }
 
     setupNavigation() {
         console.log('🏛️ Setting up navigation');
         
-        // Set up navigation links and logo clicks
         document.addEventListener('click', (e) => {
             const navLink = e.target.closest('[data-page]');
             if (navLink) {
@@ -71,7 +75,6 @@ class ChurchApp {
             }
         });
 
-        // Handle keyboard navigation for logo and nav links
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 const navElement = e.target.closest('[data-page]');
@@ -84,11 +87,10 @@ class ChurchApp {
             }
         });
 
-        // Handle browser back/forward
         window.addEventListener('popstate', () => {
             const hash = window.location.hash.substring(1) || 'home';
             console.log('🏛️ Popstate event:', hash);
-            this.loadPage(hash, false); // Don't update URL since we're responding to URL change
+            this.loadPage(hash, false);
         });
     }
 
@@ -97,7 +99,9 @@ class ChurchApp {
         const hash = window.location.hash.substring(1);
         const initialPage = hash && this.pageContent[hash] ? hash : 'home';
         console.log('🏛️ Initial page determined:', initialPage);
-        this.loadPage(initialPage, false); // Don't update URL on initial load
+        
+        this.currentPage = null;
+        this.loadPage(initialPage, false);
     }
 
     loadPage(pageName, updateURL = true) {
@@ -108,8 +112,7 @@ class ChurchApp {
             return;
         }
         
-        // Don't reload the same page
-        if (this.currentPage === pageName) {
+        if (this.currentPage === pageName && this.currentPage !== null) {
             console.log('🏛️ Same page, skipping reload');
             return;
         }
@@ -118,25 +121,24 @@ class ChurchApp {
         
         try {
             const pageContent = this.getPageContent(pageName);
-            console.log('🏛️ Got page content for', pageName, 'Content length:', pageContent.length);
+            console.log('🏛️ Got page content for', pageName, 'Content length:', pageContent ? pageContent.length : 0);
             
             this.currentPage = pageName;
             this.renderPage(pageContent);
             this.updateActiveNavigation(pageName);
             this.updatePageTitle(pageName);
             
-            // Update URL hash
             if (updateURL && window.location.hash !== `#${pageName}`) {
                 console.log('🏛️ Updating URL hash to:', pageName);
                 window.history.pushState(null, null, `#${pageName}`);
             }
 
-            // Announce page change for accessibility
             if (window.announcePageChange) {
                 window.announcePageChange(pageName);
             }
         } catch (error) {
             console.error('🏛️ Error loading page:', error);
+            this.renderPage('<div class="page-content"><div class="container"><h1>Error Loading Page</h1><p>Please try refreshing the page.</p></div></div>');
         } finally {
             this.isLoading = false;
         }
@@ -144,13 +146,21 @@ class ChurchApp {
 
     getPageContent(pageName) {
         console.log('🏛️ Getting content for page:', pageName);
-        const content = this.pageContent[pageName] || this.pageContent.home;
-        console.log('🏛️ Content found:', !!content, 'Length:', content.length);
+        console.log('🏛️ Available pages:', Object.keys(this.pageContent));
+        
+        const content = this.pageContent[pageName];
+        
+        if (!content) {
+            console.error('🏛️ No content found for page:', pageName);
+            return `<div class="page-content"><div class="container"><h1>Page Not Found</h1><p>Content for "${pageName}" could not be loaded.</p><p>Available pages: ${Object.keys(this.pageContent).join(', ')}</p></div></div>`;
+        }
+        
+        console.log('🏛️ Content found for', pageName, 'Length:', content.length);
         return content;
     }
 
     renderPage(pageContent) {
-        console.log('🏛️ Rendering page content, length:', pageContent.length);
+        console.log('🏛️ Rendering page content, length:', pageContent ? pageContent.length : 0);
         const container = document.getElementById('page-container');
         
         if (!container) {
@@ -158,18 +168,20 @@ class ChurchApp {
             return;
         }
         
-        // Force immediate content update without transition for debugging
-        container.innerHTML = pageContent;
+        console.log('🏛️ Container found, updating content...');
+        console.log('🏛️ Content preview:', pageContent ? pageContent.substring(0, 100) + '...' : 'No content');
         
-        // Scroll to top immediately
+        container.innerHTML = pageContent || '<div class="page-content"><div class="container"><h1>No Content</h1><p>This page has no content available.</p></div></div>';
+        
         window.scrollTo({ top: 0, behavior: 'auto' });
         
         console.log('🏛️ Page content rendered successfully');
+        console.log('🏛️ Container innerHTML length:', container.innerHTML.length);
     }
 
     updateActiveNavigation(pageName) {
         console.log('🏛️ Updating active navigation for:', pageName);
-        const navLinks = document.querySelectorAll('.nav-link');
+        const navLinks = document.querySelectorAll('.nav-link:not(.donate-link)');
         navLinks.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('data-page') === pageName) {
@@ -195,7 +207,8 @@ class ChurchApp {
 
     initializePageContent() {
         console.log('🏛️ Initializing page content...');
-        return {
+        
+        this.pageContent = {
             home: `
                 <div class="page-content">
                     <section class="hero-section" style="background: var(--primary-color); background-image: linear-gradient(135deg, rgba(139, 0, 0, 0.8) 0%, rgba(102, 0, 0, 0.9) 100%), url('./images/ascension-lutheran-school-fort-wayne-in-primaryphoto.jpg'); background-size: cover; background-position: center; background-attachment: fixed;">
@@ -223,6 +236,27 @@ class ChurchApp {
                                 <div class="time-item">
                                     <span class="time-label">Children's Sunday School</span>
                                     <span class="time-value">9:30 AM</span>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="info-section">
+                            <div class="card" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); color: white; text-align: center;">
+                                <div class="card-content">
+                                    <h3 style="color: white; font-size: 1.8rem; margin-bottom: 1rem;">
+                                        <span style="font-size: 2rem; color: #ff6b6b;">♥</span> Support Our Ministry
+                                    </h3>
+                                    <p style="font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.95;">Your generous giving helps us continue our mission to share God's love and serve our community through worship, education, and fellowship.</p>
+                                    <div style="margin: 1.5rem 0;">
+                                        <a href="https://secure.myvanco.com/L-YTGK/home" target="_blank" rel="noopener" 
+                                           style="background: #ff6b6b; color: white; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3); transition: all 0.3s ease;"
+                                           onmouseover="this.style.background='#ff5252'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 107, 0.4)'"
+                                           onmouseout="this.style.background='#ff6b6b'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 107, 0.3)'">
+                                            <span style="font-size: 1.2rem;">♥</span> Give Online
+                                        </a>
+                                    </div>
+                                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 1rem;">
+                                        "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver." - 2 Corinthians 9:7
+                                    </p>
                                 </div>
                             </div>
                         </section>
@@ -271,7 +305,7 @@ class ChurchApp {
                             <div class="card">
                                 <div class="card-content" style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
                                     <div style="flex: 0 0 200px;">
-                                        <img src="./images/Pastor.png?v=2025011405" alt="Rev. James Gier, Senior Pastor" 
+                                        <img src="./images/Pastor.png?v=2025011409" alt="Rev. James Gier, Senior Pastor" 
                                              style="width: 200px; height: 250px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
                                     </div>
                                     <div style="flex: 1; min-width: 300px;">
@@ -349,6 +383,19 @@ class ChurchApp {
                                         <h4>Pastor Gier</h4>
                                         <p>Rev. James Gier was installed as Ascension's third senior pastor. Pastor Gier was a licensed architect prior to entering the Holy Ministry.</p>
                                     </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="info-section">
+                            <div class="card" style="border: 2px solid var(--primary-color); background: rgba(139, 0, 0, 0.05);">
+                                <div class="card-content" style="text-align: center;">
+                                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">
+                                        <span style="color: #ff6b6b; font-size: 1.5rem;">♥</span> Partner With Our Mission
+                                    </h3>
+                                    <p style="margin-bottom: 1.5rem;">Your faithful giving helps support our church's ministry, missions, and the spiritual growth of our community. Every gift, large or small, makes a difference in sharing God's love.</p>
+                                    <a href="https://secure.myvanco.com/L-YTGK/home" target="_blank" rel="noopener" class="btn btn-primary" style="background: #ff6b6b; border: none;">
+                                        <span style="margin-right: 0.5rem;">♥</span> Give Securely Online
+                                    </a>
                                 </div>
                             </div>
                         </section>
@@ -671,13 +718,13 @@ class ChurchApp {
                             <div class="card" style="background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-light) 100%); color: white;">
                                 <div class="card-content" style="text-align: center;">
                                     <h3 style="color: white; margin-bottom: 1rem;">
-                                        <span style="color: #ff6b6b; font-size: 1.5rem;">❤️</span> Support Our Church Family
+                                        <span style="color: #ff6b6b; font-size: 1.5rem;">♥</span> Support Our Church Family
                                     </h3>
                                     <p style="margin-bottom: 1.5rem; opacity: 0.95;">Thank you for considering a financial gift to support the ministry of Ascension Lutheran Church. Your generosity helps us continue serving God and our community.</p>
                                     <div style="margin: 1.5rem 0;">
                                         <a href="https://secure.myvanco.com/L-YTGK/home" target="_blank" rel="noopener" 
                                            style="background: white; color: var(--secondary-color); padding: 0.75rem 1.5rem; border-radius: 25px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
-                                            <span style="color: #ff6b6b;">❤️</span> Give Online Now
+                                            <span style="color: #ff6b6b;">♥</span> Give Online Now
                                         </a>
                                     </div>
                                     <p style="font-size: 0.9rem; opacity: 0.8;">Questions about giving? Contact our church office at (260) 486-2226</p>
@@ -692,6 +739,11 @@ class ChurchApp {
                 </div>
             `
         };
+        
+        console.log('🏛️ Page content initialized. Pages available:', Object.keys(this.pageContent));
+        Object.keys(this.pageContent).forEach(page => {
+            console.log(`🏛️ ${page} content length:`, this.pageContent[page].length);
+        });
     }
 }
 
@@ -701,4 +753,4 @@ document.addEventListener('DOMContentLoaded', function() {
     window.app = new ChurchApp();
 });
 
-console.log('🏛️ ALC PWA App.js Version: 2025011406');
+console.log('🏛️ ALC PWA App.js Version: 2025011409');
