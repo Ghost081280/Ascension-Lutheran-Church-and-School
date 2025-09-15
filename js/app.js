@@ -667,6 +667,23 @@ class ChurchApp {
                                 </div>
                             </div>
                         </section>
+                        <section class="info-section">
+                            <div class="card" style="background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-light) 100%); color: white;">
+                                <div class="card-content" style="text-align: center;">
+                                    <h3 style="color: white; margin-bottom: 1rem;">
+                                        <span style="color: #ff6b6b; font-size: 1.5rem;">❤️</span> Support Our Church Family
+                                    </h3>
+                                    <p style="margin-bottom: 1.5rem; opacity: 0.95;">Thank you for considering a financial gift to support the ministry of Ascension Lutheran Church. Your generosity helps us continue serving God and our community.</p>
+                                    <div style="margin: 1.5rem 0;">
+                                        <a href="https://secure.myvanco.com/L-YTGK/home" target="_blank" rel="noopener" 
+                                           style="background: white; color: var(--secondary-color); padding: 0.75rem 1.5rem; border-radius: 25px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+                                            <span style="color: #ff6b6b;">❤️</span> Give Online Now
+                                        </a>
+                                    </div>
+                                    <p style="font-size: 0.9rem; opacity: 0.8;">Questions about giving? Contact our church office at (260) 486-2226</p>
+                                </div>
+                            </div>
+                        </section>
                         <section class="verse-display">
                             <p class="verse-text">"Come to me, all you who are weary and burdened, and I will give you rest."</p>
                             <p class="verse-reference">Matthew 11:28 (NIV)</p>
