@@ -230,9 +230,55 @@
     </div>
 
     <!-- JavaScript Files with cache busting -->
-    <script src="./js/components.js?v=2025011402" defer></script>
-    <script src="./js/navigation.js?v=2025011402" defer></script>
-    <script src="./js/app.js?v=2025011402" defer></script>
+    <script>
+    // Emergency inline navigation - this WILL work
+    function showPage(pageName) {
+        console.log('Showing page:', pageName);
+        const container = document.getElementById('page-container');
+        
+        const pages = {
+            home: `<div class="page-content"><section class="hero-section" style="background-image: linear-gradient(135deg, rgba(139, 0, 0, 0.8) 0%, rgba(102, 0, 0, 0.9) 100%), url('./images/ascension-lutheran-school-fort-wayne-in-primaryphoto.jpg'); background-size: cover; background-position: center;"><div class="hero-content"><h1 class="hero-title">Welcome to Ascension Lutheran Church</h1><p class="hero-subtitle">Join our family in worshipping and serving our glorious God in Fort Wayne, Indiana</p></div></section></div>`,
+            church: `<div class="page-content"><div class="container"><h1 style="color: #8B0000; margin: 2rem 0;">Our Church</h1><p>Faithful to the Gospel of Christ since 1977</p><div class="card"><div class="card-content"><h3>What We Believe</h3><p>Ascension Lutheran Church follows the teaching of the Holy Scripture, firmly accepting the Bible as God's inerrant Word.</p></div></div></div></div>`,
+            family: `<div class="page-content"><div class="container"><h1 style="color: #8B0000; margin: 2rem 0;">Family Ministry</h1><p>Ascension is a place for families with many opportunities to grow in faith together</p><div class="card"><div class="card-content"><h3>Family Programs</h3><p>We offer many opportunities to study God's Word together as families.</p></div></div></div></div>`,
+            school: `<div class="page-content"><div class="container"><h1 style="color: #8B0000; margin: 2rem 0;">Ascension Lutheran School</h1><p>Providing traditional, Christian education from Preschool through 8th grade</p><div class="card"><div class="card-content"><h3>Our Mission</h3><p>We proclaim the Gospel to the next generation and provide quality education.</p></div></div></div></div>`,
+            worship: `<div class="page-content"><div class="container"><h1 style="color: #8B0000; margin: 2rem 0;">Worship With Us</h1><p>Traditional Lutheran worship services every Sunday</p><div class="worship-times"><h3>Sunday Worship Schedule</h3><div class="time-item"><span class="time-label">Divine Service</span><span class="time-value">8:00 AM & 10:45 AM</span></div></div></div></div>`,
+            contact: `<div class="page-content"><div class="container"><h1 style="color: #8B0000; margin: 2rem 0;">Contact Us</h1><p>We'd love to hear from you and answer any questions</p><div class="card"><div class="card-content"><h3>Church Office</h3><p><strong>Address:</strong> 8811 St. Joe Road, Fort Wayne, IN 46835</p><p><strong>Phone:</strong> <a href="tel:+12604862226">(260) 486-2226</a></p></div></div></div></div>`
+        };
+        
+        container.innerHTML = pages[pageName] || pages.home;
+        
+        // Update nav
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-page') === pageName) {
+                link.classList.add('active');
+            }
+        });
+    }
+    
+    // Set up when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        // Show main app
+        setTimeout(() => {
+            document.getElementById('loading-screen').style.display = 'none';
+            document.getElementById('main-app').classList.remove('hidden');
+        }, 1000);
+        
+        // Set up navigation
+        document.querySelectorAll('[data-page]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                showPage(this.getAttribute('data-page'));
+            });
+        });
+        
+        // Load home page
+        showPage('home');
+    });
+    </script>
+    <script src="./js/components.js?v=2025011403" defer></script>
+    <script src="./js/navigation.js?v=2025011403" defer></script>
+    <script src="./js/app.js?v=2025011403" defer></script>
     
     <!-- Service Worker Registration -->
     <script>
