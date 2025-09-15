@@ -1,61 +1,66 @@
-// FINAL app.js - DEEP MOBILE NAVIGATION FIX & Hero Background
-console.log('🏛️ Content-driven app.js loading...');
+// EMERGENCY FIX app.js - Prevent Mobile Offline Issues
+console.log('🏛️ EMERGENCY: Content-driven app.js loading...');
 
 class AscensionApp {
   constructor() {
     this.currentPage = 'home';
     this.mobileMenuOpen = false;
     this.content = null;
+    this.initialized = false;
     this.init();
   }
 
   async init() {
-    console.log('🏛️ Initializing Ascension App...');
+    console.log('🏛️ EMERGENCY: Initializing Ascension App...');
     
-    await this.loadContent();
-    this.setupEventListeners();
-    this.loadInitialPage();
-    
-    console.log('🏛️ App initialized successfully');
-  }
-
-  async loadContent() {
-    if (typeof SITE_CONTENT !== 'undefined') {
-      this.content = SITE_CONTENT;
-      console.log('🏛️ Content loaded successfully');
-    } else {
-      console.error('🏛️ Content not available - make sure content.js is loaded');
-      try {
-        const script = document.createElement('script');
-        script.src = './content/content.js';
-        document.head.appendChild(script);
-        
-        await new Promise(resolve => {
-          script.onload = () => {
-            this.content = window.SITE_CONTENT;
-            resolve();
-          };
-        });
-      } catch (error) {
-        console.error('🏛️ Failed to load content:', error);
-      }
+    try {
+      await this.loadContent();
+      this.setupEventListeners();
+      this.loadInitialPage();
+      this.initialized = true;
+      console.log('🏛️ EMERGENCY: App initialized successfully');
+    } catch (error) {
+      console.error('🏛️ EMERGENCY: App initialization failed:', error);
+      // Don't let errors prevent the app from working
+      this.emergencyInit();
     }
   }
 
+  emergencyInit() {
+    console.log('🏛️ EMERGENCY: Running emergency initialization');
+    this.setupBasicEventListeners();
+    this.showBasicContent();
+  }
+
+  async loadContent() {
+    let attempts = 0;
+    const maxAttempts = 5;
+    
+    while (attempts < maxAttempts) {
+      if (typeof SITE_CONTENT !== 'undefined') {
+        this.content = SITE_CONTENT;
+        console.log('🏛️ EMERGENCY: Content loaded successfully');
+        return;
+      }
+      
+      attempts++;
+      console.log(`🏛️ EMERGENCY: Content loading attempt ${attempts}/${maxAttempts}`);
+      await new Promise(resolve => setTimeout(resolve, 200));
+    }
+    
+    console.error('🏛️ EMERGENCY: Content failed to load after maximum attempts');
+    throw new Error('Content not available');
+  }
+
   setupEventListeners() {
-    // DEEP FIX: Ultimate mobile menu toggle
+    // EMERGENCY: Simplified but functional mobile menu
     this.setupMobileMenuToggle();
-    
-    // Enhanced navigation link handling
     this.setupNavigationLinks();
-    
-    // ONLY rose logo is clickable
     this.setupLogoHandler();
 
-    // Keyboard navigation
+    // Basic keyboard support
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && this.mobileMenuOpen) {
-        console.log('🏛️ Escape key pressed - closing mobile menu');
         this.closeMobileMenu();
       }
     });
@@ -68,173 +73,94 @@ class AscensionApp {
       }
     });
 
-    // Window resize - close mobile menu on desktop
+    // Window resize
     window.addEventListener('resize', () => {
       if (window.innerWidth > 767 && this.mobileMenuOpen) {
-        console.log('🏛️ Window resized to desktop - closing mobile menu');
         this.closeMobileMenu();
       }
     });
+  }
 
-    // Orientation change handling
-    window.addEventListener('orientationchange', () => {
-      setTimeout(() => {
-        if (this.mobileMenuOpen) {
-          console.log('🏛️ Orientation changed - adjusting mobile menu');
-          // Don't auto-close on orientation change, just adjust
-          this.adjustMobileMenuForOrientation();
-        }
-      }, 200);
+  setupBasicEventListeners() {
+    // EMERGENCY: Basic functionality without content
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    if (mobileToggle) {
+      mobileToggle.addEventListener('click', () => {
+        console.log('🏛️ EMERGENCY: Basic mobile toggle');
+        this.basicToggleMobileMenu();
+      });
+    }
+
+    // Basic navigation
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('nav-link') && e.target.hasAttribute('data-page')) {
+        e.preventDefault();
+        const page = e.target.getAttribute('data-page');
+        this.showBasicPage(page);
+      }
     });
   }
 
   setupMobileMenuToggle() {
-    // ULTIMATE MOBILE MENU FIX
-    const setupToggle = () => {
-      const mobileToggle = document.getElementById('mobile-menu-toggle');
-      if (mobileToggle) {
-        console.log('🏛️ Setting up ULTIMATE mobile menu toggle');
-        
-        // Clear all existing event listeners
-        const newToggle = mobileToggle.cloneNode(true);
-        mobileToggle.parentNode.replaceChild(newToggle, mobileToggle);
-        
-        // Multiple event types for maximum compatibility
-        const handleToggle = (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          e.stopImmediatePropagation();
-          console.log('🏛️ Mobile toggle activated via', e.type);
-          this.toggleMobileMenu();
-        };
-        
-        // Touch events (primary for mobile)
-        newToggle.addEventListener('touchstart', (e) => {
-          e.preventDefault();
-          console.log('🏛️ Touch start detected');
-        }, { passive: false });
-        
-        newToggle.addEventListener('touchend', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          console.log('🏛️ Touch end - toggling menu');
-          this.toggleMobileMenu();
-        }, { passive: false });
-        
-        // Click event (fallback)
-        newToggle.addEventListener('click', handleToggle);
-        
-        // Pointer events (modern browsers)
-        newToggle.addEventListener('pointerup', handleToggle);
-        
-        // Keyboard support
-        newToggle.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('🏛️ Keyboard toggle activated');
-            this.toggleMobileMenu();
-          }
-        });
-        
-        // Prevent default behaviors
-        newToggle.addEventListener('contextmenu', (e) => e.preventDefault());
-        newToggle.addEventListener('selectstart', (e) => e.preventDefault());
-        
-        console.log('🏛️ ULTIMATE mobile toggle setup complete');
-      } else {
-        console.warn('🏛️ Mobile toggle not found, retrying...');
-        setTimeout(setupToggle, 100);
-      }
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    if (!mobileToggle) {
+      console.warn('🏛️ EMERGENCY: Mobile toggle not found');
+      return;
+    }
+
+    console.log('🏛️ EMERGENCY: Setting up mobile menu toggle');
+
+    // EMERGENCY: Simple, reliable event handling
+    const handleToggle = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('🏛️ EMERGENCY: Mobile toggle activated');
+      this.toggleMobileMenu();
     };
-    
-    setupToggle();
+
+    // Primary event handlers
+    mobileToggle.addEventListener('click', handleToggle);
+    mobileToggle.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      this.toggleMobileMenu();
+    });
+
+    console.log('🏛️ EMERGENCY: Mobile toggle setup complete');
   }
 
   setupNavigationLinks() {
-    // Enhanced navigation with delegation and multiple event types
-    const handleNavigation = (target) => {
-      if (target.hasAttribute('data-page')) {
-        const page = target.getAttribute('data-page');
-        console.log('🏛️ Navigation to:', page);
-        this.loadPage(page);
-        return true;
-      }
-      return false;
-    };
-
-    // Multiple event delegation for maximum compatibility
     document.addEventListener('click', (e) => {
       // Handle navigation
-      if (handleNavigation(e.target)) {
+      if (e.target.hasAttribute('data-page')) {
         e.preventDefault();
-        e.stopPropagation();
-        return;
+        const page = e.target.getAttribute('data-page');
+        console.log('🏛️ EMERGENCY: Navigation to:', page);
+        this.loadPage(page);
       }
 
       // Close mobile menu on outside click
       if (this.mobileMenuOpen && 
           !e.target.closest('.nav-menu') && 
           !e.target.closest('.mobile-menu-toggle')) {
-        console.log('🏛️ Outside click - closing mobile menu');
         this.closeMobileMenu();
-      }
-    });
-
-    // Touch events for navigation links
-    document.addEventListener('touchend', (e) => {
-      if (handleNavigation(e.target)) {
-        e.preventDefault();
-        e.stopPropagation();
       }
     });
   }
 
   setupLogoHandler() {
-    // ONLY the rose logo is clickable
-    const setupLogo = () => {
-      const logoContainer = document.getElementById('nav-logo-home');
-      if (logoContainer) {
-        console.log('🏛️ Setting up rose logo click handler');
-        
-        const handleLogoActivation = (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          console.log('🏛️ Rose logo activated - navigating to home');
-          this.loadPage('home');
-        };
-        
-        // Multiple event types for logo
-        logoContainer.addEventListener('click', handleLogoActivation);
-        logoContainer.addEventListener('touchend', handleLogoActivation);
-        
-        logoContainer.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            handleLogoActivation(e);
-          }
-        });
-        
-        // Visual feedback
-        logoContainer.style.cursor = 'pointer';
-        logoContainer.style.transition = 'transform 0.2s ease';
-        
-        console.log('🏛️ Rose logo handler setup complete');
-      } else {
-        console.warn('🏛️ Logo container not found, retrying...');
-        setTimeout(setupLogo, 200);
-      }
-    };
-    
-    setTimeout(setupLogo, 100);
-  }
+    const logoContainer = document.getElementById('nav-logo-home');
+    if (logoContainer) {
+      console.log('🏛️ EMERGENCY: Setting up logo handler');
+      
+      const handleLogoClick = (e) => {
+        e.preventDefault();
+        console.log('🏛️ EMERGENCY: Logo clicked');
+        this.loadPage('home');
+      };
 
-  adjustMobileMenuForOrientation() {
-    // Adjust menu for orientation changes without closing
-    const navMenu = document.getElementById('nav-menu');
-    if (navMenu && this.mobileMenuOpen) {
-      // Force reflow to handle orientation change
-      navMenu.style.height = '100vh';
-      navMenu.style.height = '100dvh';
+      logoContainer.addEventListener('click', handleLogoClick);
+      logoContainer.addEventListener('touchend', handleLogoClick);
+      logoContainer.style.cursor = 'pointer';
     }
   }
 
@@ -245,21 +171,19 @@ class AscensionApp {
   }
 
   loadPage(pageName) {
-    console.log('🏛️ Loading page:', pageName);
+    console.log('🏛️ EMERGENCY: Loading page:', pageName);
 
     if (!this.content || !this.content.pages[pageName]) {
-      console.error('🏛️ Page not found:', pageName);
+      console.warn('🏛️ EMERGENCY: Page not found, showing basic content');
+      this.showBasicPage(pageName);
       return;
     }
 
-    // Close mobile menu when loading a page
     this.closeMobileMenu();
 
-    // Get page content
     const pageData = this.content.pages[pageName];
     const pageHTML = this.generatePageHTML(pageName, pageData);
 
-    // Update page container with smooth transition
     const container = document.getElementById('page-container');
     if (container) {
       container.style.opacity = '0.3';
@@ -273,6 +197,96 @@ class AscensionApp {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }, 150);
     }
+  }
+
+  showBasicContent() {
+    const container = document.getElementById('page-container');
+    if (container) {
+      container.innerHTML = `
+        <div class="page-content">
+          <section class="hero-section">
+            <div class="hero-content">
+              <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
+              <p class="hero-subtitle">Church & School • Fort Wayne, Indiana</p>
+            </div>
+          </section>
+          <div class="container">
+            <section class="info-section">
+              <div class="worship-times">
+                <h3>Divine Worship</h3>
+                <div class="time-item">
+                  <span class="time-label">Sunday Morning Services</span>
+                  <span class="time-value">8:00 AM & 10:45 AM</span>
+                </div>
+                <div class="time-item">
+                  <span class="time-label">Sunday School</span>
+                  <span class="time-value">9:30 AM</span>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  showBasicPage(pageName) {
+    const container = document.getElementById('page-container');
+    if (!container) return;
+
+    const basicPages = {
+      home: `
+        <div class="page-content">
+          <section class="hero-section">
+            <div class="hero-content">
+              <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
+              <p class="hero-subtitle">Church & School • Fort Wayne, Indiana</p>
+            </div>
+          </section>
+        </div>
+      `,
+      church: `
+        <div class="page-content">
+          <div class="container">
+            <section class="hero-section">
+              <div class="hero-content">
+                <h1 class="hero-title">Our Church</h1>
+                <p class="hero-subtitle">Faithful to the Gospel of Christ since 1977</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      `,
+      worship: `
+        <div class="page-content">
+          <div class="container">
+            <section class="hero-section">
+              <div class="hero-content">
+                <h1 class="hero-title">Worship With Us</h1>
+                <p class="hero-subtitle">Sunday Services: 8:00 AM & 10:45 AM</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      `,
+      contact: `
+        <div class="page-content">
+          <div class="container">
+            <section class="hero-section">
+              <div class="hero-content">
+                <h1 class="hero-title">Contact Us</h1>
+                <p class="hero-subtitle">8811 St. Joe Road, Fort Wayne, IN 46835<br>(260) 486-2226</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      `
+    };
+
+    const content = basicPages[pageName] || basicPages.home;
+    container.innerHTML = content;
+    this.updateNavigation(pageName);
+    this.updateURL(pageName);
   }
 
   generatePageHTML(pageName, pageData) {
@@ -376,7 +390,6 @@ class AscensionApp {
   generateHeroSection(hero) {
     if (!hero) return '';
 
-    // FIXED: Mobile-compatible background image
     const backgroundStyle = hero.backgroundImage ? 
       `style="background-image: linear-gradient(rgba(139, 0, 0, 0.7), rgba(102, 0, 0, 0.7)), url('${hero.backgroundImage}'); background-size: cover; background-position: center; background-attachment: scroll;"` : '';
 
@@ -706,13 +719,32 @@ class AscensionApp {
     `;
   }
 
-  // ULTIMATE Mobile Menu Functions
+  // EMERGENCY: Simplified Mobile Menu Functions
   toggleMobileMenu() {
-    console.log('🏛️ Toggle mobile menu - current state:', this.mobileMenuOpen);
+    console.log('🏛️ EMERGENCY: Toggle mobile menu - current state:', this.mobileMenuOpen);
     if (this.mobileMenuOpen) {
       this.closeMobileMenu();
     } else {
       this.openMobileMenu();
+    }
+  }
+
+  basicToggleMobileMenu() {
+    const navMenu = document.getElementById('nav-menu');
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    
+    if (navMenu && mobileToggle) {
+      if (navMenu.classList.contains('active')) {
+        navMenu.classList.remove('active');
+        mobileToggle.classList.remove('active');
+        document.body.style.overflow = '';
+        this.mobileMenuOpen = false;
+      } else {
+        navMenu.classList.add('active');
+        mobileToggle.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        this.mobileMenuOpen = true;
+      }
     }
   }
 
@@ -721,33 +753,20 @@ class AscensionApp {
     const mobileToggle = document.getElementById('mobile-menu-toggle');
     
     if (!navMenu || !mobileToggle) {
-      console.warn('🏛️ Mobile menu elements not found');
+      console.warn('🏛️ EMERGENCY: Mobile menu elements not found');
       return;
     }
 
-    console.log('🏛️ Opening mobile menu');
+    console.log('🏛️ EMERGENCY: Opening mobile menu');
     this.mobileMenuOpen = true;
     
-    // Add active classes
     navMenu.classList.add('active');
     mobileToggle.classList.add('active');
     mobileToggle.setAttribute('aria-expanded', 'true');
     
-    // ULTIMATE body scroll prevention
-    document.body.classList.add('menu-open');
     document.body.style.overflow = 'hidden';
     document.body.style.position = 'fixed';
     document.body.style.width = '100%';
-    document.body.style.height = '100%';
-    document.documentElement.style.overflow = 'hidden';
-    
-    // Focus management
-    setTimeout(() => {
-      const firstNavLink = navMenu.querySelector('.nav-link');
-      if (firstNavLink) {
-        firstNavLink.focus();
-      }
-    }, 100);
   }
 
   closeMobileMenu() {
@@ -755,28 +774,22 @@ class AscensionApp {
     const mobileToggle = document.getElementById('mobile-menu-toggle');
     
     if (!navMenu || !mobileToggle) {
-      console.warn('🏛️ Mobile menu elements not found');
+      console.warn('🏛️ EMERGENCY: Mobile menu elements not found');
       return;
     }
 
-    console.log('🏛️ Closing mobile menu');
+    console.log('🏛️ EMERGENCY: Closing mobile menu');
     this.mobileMenuOpen = false;
     
-    // Remove active classes
     navMenu.classList.remove('active');
     mobileToggle.classList.remove('active');
     mobileToggle.setAttribute('aria-expanded', 'false');
     
-    // ULTIMATE body scroll restoration
-    document.body.classList.remove('menu-open');
     document.body.style.overflow = '';
     document.body.style.position = '';
     document.body.style.width = '';
-    document.body.style.height = '';
-    document.documentElement.style.overflow = '';
   }
 
-  // Navigation Updates
   updateNavigation(pageName) {
     const navLinks = document.querySelectorAll('.nav-link:not(.donate-link)');
     navLinks.forEach(link => {
@@ -794,13 +807,10 @@ class AscensionApp {
   }
 
   setupPageEventListeners() {
-    // Re-setup event listeners for new page content
     const buttons = document.querySelectorAll('[data-page]');
     buttons.forEach(button => {
-      // Multiple event types for maximum compatibility
       const handleClick = (e) => {
         e.preventDefault();
-        e.stopPropagation();
         const page = button.getAttribute('data-page');
         this.loadPage(page);
       };
@@ -809,17 +819,32 @@ class AscensionApp {
       button.addEventListener('touchend', handleClick);
     });
 
-    // Re-setup logo handler
     this.setupLogoHandler();
   }
 }
 
-// Initialize app when DOM is ready
+// EMERGENCY: Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('🏛️ DOM ready, starting Ascension App...');
-  window.ascensionApp = new AscensionApp();
+  console.log('🏛️ EMERGENCY: DOM ready, starting Ascension App...');
+  try {
+    window.ascensionApp = new AscensionApp();
+  } catch (error) {
+    console.error('🏛️ EMERGENCY: Failed to start app:', error);
+    // Show basic content even if app fails
+    document.getElementById('page-container').innerHTML = `
+      <div class="page-content">
+        <section class="hero-section">
+          <div class="hero-content">
+            <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
+            <p class="hero-subtitle">Church & School • Fort Wayne, Indiana</p>
+            <p>Sunday Services: 8:00 AM & 10:45 AM</p>
+          </div>
+        </section>
+      </div>
+    `;
+  }
 });
 
-// Make functions available globally for backwards compatibility
+// Make functions available globally
 window.loadPage = (page) => window.ascensionApp?.loadPage(page);
 window.toggleMobileMenu = () => window.ascensionApp?.toggleMobileMenu();
