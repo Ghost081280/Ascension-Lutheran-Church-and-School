@@ -638,6 +638,73 @@ class ChurchApp {
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="contact-info">
+                                <h3>Pastor Information</h3>
+                                <div class="contact-item">
+                                    <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 12C14.21 12 16 10.21 16 8S14.21 4 12 4 8 5.79 8 8 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"/>
+                                    </svg>
+                                    <div>
+                                        <p class="contact-text"><strong>Rev. James Gier</strong><br>
+                                        Senior Pastor</p>
+                                        <p class="contact-text">Pastor Gier was a licensed architect prior to entering the Holy Ministry and is a graduate of Concordia Theological Seminary in Fort Wayne.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="info-section">
+                        <div class="section-header">
+                            <h2 class="section-title">Office Hours</h2>
+                        </div>
+
+                        <div class="worship-times">
+                            <div class="time-item">
+                                <span class="time-label">Monday - Thursday</span>
+                                <span class="time-value">9:00 AM - 3:00 PM</span>
+                            </div>
+                            <div class="time-item">
+                                <span class="time-label">Friday</span>
+                                <span class="time-value">9:00 AM - 12:00 PM</span>
+                            </div>
+                            <div class="time-item">
+                                <span class="time-label">Saturday - Sunday</span>
+                                <span class="time-value">By Appointment</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="info-section">
+                        <div class="card">
+                            <div class="card-content">
+                                <h3>Questions About Membership?</h3>
+                                <p>Interested in becoming a member of Ascension Lutheran Church? Whenever you have any questions about the church, what we believe, or have a special need, please contact the church office at (260) 486-2226 and ask to talk with the pastor.</p>
+                                
+                                <p>Pastor Gier and Pastor Zieroth conduct instructional classes regularly for those who want to join Ascension or have children in Ascension Lutheran School.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="info-section">
+                        <div class="card">
+                            <div class="card-content">
+                                <h3>Get Directions</h3>
+                                <p>We're located on St. Joe Road in northeast Fort Wayne, easily accessible from major highways.</p>
+                                
+                                <div style="margin: 2rem 0;">
+                                    <a href="https://maps.google.com/?q=8811+St+Joe+Road+Fort+Wayne+IN+46835" target="_blank" rel="noopener" class="btn btn-primary">
+                                        Get Directions
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5Z"/>
+                                        </svg>
+                                    </a>
+                                </div>
+
+                                <p><strong>Parking:</strong> Free parking is available in our church lot with easy access to the main entrance.</p>
+                                <p><strong>Accessibility:</strong> Our building is wheelchair accessible with ramps and accessible restrooms.</p>
+                            </div>
                         </div>
                     </section>
 
