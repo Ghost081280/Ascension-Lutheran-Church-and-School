@@ -21,7 +21,7 @@
     
     <!-- Critical CSS - Inline to prevent FOUC -->
     <style>
-        /* CRITICAL LOADING STYLES - EXPANDED TO PREVENT FOUC */
+        /* CRITICAL LOADING STYLES */
         * {
             margin: 0;
             padding: 0;
@@ -36,15 +36,7 @@
             overflow-x: hidden;
         }
         
-        /* Hide main content during loading to prevent FOUC */
-        body.loading .main-header,
-        body.loading .page-container,
-        body.loading .main-footer {
-            opacity: 0;
-            visibility: hidden;
-        }
-        
-        /* Enhanced Loading Screen - RESTORED Animated Background */
+        /* EMERGENCY: Don't hide content during loading on mobile */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -63,6 +55,7 @@
         .loading-screen.hidden {
             opacity: 0;
             visibility: hidden;
+            pointer-events: none;
         }
         
         .loading-background {
@@ -200,7 +193,7 @@
             text-align: center;
         }
         
-        /* RESTORED Background Animations */
+        /* Background Animations */
         @keyframes enhancedFloat {
             0%, 100% { 
                 transform: translate(0, 0) rotate(0deg) scale(1); 
@@ -299,8 +292,8 @@
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/components.css">
 </head>
-<body class="loading">
-    <!-- Enhanced Loading Screen - RESTORED Background Animation -->
+<body>
+    <!-- Enhanced Loading Screen -->
     <div id="loading-screen" class="loading-screen">
         <div class="loading-background">
             <div class="decorative-pattern">
@@ -400,16 +393,34 @@
         <!-- Footer will be populated by JavaScript -->
     </footer>
 
-    <!-- JavaScript Files - Load content first, then app logic -->
+    <!-- JavaScript Files - EMERGENCY FIX FOR MOBILE -->
     <script>
-        // Enhanced loading management - SLOWER for Bible verse reading
-        console.log('🏛️ Starting enhanced content-driven site initialization...');
+        // EMERGENCY: Force loading screen to hide and prevent offline mode
+        console.log('🏛️ EMERGENCY: Starting mobile-friendly initialization...');
         
+        let forceHideTimer;
         let loadingSteps = {
             content: false,
             dom: false,
             assets: false
         };
+        
+        function emergencyHideLoading() {
+            console.log('🏛️ EMERGENCY: Force hiding loading screen');
+            const loadingScreen = document.getElementById('loading-screen');
+            const body = document.body;
+            
+            if (loadingScreen) {
+                loadingScreen.classList.add('hidden');
+                body.classList.remove('loading');
+                
+                setTimeout(() => {
+                    if (loadingScreen.style) {
+                        loadingScreen.style.display = 'none';
+                    }
+                }, 800);
+            }
+        }
         
         function updateLoadingStatus() {
             const statusElement = document.getElementById('loading-status');
@@ -424,26 +435,18 @@
             
             if (allLoaded) {
                 console.log('🏛️ All resources loaded, hiding loading screen...');
-                // SLOWER timing for Bible verse reading
+                clearTimeout(forceHideTimer);
                 setTimeout(() => {
-                    hideLoadingScreen();
-                }, 2500); // Extended to 2.5 seconds for verse reading
+                    emergencyHideLoading();
+                }, 1500);
             }
         }
         
-        function hideLoadingScreen() {
-            const loadingScreen = document.getElementById('loading-screen');
-            const body = document.body;
-            
-            if (loadingScreen) {
-                loadingScreen.classList.add('hidden');
-                body.classList.remove('loading');
-                
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                }, 800);
-            }
-        }
+        // EMERGENCY: Force hide after maximum 3 seconds
+        forceHideTimer = setTimeout(() => {
+            console.log('🏛️ EMERGENCY: Force hiding loading screen after 3 seconds');
+            emergencyHideLoading();
+        }, 3000);
         
         // DOM ready check
         if (document.readyState === 'loading') {
@@ -480,19 +483,11 @@
         window.addEventListener('load', () => {
             setTimeout(() => {
                 if (!Object.values(loadingSteps).every(step => step)) {
-                    console.log('🏛️ Fallback: Force hiding loading screen');
-                    Object.keys(loadingSteps).forEach(key => loadingSteps[key] = true);
-                    hideLoadingScreen();
+                    console.log('🏛️ Window load fallback: Force hiding loading screen');
+                    emergencyHideLoading();
                 }
-            }, 3000); // Longer fallback time
+            }, 1000);
         });
-        
-        // Emergency fallback
-        setTimeout(() => {
-            console.log('🏛️ Emergency fallback: Force hiding loading screen');
-            Object.keys(loadingSteps).forEach(key => loadingSteps[key] = true);
-            hideLoadingScreen();
-        }, 6000); // Extended emergency fallback
     </script>
     
     <script src="./content/content.js"></script>
@@ -500,7 +495,7 @@
     
     <!-- Enhanced PWA Install Script -->
     <script>
-        // Enhanced PWA Install Functionality
+        // Simplified PWA Install - don't interfere with main functionality
         let deferredPrompt;
         let installPromptShown = false;
 
@@ -509,9 +504,9 @@
             e.preventDefault();
             deferredPrompt = e;
             
-            // Show custom install prompt after content loads
+            // Show after everything is loaded and working
             if (!installPromptShown) {
-                setTimeout(showInstallPrompt, 5000);
+                setTimeout(showInstallPrompt, 8000);
             }
         });
 
@@ -522,8 +517,6 @@
             const installPrompt = document.getElementById('pwa-install-prompt');
             if (installPrompt) {
                 installPrompt.classList.remove('hidden');
-                
-                // Auto-hide after 15 seconds
                 setTimeout(() => {
                     hideInstallPrompt();
                 }, 15000);
@@ -543,65 +536,21 @@
                 if (deferredPrompt) {
                     deferredPrompt.prompt();
                     deferredPrompt.userChoice.then((choiceResult) => {
-                        if (choiceResult.outcome === 'accepted') {
-                            console.log('🏛️ PWA installed');
-                        }
                         deferredPrompt = null;
                         hideInstallPrompt();
                     });
                 } else {
-                    // Fallback for browsers without install prompt
                     hideInstallPrompt();
                 }
             } else if (e.target.id === 'pwa-dismiss-btn') {
                 hideInstallPrompt();
             }
         });
-
-        // Listen for app installed
-        window.addEventListener('appinstalled', () => {
-            console.log('🏛️ PWA was installed');
-            hideInstallPrompt();
-        });
-
-        // Enhanced iOS Safari support
-        function isIOS() {
-            return /iPad|iPhone|iPod/.test(navigator.userAgent);
-        }
-
-        function isInStandaloneMode() {
-            return ('standalone' in window.navigator) && (window.navigator.standalone);
-        }
-
-        if (isIOS() && !isInStandaloneMode()) {
-            setTimeout(() => {
-                if (!installPromptShown) {
-                    // Show iOS-specific install instructions
-                    const installPrompt = document.getElementById('pwa-install-prompt');
-                    if (installPrompt) {
-                        const textEl = installPrompt.querySelector('p');
-                        if (textEl) {
-                            textEl.textContent = 'Tap Share ⬆ then "Add to Home Screen"';
-                        }
-                        const installBtn = document.getElementById('pwa-install-btn');
-                        if (installBtn) {
-                            installBtn.textContent = 'Got It';
-                            installBtn.onclick = hideInstallPrompt;
-                        }
-                        installPrompt.classList.remove('hidden');
-                        installPromptShown = true;
-                        
-                        // Longer display for iOS instructions
-                        setTimeout(hideInstallPrompt, 20000);
-                    }
-                }
-            }, 7000);
-        }
     </script>
     
     <!-- Initialize Application -->
     <script>
-        // Enhanced content-driven initialization
+        // EMERGENCY: Simplified initialization
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🏛️ DOM ready - initializing content...');
             
@@ -625,7 +574,7 @@
                 if (loadingLocation) loadingLocation.textContent = content.loading.location;
                 if (loadingVerse) loadingVerse.textContent = `"${content.loading.verse.text}" - ${content.loading.verse.reference}`;
 
-                // Update brand text - FIXED: Clean titles
+                // Update brand text
                 const brandName = document.getElementById('brand-name');
                 const brandSubtitle = document.getElementById('brand-subtitle');
                 
@@ -711,7 +660,7 @@
             }
             
             function setupLogoClickHandler() {
-                // ONLY the rose logo is clickable now
+                // ONLY the rose logo is clickable
                 const logoContainer = document.getElementById('nav-logo-home');
                 if (logoContainer) {
                     const handleLogoClick = (e) => {
@@ -723,23 +672,9 @@
                         }
                     };
                     
-                    const handleLogoKeydown = (e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            console.log('🏛️ Rose logo keyboard activated');
-                            if (window.ascensionApp) {
-                                window.ascensionApp.loadPage('home');
-                            }
-                        }
-                    };
-                    
                     logoContainer.addEventListener('click', handleLogoClick);
-                    logoContainer.addEventListener('keydown', handleLogoKeydown);
-                    
-                    // Visual feedback
+                    logoContainer.addEventListener('touchend', handleLogoClick);
                     logoContainer.style.cursor = 'pointer';
-                    logoContainer.style.transition = 'transform 0.2s ease';
                     
                     console.log('🏛️ Rose logo click handler setup complete');
                 }
@@ -748,7 +683,9 @@
             populateStaticContent();
         });
 
-        // Service Worker Registration
+        // EMERGENCY: Don't register service worker if it's causing issues
+        // Commented out to prevent offline mode problems
+        /*
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
@@ -760,10 +697,12 @@
                     });
             });
         }
+        */
 
         // Error handling
         window.addEventListener('error', (e) => {
             console.error('🏛️ Application error:', e.error);
+            // Don't let errors prevent the site from loading
         });
     </script>
 </body>
