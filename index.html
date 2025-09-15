@@ -10,6 +10,7 @@
     <meta name="theme-color" content="#8B0000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Ascension Lutheran">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="./images/Color Luther Rose - 72 dpi.jpg">
@@ -23,15 +24,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/components.css">
+    
     <style>
-        /* Simple, Clean Loading Screen */
+        /* Enhanced Loading Screen - Luxury Experience */
         .loading-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            background: linear-gradient(135deg, #8B0000 0%, #660000 100%);
             z-index: 9999;
             display: flex;
             align-items: center;
@@ -54,7 +59,7 @@
             overflow: hidden;
         }
         
-        /* Enhanced LV Pattern Background - More Visible & Animated */
+        /* Enhanced Decorative Pattern */
         .decorative-pattern {
             position: relative;
             width: 100%;
@@ -63,7 +68,7 @@
         
         .pattern-cross {
             position: absolute;
-            color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.15);
             font-size: 2.5rem;
             font-weight: bold;
             animation: enhancedFloat 20s ease-in-out infinite;
@@ -73,12 +78,12 @@
         
         .pattern-circle {
             position: absolute;
-            border: 3px solid rgba(255, 255, 255, 0.2);
+            border: 3px solid rgba(255, 255, 255, 0.15);
             border-radius: 50%;
             animation: enhancedPulse 18s ease-in-out infinite;
         }
         
-        /* Enhanced Pattern Grid Positions with More Movement */
+        /* Pattern Positions */
         .cross-1 { top: 8%; left: 12%; animation-delay: 0s; }
         .cross-2 { top: 15%; left: 35%; animation-delay: 5s; }
         .cross-3 { top: 10%; left: 58%; animation-delay: 10s; }
@@ -97,7 +102,7 @@
         .circle-7 { top: 85%; left: 30%; width: 85px; height: 85px; animation-delay: 13.5s; }
         .circle-8 { top: 80%; left: 70%; width: 75px; height: 75px; animation-delay: 18.5s; }
         
-        /* REVERTED - Back to Working Loading Screen with Fixes */
+        /* Loading Content */
         .loading-content {
             text-align: center;
             z-index: 10;
@@ -115,8 +120,8 @@
         }
         
         .logo-img {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
@@ -181,7 +186,7 @@
             line-height: 1.5;
         }
         
-        /* Enhanced Animations - More Visible Icons */
+        /* Enhanced Animations */
         @keyframes enhancedFloat {
             0% { 
                 transform: translate(0, 0) rotate(0deg) scale(1); 
@@ -189,7 +194,7 @@
             }
             25% { 
                 transform: translate(40px, -30px) rotate(90deg) scale(1.3); 
-                opacity: 0.4; 
+                opacity: 0.3; 
             }
             50% { 
                 transform: translate(-25px, -50px) rotate(180deg) scale(0.7); 
@@ -197,7 +202,7 @@
             }
             75% { 
                 transform: translate(35px, -20px) rotate(270deg) scale(1.2); 
-                opacity: 0.35; 
+                opacity: 0.25; 
             }
             100% { 
                 transform: translate(0, 0) rotate(360deg) scale(1); 
@@ -213,8 +218,8 @@
             }
             20% { 
                 transform: scale(1.5) translateX(20px) translateY(-20px); 
-                opacity: 0.4; 
-                border-color: rgba(255, 255, 255, 0.4); 
+                opacity: 0.3; 
+                border-color: rgba(255, 255, 255, 0.3); 
             }
             40% { 
                 transform: scale(0.6) translateX(-15px) translateY(25px); 
@@ -223,8 +228,8 @@
             }
             60% { 
                 transform: scale(1.3) translateX(25px) translateY(-10px); 
-                opacity: 0.35; 
-                border-color: rgba(255, 255, 255, 0.35); 
+                opacity: 0.25; 
+                border-color: rgba(255, 255, 255, 0.25); 
             }
             80% { 
                 transform: scale(0.8) translateX(-10px) translateY(15px); 
@@ -243,30 +248,29 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Mobile Responsive - Final Polish */
+        /* Mobile Responsive Loading */
         @media (max-width: 480px) {
             .loading-content {
                 margin: 1.5rem;
-                padding: 3rem 2.5rem;
-                max-width: 380px;
+                padding: 2rem 1.5rem;
+                max-width: 350px;
             }
             
             .logo-img {
-                width: 90px;
-                height: 90px;
+                width: 80px;
+                height: 80px;
             }
             
             .loading-title {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             
             .loading-subtitle {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
             
             .loading-verse {
-                font-size: 1rem;
-                max-width: 300px;
+                font-size: 0.9rem;
             }
             
             .spinner {
@@ -274,15 +278,17 @@
                 height: 40px;
             }
             
-            .loading-status {
-                font-size: 0.9rem;
+            .pattern-cross {
+                font-size: 2rem;
             }
         }
+        
+        /* Page content fade-in effect */
+        .page-container {
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+        }
     </style>
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="./css/main.css">
-    <link rel="stylesheet" href="./css/components.css">
 </head>
 <body>
     <!-- Loading Screen -->
@@ -313,7 +319,8 @@
                 <img src="./images/Color Luther Rose - 72 dpi.jpg" alt="Ascension Lutheran Church Logo" class="logo-img">
             </div>
             <h1 class="loading-title">Ascension Lutheran Church</h1>
-            <p class="loading-subtitle">Fort Wayne, Indiana</p>
+            <p class="loading-subtitle">Church & School</p>
+            <p class="loading-location">Fort Wayne, Indiana</p>
             <div class="loading-spinner">
                 <div class="spinner"></div>
             </div>
@@ -336,7 +343,7 @@
                     </div>
                 </div>
                 
-                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu">
+                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu" aria-expanded="false">
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
@@ -366,6 +373,10 @@
                     <div class="hero-content">
                         <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
                         <p class="hero-subtitle">Join our family in worshipping and serving our glorious God in Fort Wayne, Indiana</p>
+                        <div class="hero-cta">
+                            <button class="btn btn-primary" onclick="loadPage('worship')">Join Us for Worship</button>
+                            <button class="btn btn-secondary" onclick="loadPage('church')">Learn More</button>
+                        </div>
                     </div>
                 </section>
                 <section class="info-section">
@@ -425,10 +436,12 @@
     </footer>
 
     <!-- JavaScript -->
+    <script src="./js/components.js"></script>
+    <script src="./js/navigation.js"></script>
     <script src="./js/app.js"></script>
     
     <script>
-        console.log('🏛️ HTML loaded, checking for app functions...');
+        console.log('🏛️ HTML loaded, initializing...');
         
         // Loading screen management
         function hideLoadingScreen() {
@@ -444,40 +457,72 @@
         
         // Show loading screen initially and hide after content loads
         window.addEventListener('load', () => {
-            console.log('🏛️ Page fully loaded, hiding loading screen');
-            setTimeout(hideLoadingScreen, 3000); // Show for 3 seconds to enjoy the luxury animation
+            console.log('🏛️ Page fully loaded');
+            setTimeout(hideLoadingScreen, 2500); // Show for 2.5 seconds
         });
         
-        // Fallback - hide loading screen after max 6 seconds
-        setTimeout(hideLoadingScreen, 6000);
+        // Fallback - hide loading screen after max 5 seconds
+        setTimeout(hideLoadingScreen, 5000);
         
-        // Simple working mobile menu toggle
-        function toggleMobileMenu() {
-            console.log('🏛️ toggleMobileMenu called');
+        // Mobile menu functionality fallback
+        window.toggleMobileMenu = window.toggleMobileMenu || function() {
+            console.log('🏛️ Fallback toggleMobileMenu called');
             const navMenu = document.getElementById('nav-menu');
-            const isOpen = navMenu.classList.contains('active');
+            const isOpen = navMenu && navMenu.classList.contains('active');
             
-            if (isOpen) {
-                navMenu.classList.remove('active');
-                console.log('🏛️ Mobile menu closed');
-            } else {
-                navMenu.classList.add('active');
-                console.log('🏛️ Mobile menu opened');
+            if (navMenu) {
+                if (isOpen) {
+                    navMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                } else {
+                    navMenu.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
             }
+        };
+        
+        // Page loading fallback
+        window.loadPage = window.loadPage || function(page) {
+            console.log('🏛️ Fallback loadPage called for:', page);
+            const container = document.getElementById('page-container');
+            if (container) {
+                container.innerHTML = `
+                    <div class="page-content">
+                        <div class="container">
+                            <div class="hero-section">
+                                <div class="hero-content">
+                                    <h1 class="hero-title">Loading ${page}...</h1>
+                                    <p class="hero-subtitle">Please wait while we load the content.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        };
+        
+        // Initialize service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((registration) => {
+                        console.log('🏛️ Service Worker registered successfully:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('🏛️ Service Worker registration failed:', error);
+                    });
+            });
         }
         
-        // Fallback in case main app doesn't load
-        setTimeout(function() {
-            if (typeof window.loadPage !== 'function') {
-                console.log('🏛️ Main app not loaded, using fallback');
-                window.loadPage = function(page) {
-                    console.log('🏛️ Fallback loadPage called for:', page);
-                    document.getElementById('page-container').innerHTML = '<div class="page-content"><div class="container"><h1>Loading ' + page + '...</h1><p>Please check that app.js is loading correctly.</p><p>Check the browser console for errors.</p></div></div>';
-                };
-            } else {
-                console.log('🏛️ Main app loaded successfully!');
-            }
-        }, 1000);
+        // Performance monitoring
+        if ('performance' in window) {
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    const perf = performance.getEntriesByType('navigation')[0];
+                    console.log('🏛️ Page load time:', perf.loadEventEnd - perf.loadEventStart, 'ms');
+                }, 0);
+            });
+        }
     </script>
 </body>
 </html>
