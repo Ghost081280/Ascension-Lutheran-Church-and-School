@@ -44,7 +44,7 @@
             visibility: hidden;
         }
         
-        /* Enhanced Loading Screen */
+        /* Enhanced Loading Screen - FIXED: Static with elegant border */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -65,67 +65,17 @@
             visibility: hidden;
         }
         
-        .loading-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-        
-        .decorative-pattern {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .pattern-cross {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.1);
-            font-size: 2.5rem;
-            font-weight: bold;
-            animation: enhancedFloat 25s ease-in-out infinite;
-            user-select: none;
-            pointer-events: none;
-        }
-        
-        .pattern-circle {
-            position: absolute;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: enhancedPulse 20s ease-in-out infinite;
-        }
-        
-        .cross-1 { top: 8%; left: 12%; animation-delay: 0s; }
-        .cross-2 { top: 15%; left: 35%; animation-delay: 6s; }
-        .cross-3 { top: 10%; left: 58%; animation-delay: 12s; }
-        .cross-4 { top: 12%; left: 78%; animation-delay: 18s; }
-        .cross-5 { top: 45%; left: 15%; animation-delay: 3s; }
-        .cross-6 { top: 38%; left: 65%; animation-delay: 9s; }
-        .cross-7 { top: 75%; left: 10%; animation-delay: 15s; }
-        .cross-8 { top: 68%; left: 60%; animation-delay: 21s; }
-        
-        .circle-1 { top: 3%; left: 25%; width: 70px; height: 70px; animation-delay: 1s; }
-        .circle-2 { top: 8%; left: 70%; width: 90px; height: 90px; animation-delay: 7s; }
-        .circle-3 { top: 30%; left: 3%; width: 60px; height: 60px; animation-delay: 13s; }
-        .circle-4 { top: 25%; left: 82%; width: 80px; height: 80px; animation-delay: 19s; }
-        .circle-5 { top: 60%; left: 8%; width: 100px; height: 100px; animation-delay: 4s; }
-        .circle-6 { top: 55%; left: 75%; width: 65px; height: 65px; animation-delay: 10s; }
-        .circle-7 { top: 85%; left: 30%; width: 85px; height: 85px; animation-delay: 16s; }
-        .circle-8 { top: 80%; left: 70%; width: 75px; height: 75px; animation-delay: 22s; }
-        
         .loading-content {
             text-align: center;
             z-index: 10;
             max-width: 400px;
-            padding: 2rem;
+            padding: 2.5rem;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
             border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-            animation: loadingContentFloat 3s ease-in-out infinite;
+            /* FIXED: Static, no animation */
         }
         
         .church-logo {
@@ -137,7 +87,7 @@
             height: 90px;
             border-radius: 50%;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            animation: logoGlow 2s ease-in-out infinite alternate;
+            /* FIXED: Static, no animation */
         }
         
         .loading-title {
@@ -201,72 +151,6 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
         
-        /* Loading Animations */
-        @keyframes enhancedFloat {
-            0%, 100% { 
-                transform: translate(0, 0) rotate(0deg) scale(1); 
-                opacity: 0.03; 
-            }
-            25% { 
-                transform: translate(30px, -20px) rotate(90deg) scale(1.2); 
-                opacity: 0.2; 
-            }
-            50% { 
-                transform: translate(-20px, -35px) rotate(180deg) scale(0.8); 
-                opacity: 0.06; 
-            }
-            75% { 
-                transform: translate(25px, -15px) rotate(270deg) scale(1.1); 
-                opacity: 0.15; 
-            }
-        }
-        
-        @keyframes enhancedPulse {
-            0%, 100% { 
-                transform: scale(1) translateX(0) translateY(0); 
-                opacity: 0.08; 
-                border-color: rgba(255, 255, 255, 0.08); 
-            }
-            20% { 
-                transform: scale(1.3) translateX(15px) translateY(-15px); 
-                opacity: 0.25; 
-                border-color: rgba(255, 255, 255, 0.25); 
-            }
-            40% { 
-                transform: scale(0.7) translateX(-10px) translateY(20px); 
-                opacity: 0.04; 
-                border-color: rgba(255, 255, 255, 0.04); 
-            }
-            60% { 
-                transform: scale(1.2) translateX(20px) translateY(-8px); 
-                opacity: 0.2; 
-                border-color: rgba(255, 255, 255, 0.2); 
-            }
-            80% { 
-                transform: scale(0.9) translateX(-8px) translateY(12px); 
-                opacity: 0.12; 
-                border-color: rgba(255, 255, 255, 0.12); 
-            }
-        }
-        
-        @keyframes loadingContentFloat {
-            0%, 100% { 
-                transform: translateY(0px); 
-            }
-            50% { 
-                transform: translateY(-8px); 
-            }
-        }
-        
-        @keyframes logoGlow {
-            0% { 
-                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); 
-            }
-            100% { 
-                box-shadow: 0 10px 35px rgba(139, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.1); 
-            }
-        }
-        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -301,10 +185,6 @@
                 width: 40px;
                 height: 40px;
             }
-            
-            .pattern-cross {
-                font-size: 2rem;
-            }
         }
     </style>
     
@@ -318,28 +198,8 @@
     <link rel="stylesheet" href="./css/components.css">
 </head>
 <body class="loading">
-    <!-- Enhanced Loading Screen -->
+    <!-- Enhanced Loading Screen - FIXED: Static, elegant -->
     <div id="loading-screen" class="loading-screen">
-        <div class="loading-background">
-            <div class="decorative-pattern">
-                <div class="pattern-cross cross-1">✚</div>
-                <div class="pattern-cross cross-2">✚</div>
-                <div class="pattern-cross cross-3">✚</div>
-                <div class="pattern-cross cross-4">✚</div>
-                <div class="pattern-cross cross-5">✚</div>
-                <div class="pattern-cross cross-6">✚</div>
-                <div class="pattern-cross cross-7">✚</div>
-                <div class="pattern-cross cross-8">✚</div>
-                <div class="pattern-circle circle-1"></div>
-                <div class="pattern-circle circle-2"></div>
-                <div class="pattern-circle circle-3"></div>
-                <div class="pattern-circle circle-4"></div>
-                <div class="pattern-circle circle-5"></div>
-                <div class="pattern-circle circle-6"></div>
-                <div class="pattern-circle circle-7"></div>
-                <div class="pattern-circle circle-8"></div>
-            </div>
-        </div>
         <div class="loading-content">
             <div class="church-logo">
                 <img src="./images/Color Luther Rose - 72 dpi.jpg" alt="Ascension Lutheran Church Logo" class="logo-img">
@@ -355,6 +215,23 @@
         </div>
     </div>
 
+    <!-- PWA Install Prompt -->
+    <div id="pwa-install-prompt" class="pwa-install-prompt hidden">
+        <div class="pwa-install-content">
+            <div class="pwa-install-icon">
+                <img src="./images/Color Luther Rose - 72 dpi.jpg" alt="App Icon" class="pwa-icon">
+            </div>
+            <div class="pwa-install-text">
+                <h3>Install Ascension Lutheran App</h3>
+                <p>Get quick access to worship times, events, and church information</p>
+            </div>
+            <div class="pwa-install-buttons">
+                <button id="pwa-install-btn" class="pwa-btn pwa-btn-primary">Install</button>
+                <button id="pwa-dismiss-btn" class="pwa-btn pwa-btn-secondary">Not Now</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Navigation Header -->
     <header class="main-header">
         <nav class="navbar">
@@ -364,7 +241,7 @@
                         <img src="./images/Color Luther Rose - 72 dpi.jpg" alt="Luther Rose Logo" class="nav-logo">
                     </div>
                     <div class="brand-text">
-                        <h1 class="brand-name" id="brand-name">Ascension Lutheran</h1>
+                        <h1 class="brand-name" id="brand-name">Ascension Lutheran Church</h1>
                         <p class="brand-subtitle" id="brand-subtitle">Church & School</p>
                     </div>
                 </div>
@@ -402,42 +279,31 @@
 
     <!-- JavaScript Files - Load content first, then app logic -->
     <script>
-        // Enhanced loading management to prevent FOUC
+        // Enhanced loading management - SIMPLIFIED
         console.log('🏛️ Starting enhanced content-driven site initialization...');
         
         let loadingSteps = {
             content: false,
-            fonts: false,
-            css: false,
             dom: false,
             assets: false
         };
         
-        function updateLoadingStatus(step, message) {
+        function updateLoadingStatus() {
             const statusElement = document.getElementById('loading-status');
             if (statusElement) {
-                statusElement.textContent = message;
+                statusElement.textContent = 'Loading...';
             }
-            loadingSteps[step] = true;
             checkLoadingComplete();
         }
         
         function checkLoadingComplete() {
             const allLoaded = Object.values(loadingSteps).every(step => step);
-            const loadedCount = Object.values(loadingSteps).filter(step => step).length;
-            const totalCount = Object.keys(loadingSteps).length;
-            
-            // Update progress
-            const statusElement = document.getElementById('loading-status');
-            if (statusElement && !allLoaded) {
-                statusElement.textContent = `Loading... ${Math.round((loadedCount / totalCount) * 100)}%`;
-            }
             
             if (allLoaded) {
                 console.log('🏛️ All resources loaded, hiding loading screen...');
                 setTimeout(() => {
                     hideLoadingScreen();
-                }, 1000); // Show loading screen for minimum 1 second after everything loads
+                }, 800); // Shorter delay for better UX
             }
         }
         
@@ -446,13 +312,6 @@
             const body = document.body;
             
             if (loadingScreen) {
-                // Update status
-                const statusElement = document.getElementById('loading-status');
-                if (statusElement) {
-                    statusElement.textContent = 'Welcome!';
-                }
-                
-                // Hide loading screen
                 loadingScreen.classList.add('hidden');
                 body.classList.remove('loading');
                 
@@ -462,65 +321,31 @@
             }
         }
         
-        // Check if fonts are loaded
-        if (document.fonts) {
-            document.fonts.ready.then(() => {
-                updateLoadingStatus('fonts', 'Fonts loaded...');
-            });
-        } else {
-            updateLoadingStatus('fonts', 'Fonts loaded...');
-        }
-        
-        // Check CSS load with improved detection
-        let cssLoaded = false;
-        const checkCSSLoaded = () => {
-            try {
-                // Test if CSS custom properties are working
-                const testDiv = document.createElement('div');
-                testDiv.style.cssText = 'color: var(--primary-color)';
-                document.body.appendChild(testDiv);
-                const computed = window.getComputedStyle(testDiv);
-                if (computed.color !== '' && computed.color !== 'var(--primary-color)') {
-                    cssLoaded = true;
-                    updateLoadingStatus('css', 'Styles loaded...');
-                }
-                document.body.removeChild(testDiv);
-            } catch (e) {
-                // Fallback after timeout
-                setTimeout(() => {
-                    if (!cssLoaded) {
-                        updateLoadingStatus('css', 'Styles loaded...');
-                    }
-                }, 1000);
-            }
-        };
-        
-        // Check CSS periodically
-        const cssInterval = setInterval(() => {
-            if (!cssLoaded) {
-                checkCSSLoaded();
-            } else {
-                clearInterval(cssInterval);
-            }
-        }, 100);
-        
         // DOM ready check
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
-                updateLoadingStatus('dom', 'Page structure loaded...');
+                loadingSteps.dom = true;
+                updateLoadingStatus();
             });
         } else {
-            updateLoadingStatus('dom', 'Page structure loaded...');
+            loadingSteps.dom = true;
         }
         
         // Check for critical assets
         const checkAssets = () => {
             const logo = document.querySelector('.logo-img');
             if (logo && logo.complete) {
-                updateLoadingStatus('assets', 'Assets loaded...');
+                loadingSteps.assets = true;
+                updateLoadingStatus();
             } else if (logo) {
-                logo.onload = () => updateLoadingStatus('assets', 'Assets loaded...');
-                logo.onerror = () => updateLoadingStatus('assets', 'Assets loaded...');
+                logo.onload = () => {
+                    loadingSteps.assets = true;
+                    updateLoadingStatus();
+                };
+                logo.onerror = () => {
+                    loadingSteps.assets = true;
+                    updateLoadingStatus();
+                };
             } else {
                 setTimeout(checkAssets, 100);
             }
@@ -535,7 +360,7 @@
                     Object.keys(loadingSteps).forEach(key => loadingSteps[key] = true);
                     hideLoadingScreen();
                 }
-            }, 2000); // Maximum 2 seconds after window load
+            }, 1500);
         });
         
         // Emergency fallback
@@ -543,11 +368,106 @@
             console.log('🏛️ Emergency fallback: Force hiding loading screen');
             Object.keys(loadingSteps).forEach(key => loadingSteps[key] = true);
             hideLoadingScreen();
-        }, 5000); // Absolute maximum 5 seconds
+        }, 4000);
     </script>
     
     <script src="./content/content.js"></script>
     <script src="./js/app.js"></script>
+    
+    <!-- PWA Install Script -->
+    <script>
+        // PWA Install Functionality
+        let deferredPrompt;
+        let installPromptShown = false;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('🏛️ PWA install prompt available');
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show custom install prompt after a delay
+            if (!installPromptShown) {
+                setTimeout(showInstallPrompt, 3000);
+            }
+        });
+
+        function showInstallPrompt() {
+            if (!deferredPrompt || installPromptShown) return;
+            
+            installPromptShown = true;
+            const installPrompt = document.getElementById('pwa-install-prompt');
+            if (installPrompt) {
+                installPrompt.classList.remove('hidden');
+                
+                // Auto-hide after 10 seconds
+                setTimeout(() => {
+                    hideInstallPrompt();
+                }, 10000);
+            }
+        }
+
+        function hideInstallPrompt() {
+            const installPrompt = document.getElementById('pwa-install-prompt');
+            if (installPrompt) {
+                installPrompt.classList.add('hidden');
+            }
+        }
+
+        // Install button click
+        document.addEventListener('click', (e) => {
+            if (e.target.id === 'pwa-install-btn') {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('🏛️ PWA installed');
+                        }
+                        deferredPrompt = null;
+                        hideInstallPrompt();
+                    });
+                }
+            } else if (e.target.id === 'pwa-dismiss-btn') {
+                hideInstallPrompt();
+            }
+        });
+
+        // Listen for app installed
+        window.addEventListener('appinstalled', () => {
+            console.log('🏛️ PWA was installed');
+            hideInstallPrompt();
+        });
+
+        // Show install prompt for iOS Safari
+        function isIOS() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent);
+        }
+
+        function isInStandaloneMode() {
+            return ('standalone' in window.navigator) && (window.navigator.standalone);
+        }
+
+        if (isIOS() && !isInStandaloneMode()) {
+            setTimeout(() => {
+                if (!installPromptShown) {
+                    // Show iOS-specific install instructions
+                    const installPrompt = document.getElementById('pwa-install-prompt');
+                    if (installPrompt) {
+                        const textEl = installPrompt.querySelector('p');
+                        if (textEl) {
+                            textEl.textContent = 'Tap the share button and select "Add to Home Screen"';
+                        }
+                        const installBtn = document.getElementById('pwa-install-btn');
+                        if (installBtn) {
+                            installBtn.textContent = 'Got it';
+                            installBtn.onclick = hideInstallPrompt;
+                        }
+                        installPrompt.classList.remove('hidden');
+                        installPromptShown = true;
+                    }
+                }
+            }, 5000);
+        }
+    </script>
     
     <!-- Initialize Application -->
     <script>
@@ -575,11 +495,11 @@
                 if (loadingLocation) loadingLocation.textContent = content.loading.location;
                 if (loadingVerse) loadingVerse.textContent = `"${content.loading.verse.text}" - ${content.loading.verse.reference}`;
 
-                // Update brand text
+                // Update brand text - FIXED: Full name on desktop
                 const brandName = document.getElementById('brand-name');
                 const brandSubtitle = document.getElementById('brand-subtitle');
                 
-                if (brandName) brandName.textContent = content.site.name.replace(' & School', '');
+                if (brandName) brandName.textContent = content.site.name;
                 if (brandSubtitle) brandSubtitle.textContent = content.site.tagline;
 
                 // Populate navigation
@@ -588,11 +508,12 @@
                 // Populate footer
                 populateFooter(content.footer, content.social);
                 
-                // Setup logo click handler for home - FIXED
+                // Setup logo click handler for home
                 setupLogoClickHandler();
 
                 // Mark content as loaded
-                updateLoadingStatus('content', 'Content loaded...');
+                loadingSteps.content = true;
+                updateLoadingStatus();
 
                 console.log('🏛️ Static content populated successfully');
             }
@@ -662,39 +583,38 @@
             function setupLogoClickHandler() {
                 const logoBrand = document.getElementById('nav-brand-home');
                 if (logoBrand) {
-                    // Remove any existing listeners
-                    logoBrand.replaceWith(logoBrand.cloneNode(true));
-                    const newLogoBrand = document.getElementById('nav-brand-home');
-                    
-                    newLogoBrand.addEventListener('click', (e) => {
+                    // Enhanced click handler with better event management
+                    const handleLogoClick = (e) => {
                         e.preventDefault();
+                        e.stopPropagation();
                         console.log('🏛️ Logo clicked - navigating to home');
                         if (window.ascensionApp) {
                             window.ascensionApp.loadPage('home');
                         }
-                    });
+                    };
                     
-                    newLogoBrand.addEventListener('keydown', (e) => {
+                    const handleLogoKeydown = (e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
+                            e.stopPropagation();
                             console.log('🏛️ Logo keyboard activated - navigating to home');
                             if (window.ascensionApp) {
                                 window.ascensionApp.loadPage('home');
                             }
                         }
-                    });
+                    };
                     
-                    // Add visual feedback
-                    newLogoBrand.style.cursor = 'pointer';
-                    newLogoBrand.style.transition = 'transform 0.2s ease';
+                    // Remove existing listeners
+                    logoBrand.removeEventListener('click', handleLogoClick);
+                    logoBrand.removeEventListener('keydown', handleLogoKeydown);
                     
-                    newLogoBrand.addEventListener('mouseenter', () => {
-                        newLogoBrand.style.transform = 'scale(1.02)';
-                    });
+                    // Add fresh listeners
+                    logoBrand.addEventListener('click', handleLogoClick);
+                    logoBrand.addEventListener('keydown', handleLogoKeydown);
                     
-                    newLogoBrand.addEventListener('mouseleave', () => {
-                        newLogoBrand.style.transform = 'scale(1)';
-                    });
+                    // Visual feedback
+                    logoBrand.style.cursor = 'pointer';
+                    logoBrand.style.transition = 'transform 0.2s ease';
                     
                     console.log('🏛️ Logo click handler setup complete');
                 }
