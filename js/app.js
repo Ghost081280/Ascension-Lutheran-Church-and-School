@@ -230,7 +230,7 @@ class ChurchApp {
                                     </div>
                                 </div>
                                 <div class="card">
-                                    <img src="./images/families.jpg" alt="Families at Ascension Lutheran Church" class="card-image" style="height: 200px; object-fit: cover; object-position: center top;">
+                                    <img src="./images/families.jpg" alt="Families at Ascension Lutheran Church" class="card-image" style="height: 200px; object-fit: cover; object-position: center 20%;">
                                     <div class="card-content">
                                         <h3 class="card-title">Family</h3>
                                         <p class="card-text">Ascension is a place for families with many opportunities to study God's Word together. We offer programs for all ages to grow in faith.</p>
