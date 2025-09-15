@@ -70,16 +70,18 @@ const pages = {
                         <h2 class="section-title">Meet Our Pastor</h2>
                         <p class="section-subtitle">Shepherding our congregation with wisdom and faith</p>
                     </div>
-                    <div class="pastor-card">
-                        <div class="pastor-image-container">
-                            <img src="./images/Pastor.png" alt="Rev. James Gier" class="pastor-image">
+                    <div class="pastor-section">
+                        <div class="pastor-image-wrapper">
+                            <img src="./images/Pastor.png" alt="Rev. James Gier" class="pastor-photo">
                         </div>
-                        <div class="pastor-content">
+                        <div class="pastor-info">
                             <h3 class="pastor-name">Rev. James Gier</h3>
-                            <p class="pastor-title">Senior Pastor</p>
-                            <p class="pastor-bio">Pastor Gier was a licensed architect prior to entering the Holy Ministry and is a graduate of Concordia Theological Seminary in Fort Wayne. He brings a unique perspective to ministry, combining his background in design with his passion for God's Word.</p>
-                            <p class="pastor-bio">Pastor Gier has been faithfully serving our congregation, providing pastoral care, preaching God's Word, and administering the sacraments with dedication and love.</p>
-                            <button class="card-link" onclick="loadPage('contact')">Contact Pastor Gier →</button>
+                            <p class="pastor-role">Senior Pastor</p>
+                            <div class="pastor-bio">
+                                <p>Pastor Gier was a licensed architect prior to entering the Holy Ministry and is a graduate of Concordia Theological Seminary in Fort Wayne. He brings a unique perspective to ministry, combining his background in design with his passion for God's Word.</p>
+                                <p>Pastor Gier has been faithfully serving our congregation, providing pastoral care, preaching God's Word, and administering the sacraments with dedication and love.</p>
+                            </div>
+                            <button class="card-link pastor-contact" onclick="loadPage('contact')">Contact Pastor Gier →</button>
                         </div>
                     </div>
                 </section>
