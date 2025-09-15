@@ -1,4 +1,4 @@
-/* CSS Variables for consistent theming - Updated with Church's Red Color Scheme */
+/* CSS Variables for consistent theming - Updated with Church's Red Color Scheme v2025011402 */
 :root {
   /* Color Palette - Based on original church website */
   --primary-color: #8B0000;        /* Dark Red */
@@ -51,6 +51,9 @@
   --transition-fast: 0.15s ease-in-out;
   --transition-normal: 0.3s ease-in-out;
   --transition-slow: 0.5s ease-in-out;
+  
+  /* Version identifier for cache busting */
+  --app-version: '2025011402';
 }
 
 /* Reset and Base Styles */
@@ -639,3 +642,6 @@ a:hover {
     background: white !important;
   }
 }
+
+/* Version indicator comment for cache verification */
+/* ALC PWA CSS Version: 2025011402 */
