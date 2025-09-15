@@ -614,5 +614,24 @@
             }, 3000);
         });
     </script>
+    <script>
+window.addEventListener('load', function() {
+    document.querySelectorAll('.nav-link').forEach(function(link) {
+        link.onclick = function(e) {
+            e.preventDefault();
+            var page = this.getAttribute('data-page');
+            var container = document.getElementById('page-container');
+            
+            if (page === 'church') {
+                container.innerHTML = '<div style="padding:2rem;"><h1 style="color:#8B0000;">OUR CHURCH PAGE</h1><p>This is the church page content - DIFFERENT from home!</p></div>';
+            } else if (page === 'family') {
+                container.innerHTML = '<div style="padding:2rem;"><h1 style="color:#8B0000;">FAMILY PAGE</h1><p>This is the family page content - DIFFERENT from home!</p></div>';
+            } else {
+                container.innerHTML = '<div style="padding:2rem;"><h1 style="color:#8B0000;">HOME PAGE</h1><p>This is the home page content.</p></div>';
+            }
+        };
+    });
+});
+</script>
 </body>
 </html>
