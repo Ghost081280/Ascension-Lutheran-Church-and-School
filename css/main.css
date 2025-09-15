@@ -1,4 +1,4 @@
-/* FINAL main.css - Perfect Mobile Navigation & Hero Background Fix */
+/* Ascension Lutheran Church - Main Styles - Clean Rebuild */
 
 /* CSS Variables */
 :root {
@@ -124,145 +124,6 @@ a:hover {
   padding: 0 var(--spacing-lg);
 }
 
-/* Beautiful PWA Install Prompt with Rose Icon */
-.pwa-install-prompt {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  right: 20px;
-  max-width: 420px;
-  margin: 0 auto;
-  background: var(--white);
-  border-radius: var(--radius-xl);
-  box-shadow: 0 10px 40px rgba(139, 0, 0, 0.2);
-  z-index: 10000;
-  border: 2px solid var(--gray-200);
-  transition: all var(--transition-normal);
-  overflow: hidden;
-}
-
-.pwa-install-prompt.hidden {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(100px);
-}
-
-.pwa-install-content {
-  display: flex;
-  align-items: center;
-  padding: var(--spacing-lg);
-  gap: var(--spacing-lg);
-}
-
-.pwa-rose-icon {
-  flex-shrink: 0;
-  position: relative;
-}
-
-.pwa-rose {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
-  border: 2px solid var(--primary-color);
-  background: var(--white);
-  padding: 2px;
-}
-
-.pwa-install-text {
-  flex: 1;
-}
-
-.pwa-install-text h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--primary-color);
-  margin-bottom: var(--spacing-xs);
-  font-family: var(--font-display);
-}
-
-.pwa-install-text p {
-  font-size: 0.9rem;
-  color: var(--gray-600);
-  margin-bottom: 0;
-  line-height: 1.4;
-}
-
-.pwa-install-buttons {
-  display: flex;
-  gap: var(--spacing-sm);
-  flex-direction: column;
-  min-width: 100px;
-}
-
-.pwa-btn {
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: none;
-  border-radius: var(--radius-lg);
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition-fast);
-  text-align: center;
-  min-height: 36px;
-}
-
-.pwa-btn-primary {
-  background: var(--primary-color);
-  color: var(--white);
-}
-
-.pwa-btn-primary:hover {
-  background: var(--primary-light);
-  transform: translateY(-1px);
-}
-
-.pwa-btn-secondary {
-  background: transparent;
-  color: var(--gray-600);
-  border: 1px solid var(--gray-300);
-}
-
-.pwa-btn-secondary:hover {
-  background: var(--gray-100);
-}
-
-@media (max-width: 480px) {
-  .pwa-install-prompt {
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-  }
-  
-  .pwa-install-content {
-    padding: var(--spacing-md);
-    gap: var(--spacing-md);
-  }
-  
-  .pwa-rose {
-    width: 56px;
-    height: 56px;
-  }
-  
-  .pwa-install-text h3 {
-    font-size: 1rem;
-  }
-  
-  .pwa-install-text p {
-    font-size: 0.85rem;
-  }
-  
-  .pwa-install-buttons {
-    flex-direction: row;
-    width: 100%;
-  }
-  
-  .pwa-btn {
-    flex: 1;
-    font-size: 0.85rem;
-  }
-}
-
 /* Navigation */
 .main-header {
   background: var(--white);
@@ -286,7 +147,6 @@ a:hover {
   justify-content: space-between;
 }
 
-/* FIXED: Separate clickable logo from text */
 .nav-brand-wrapper {
   display: flex;
   align-items: center;
@@ -324,7 +184,7 @@ a:hover {
 
 .brand-text {
   line-height: 1.2;
-  pointer-events: none; /* Text is not clickable */
+  pointer-events: none;
 }
 
 .brand-name {
@@ -340,7 +200,7 @@ a:hover {
   margin-bottom: 0;
 }
 
-/* FIXED: Enhanced Mobile Menu Toggle */
+/* Mobile Menu Toggle */
 .mobile-menu-toggle {
   display: none;
   flex-direction: column;
@@ -370,11 +230,6 @@ a:hover {
   outline-offset: 2px;
 }
 
-.mobile-menu-toggle:active {
-  background-color: var(--gray-200);
-  transform: scale(0.95);
-}
-
 .hamburger-line {
   width: 26px;
   height: 3px;
@@ -384,7 +239,6 @@ a:hover {
   transform-origin: center;
 }
 
-/* FIXED: Perfect Hamburger Animation */
 .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
   transform: rotate(45deg) translate(6px, 6px);
   background-color: var(--primary-color);
@@ -400,7 +254,7 @@ a:hover {
   background-color: var(--primary-color);
 }
 
-/* FIXED: Perfect Mobile Navigation Menu */
+/* Navigation Menu */
 .nav-menu {
   display: flex;
   align-items: center;
@@ -467,7 +321,7 @@ a:hover {
   width: 100%;
 }
 
-/* FIXED: Hero Section with Mobile Background */
+/* Hero Section */
 .hero-section {
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
   color: var(--white);
@@ -475,20 +329,9 @@ a:hover {
   text-align: center;
   position: relative;
   overflow: hidden;
-  /* FIXED: Background image for mobile */
   background-size: cover;
   background-position: center;
-  background-attachment: scroll; /* Changed from fixed for mobile compatibility */
-}
-
-/* FIXED: Mobile background image support */
-@media (max-width: 767px) {
-  .hero-section {
-    background-attachment: scroll !important;
-    background-size: cover !important;
-    background-position: center !important;
-    min-height: 60vh;
-  }
+  background-attachment: scroll;
 }
 
 .hero-content {
@@ -809,7 +652,7 @@ a:hover {
   font-size: 1.1rem;
 }
 
-/* Enhanced Footer */
+/* Footer */
 .main-footer {
   background: var(--gray-900);
   color: var(--white);
@@ -893,12 +736,11 @@ a:hover {
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: var(--spacing-2xl);
   padding-left: var(--spacing-xl);
   padding-right: var(--spacing-xl);
 }
 
-/* RESPONSIVE DESIGN - FIXED Mobile Navigation */
+/* RESPONSIVE DESIGN */
 
 /* Mobile Styles (up to 767px) */
 @media (max-width: 767px) {
@@ -910,27 +752,23 @@ a:hover {
     display: flex;
   }
   
-  /* FIXED: Perfect Mobile Navigation Menu */
   .nav-menu {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    height: 100dvh; /* Dynamic viewport height for mobile */
     background: var(--white);
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
     padding: 100px var(--spacing-lg) var(--spacing-lg);
-    box-shadow: none;
     transform: translateX(-100%);
     opacity: 0;
     visibility: hidden;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 999;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
   }
   
   .nav-menu.active {
@@ -950,8 +788,6 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all var(--transition-fast);
-    touch-action: manipulation;
   }
   
   .nav-link:hover, .nav-link:active {
@@ -960,15 +796,9 @@ a:hover {
     transform: scale(1.02);
   }
   
-  .nav-link:last-child:not(.donate-link) {
-    border-bottom: none;
-    margin-bottom: 0;
-  }
-  
   .donate-link {
     margin-top: var(--spacing-lg) !important;
     justify-content: center !important;
-    width: auto !important;
     border-bottom: none !important;
     padding: var(--spacing-lg) var(--spacing-xl) !important;
     font-size: 1.1rem !important;
@@ -1099,29 +929,6 @@ a:hover {
   }
 }
 
-/* Landscape Mobile Support */
-@media (max-width: 767px) and (orientation: landscape) {
-  .nav-menu {
-    padding: 80px var(--spacing-md) var(--spacing-md);
-  }
-  
-  .nav-link {
-    padding: var(--spacing-md) var(--spacing-sm);
-    font-size: 1rem;
-    min-height: 44px;
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  .hero-section {
-    padding: var(--spacing-xl) 0;
-    min-height: 50vh;
-  }
-  
-  .info-section {
-    padding: var(--spacing-lg) 0;
-  }
-}
-
 /* Prevent horizontal scroll */
 html, body {
   overflow-x: hidden;
@@ -1141,17 +948,14 @@ button:focus,
   outline-offset: 2px;
 }
 
-/* DEEP MOBILE NAVIGATION FIXES */
+/* Mobile-specific improvements */
 @media (max-width: 767px) {
-  /* Prevent body scroll when menu is open */
   body.menu-open {
     overflow: hidden;
     position: fixed;
     width: 100%;
-    height: 100%;
   }
   
-  /* Ensure proper layering and touch */
   .main-header {
     position: relative;
     z-index: 1000;
@@ -1161,16 +965,13 @@ button:focus,
     z-index: 1001;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
-    user-select: none;
   }
   
   .nav-menu {
     z-index: 999;
     touch-action: manipulation;
-    -webkit-overflow-scrolling: touch;
   }
   
-  /* Ensure all touch targets are properly sized */
   .nav-link,
   .btn,
   .card-link,
@@ -1181,22 +982,10 @@ button:focus,
     -webkit-tap-highlight-color: transparent;
   }
   
-  /* Enhanced touch feedback */
   .nav-link:active,
   .btn:active,
   .mobile-menu-toggle:active {
     transform: scale(0.98);
     transition: transform 0.1s ease;
-  }
-}
-
-/* Additional iOS Safari fixes */
-@supports (-webkit-touch-callout: none) {
-  .nav-menu {
-    height: -webkit-fill-available;
-  }
-  
-  .mobile-menu-toggle {
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
   }
 }
