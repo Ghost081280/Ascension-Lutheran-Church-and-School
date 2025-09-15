@@ -27,6 +27,8 @@
     <!-- CSS Files -->
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/components.css">
+    <link rel="stylesheet" href="./css/loading.css">
+    <link rel="stylesheet" href="./css/pwa.css">
 </head>
 <body>
     <!-- Beautiful Loading Screen -->
@@ -151,582 +153,6 @@
     <script src="./content/content.js"></script>
     <script src="./js/app.js"></script>
     
-    <!-- Beautiful Loading Screen Styles -->
-    <style>
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #8B0000 0%, #660000 100%);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 1;
-            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
-        }
-        
-        .loading-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-        
-        .loading-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-        
-        .decorative-pattern {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .pattern-cross {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.1);
-            font-size: 2.5rem;
-            font-weight: bold;
-            animation: enhancedFloat 25s ease-in-out infinite;
-            user-select: none;
-            pointer-events: none;
-        }
-        
-        .pattern-circle {
-            position: absolute;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: enhancedPulse 20s ease-in-out infinite;
-        }
-        
-        .cross-1 { top: 8%; left: 12%; animation-delay: 0s; }
-        .cross-2 { top: 15%; left: 35%; animation-delay: 6s; }
-        .cross-3 { top: 10%; left: 58%; animation-delay: 12s; }
-        .cross-4 { top: 12%; left: 78%; animation-delay: 18s; }
-        .cross-5 { top: 45%; left: 15%; animation-delay: 3s; }
-        .cross-6 { top: 38%; left: 65%; animation-delay: 9s; }
-        .cross-7 { top: 75%; left: 10%; animation-delay: 15s; }
-        .cross-8 { top: 68%; left: 60%; animation-delay: 21s; }
-        
-        .circle-1 { top: 3%; left: 25%; width: 70px; height: 70px; animation-delay: 1s; }
-        .circle-2 { top: 8%; left: 70%; width: 90px; height: 90px; animation-delay: 7s; }
-        .circle-3 { top: 30%; left: 3%; width: 60px; height: 60px; animation-delay: 13s; }
-        .circle-4 { top: 25%; left: 82%; width: 80px; height: 80px; animation-delay: 19s; }
-        .circle-5 { top: 60%; left: 8%; width: 100px; height: 100px; animation-delay: 4s; }
-        .circle-6 { top: 55%; left: 75%; width: 65px; height: 65px; animation-delay: 10s; }
-        .circle-7 { top: 85%; left: 30%; width: 85px; height: 85px; animation-delay: 16s; }
-        .circle-8 { top: 80%; left: 70%; width: 75px; height: 75px; animation-delay: 22s; }
-        
-        .loading-content {
-            text-align: center;
-            z-index: 10;
-            max-width: 400px;
-            padding: 2.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border-radius: 24px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-        }
-        
-        .church-logo {
-            margin-bottom: 1.5rem;
-        }
-        
-        .logo-img {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-        }
-        
-        .loading-title {
-            color: white;
-            font-size: 2rem;
-            font-weight: 700;
-            margin: 0 0 0.5rem 0;
-            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
-            font-family: 'Playfair Display', Georgia, serif;
-        }
-        
-        .loading-subtitle {
-            color: rgba(255, 255, 255, 0.95);
-            font-size: 1.1rem;
-            margin: 0 0 0.25rem 0;
-            font-weight: 500;
-        }
-        
-        .loading-location {
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 1rem;
-            margin: 0 0 1.5rem 0;
-            font-weight: 400;
-        }
-        
-        .loading-spinner {
-            margin: 1.5rem auto;
-            display: flex;
-            justify-content: center;
-        }
-        
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255, 255, 255, 0.2);
-            border-top: 4px solid white;
-            border-radius: 50%;
-            animation: spin 1.2s linear infinite;
-        }
-        
-        .loading-status {
-            color: white;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin: 0.5rem 0 1.5rem 0;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            opacity: 0.9;
-        }
-        
-        .loading-verse {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 1.2rem;
-            margin: 1rem 0;
-            border-left: 4px solid rgba(255, 255, 255, 0.6);
-            color: white;
-            font-size: 1rem;
-            font-style: italic;
-            line-height: 1.6;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-        
-        /* Background Animations */
-        @keyframes enhancedFloat {
-            0%, 100% { 
-                transform: translate(0, 0) rotate(0deg) scale(1); 
-                opacity: 0.05; 
-            }
-            25% { 
-                transform: translate(30px, -20px) rotate(90deg) scale(1.2); 
-                opacity: 0.3; 
-            }
-            50% { 
-                transform: translate(-20px, -35px) rotate(180deg) scale(0.8); 
-                opacity: 0.1; 
-            }
-            75% { 
-                transform: translate(25px, -15px) rotate(270deg) scale(1.1); 
-                opacity: 0.25; 
-            }
-        }
-        
-        @keyframes enhancedPulse {
-            0%, 100% { 
-                transform: scale(1) translateX(0) translateY(0); 
-                opacity: 0.1; 
-                border-color: rgba(255, 255, 255, 0.1); 
-            }
-            20% { 
-                transform: scale(1.3) translateX(15px) translateY(-15px); 
-                opacity: 0.4; 
-                border-color: rgba(255, 255, 255, 0.4); 
-            }
-            40% { 
-                transform: scale(0.7) translateX(-10px) translateY(20px); 
-                opacity: 0.08; 
-                border-color: rgba(255, 255, 255, 0.08); 
-            }
-            60% { 
-                transform: scale(1.2) translateX(20px) translateY(-8px); 
-                opacity: 0.35; 
-                border-color: rgba(255, 255, 255, 0.35); 
-            }
-            80% { 
-                transform: scale(0.9) translateX(-8px) translateY(12px); 
-                opacity: 0.15; 
-                border-color: rgba(255, 255, 255, 0.15); 
-            }
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Mobile responsive loading */
-        @media (max-width: 480px) {
-            .loading-content {
-                margin: 1.5rem;
-                padding: 2rem 1.5rem;
-                max-width: 350px;
-            }
-            
-            .logo-img {
-                width: 80px;
-                height: 80px;
-            }
-            
-            .loading-title {
-                font-size: 1.8rem;
-            }
-            
-            .loading-subtitle {
-                font-size: 1rem;
-            }
-            
-            .loading-verse {
-                font-size: 0.95rem;
-                padding: 1rem;
-            }
-            
-            .spinner {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .pattern-cross {
-                font-size: 2rem;
-            }
-        }
-        
-        /* Reduced motion accessibility */
-        @media (prefers-reduced-motion: reduce) {
-            .pattern-cross,
-            .pattern-circle,
-            .spinner {
-                animation: none;
-            }
-        }
-        
-        /* Fallback for browsers without backdrop-filter */
-        @supports not (backdrop-filter: blur(15px)) {
-            .loading-content {
-                background: rgba(139, 0, 0, 0.9);
-            }
-        }
-        
-        /* Enhanced PWA Install Prompts */
-        .pwa-install-prompt {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            max-width: 420px;
-            margin: 0 auto;
-            background: var(--white, #ffffff);
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(139, 0, 0, 0.3);
-            z-index: 10000;
-            border: 2px solid #e2e8f0;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden;
-            animation: slideUpBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        
-        .pwa-install-prompt.hidden {
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(100px) scale(0.9);
-        }
-        
-        .pwa-install-content {
-            display: flex;
-            align-items: center;
-            padding: 1.5rem;
-            gap: 1rem;
-        }
-        
-        .pwa-rose-icon {
-            flex-shrink: 0;
-        }
-        
-        .pwa-rose {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.3);
-            border: 3px solid #8B0000;
-            background: white;
-            padding: 2px;
-        }
-        
-        .pwa-install-text {
-            flex: 1;
-        }
-        
-        .pwa-install-text h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #8B0000;
-            margin-bottom: 0.5rem;
-            font-family: 'Playfair Display', Georgia, serif;
-        }
-        
-        .pwa-install-text p {
-            font-size: 0.95rem;
-            color: #4a5568;
-            margin-bottom: 0;
-            line-height: 1.5;
-        }
-        
-        .pwa-install-buttons {
-            display: flex;
-            gap: 0.75rem;
-            flex-direction: column;
-            min-width: 120px;
-        }
-        
-        .pwa-btn {
-            padding: 0.75rem 1rem;
-            border: none;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            min-height: 44px;
-            font-family: inherit;
-        }
-        
-        .pwa-btn-primary {
-            background: linear-gradient(135deg, #8B0000 0%, #A52A2A 100%);
-            color: white;
-            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
-        }
-        
-        .pwa-btn-primary:hover {
-            background: linear-gradient(135deg, #A52A2A 0%, #CD853F 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(139, 0, 0, 0.4);
-        }
-        
-        .pwa-btn-secondary {
-            background: transparent;
-            color: #4a5568;
-            border: 2px solid #e2e8f0;
-        }
-        
-        .pwa-btn-secondary:hover {
-            background: #f7fafc;
-            border-color: #cbd5e0;
-        }
-        
-        /* Desktop Install Banner */
-        .desktop-install-banner {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(135deg, #8B0000 0%, #A52A2A 100%);
-            color: white;
-            z-index: 9998;
-            box-shadow: 0 4px 20px rgba(139, 0, 0, 0.3);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            animation: slideDownBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        
-        .desktop-install-banner.hidden {
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-100%);
-        }
-        
-        .desktop-banner-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-        }
-        
-        .banner-left {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .banner-logo {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .banner-text h4 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-            font-family: 'Playfair Display', Georgia, serif;
-        }
-        
-        .banner-text p {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin: 0;
-        }
-        
-        .banner-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .banner-install-btn {
-            background: white;
-            color: #8B0000;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-        
-        .banner-install-btn:hover {
-            background: #f7fafc;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .install-icon {
-            font-size: 1.1rem;
-        }
-        
-        .banner-dismiss-btn {
-            background: transparent;
-            color: white;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            opacity: 0.7;
-        }
-        
-        .banner-dismiss-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            opacity: 1;
-        }
-        
-        /* Mobile-specific PWA styles */
-        @media (max-width: 768px) {
-            .desktop-install-banner {
-                display: none !important;
-            }
-            
-            .pwa-install-prompt {
-                left: 10px;
-                right: 10px;
-                bottom: 10px;
-                max-width: none;
-            }
-            
-            .pwa-install-content {
-                padding: 1.25rem;
-                gap: 1rem;
-            }
-            
-            .pwa-rose {
-                width: 56px;
-                height: 56px;
-            }
-            
-            .pwa-install-text h3 {
-                font-size: 1.1rem;
-            }
-            
-            .pwa-install-text p {
-                font-size: 0.9rem;
-            }
-            
-            .pwa-install-buttons {
-                flex-direction: row;
-                width: 100%;
-            }
-            
-            .pwa-btn {
-                flex: 1;
-                font-size: 0.9rem;
-            }
-        }
-        
-        /* Desktop-specific PWA styles */
-        @media (min-width: 769px) {
-            .pwa-install-prompt {
-                display: none !important;
-            }
-            
-            .desktop-banner-content {
-                padding: 0.75rem 2rem;
-            }
-            
-            .banner-text h4 {
-                font-size: 1rem;
-            }
-            
-            .banner-text p {
-                font-size: 0.85rem;
-            }
-        }
-        
-        /* Animations */
-        @keyframes slideUpBounce {
-            0% {
-                transform: translateY(100%) scale(0.8);
-                opacity: 0;
-            }
-            60% {
-                transform: translateY(-10px) scale(1.02);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
-        }
-        
-        @keyframes slideDownBounce {
-            0% {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            60% {
-                transform: translateY(5px);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        
-        /* Adjust main header when banner is shown */
-        body.banner-shown .main-header {
-            top: 72px;
-        }
-        
-        body.banner-shown .page-container {
-            padding-top: 72px;
-        }
-    </style>
-    
     <script>
         // Extended loading manager - gives time to read the Bible verse
         let loadingTimer;
@@ -742,12 +168,11 @@
         }
         
         // Extended loading time to appreciate the design and read the verse
-        loadingTimer = setTimeout(hideLoading, 4500); // Increased from 2000ms to 4500ms
+        loadingTimer = setTimeout(hideLoading, 4500);
         
         window.addEventListener('load', () => {
             clearTimeout(loadingTimer);
-            // Still wait a bit even when everything is loaded so people can read
-            setTimeout(hideLoading, 3000); // Minimum 3 seconds to read the verse
+            setTimeout(hideLoading, 3000);
         });
         
         // Initialize app when DOM is ready
@@ -768,10 +193,11 @@
             });
         }
         
-        // FORCE SHOW PWA INSTALL PROMPTS FOR TESTING
-        console.log('🏛️ PWA Install: Starting forced test mode...');
+        // Enhanced PWA Install Experience
+        let deferredPrompt;
+        let installPromptShown = false;
         
-        // Force show install prompts immediately for testing (bypass all checks)
+        // Force show install prompts for testing
         setTimeout(() => {
             console.log('🏛️ PWA Install: FORCE SHOWING PROMPTS NOW!');
             forceShowInstallPromptsNow();
@@ -779,102 +205,40 @@
         
         function forceShowInstallPromptsNow() {
             const isMobile = window.innerWidth <= 768;
-            console.log('🏛️ PWA Install: Device width:', window.innerWidth);
-            console.log('🏛️ PWA Install: Is mobile?', isMobile);
             
             if (isMobile) {
-                console.log('🏛️ PWA Install: Forcing mobile prompt...');
                 const mobilePrompt = document.getElementById('pwa-install-prompt');
-                console.log('🏛️ PWA Install: Mobile element found?', !!mobilePrompt);
                 if (mobilePrompt) {
                     mobilePrompt.classList.remove('hidden');
-                    mobilePrompt.style.display = 'block';
-                    mobilePrompt.style.visibility = 'visible';
-                    mobilePrompt.style.opacity = '1';
-                    console.log('🏛️ PWA Install: Mobile prompt should be visible!');
                 }
             } else {
-                console.log('🏛️ PWA Install: Forcing desktop banner...');
                 const desktopBanner = document.getElementById('desktop-install-banner');
-                console.log('🏛️ PWA Install: Desktop element found?', !!desktopBanner);
                 if (desktopBanner) {
                     desktopBanner.classList.remove('hidden');
-                    desktopBanner.style.display = 'block';
-                    desktopBanner.style.visibility = 'visible';
-                    desktopBanner.style.opacity = '1';
                     document.body.classList.add('banner-shown');
-                    console.log('🏛️ PWA Install: Desktop banner should be visible!');
                 }
             }
         }
         
-        // Enhanced PWA Install Experience with Debugging
-        let deferredPrompt;
-        let installPromptShown = false;
-        
-        console.log('🏛️ PWA Install: Starting setup...');
-        console.log('🏛️ PWA Install: HTTPS?', location.protocol === 'https:');
-        console.log('🏛️ PWA Install: Service Worker support?', 'serviceWorker' in navigator);
-        
         // Listen for the beforeinstallprompt event
         window.addEventListener('beforeinstallprompt', (e) => {
-            console.log('🏛️ PWA install prompt available - beforeinstallprompt fired!');
             e.preventDefault();
             deferredPrompt = e;
             
-            // Show appropriate install prompt after app loads
             setTimeout(() => {
                 if (!installPromptShown) {
-                    console.log('🏛️ PWA Install: Showing install prompt...');
                     showInstallPrompt();
                 }
-            }, 3000); // Reduced to 3 seconds for testing
+            }, 3000);
         });
         
-        // Check if already installed
         window.addEventListener('appinstalled', () => {
-            console.log('🏛️ PWA was installed successfully!');
             hideAllInstallPrompts();
             deferredPrompt = null;
         });
         
-        // Force show install prompt for testing (remove this in production)
-        setTimeout(() => {
-            if (!deferredPrompt && !installPromptShown) {
-                console.log('🏛️ PWA Install: No beforeinstallprompt event detected');
-                console.log('🏛️ PWA Install: This might be because:');
-                console.log('🏛️ PWA Install: 1. Not served over HTTPS');
-                console.log('🏛️ PWA Install: 2. App already installed');
-                console.log('🏛️ PWA Install: 3. Browser doesn\'t support PWA install');
-                console.log('🏛️ PWA Install: 4. Manifest file issues');
-                
-                // Force show for testing/demo purposes
-                console.log('🏛️ PWA Install: Force showing for demo...');
-                forceShowInstallPrompt();
-            }
-        }, 5000);
-        
-        // Show appropriate install prompt based on device
         function showInstallPrompt() {
             if (installPromptShown) return;
-            
-            installPromptShown = true;
-            const isMobile = window.innerWidth <= 768;
-            
-            console.log('🏛️ PWA Install: Device type:', isMobile ? 'Mobile' : 'Desktop');
-            
-            if (isMobile) {
-                showMobileInstallPrompt();
-            } else {
-                showDesktopInstallBanner();
-            }
-        }
-        
-        // Force show for testing when no native prompt available
-        function forceShowInstallPrompt() {
-            if (installPromptShown) return;
-            
-            console.log('🏛️ PWA Install: Force showing install prompt for testing...');
             installPromptShown = true;
             const isMobile = window.innerWidth <= 768;
             
@@ -885,63 +249,36 @@
             }
         }
         
-        // Mobile install prompt
         function showMobileInstallPrompt() {
-            console.log('🏛️ PWA Install: Showing mobile install prompt');
             const installPrompt = document.getElementById('pwa-install-prompt');
             if (installPrompt) {
                 installPrompt.classList.remove('hidden');
-                console.log('🏛️ PWA Install: Mobile prompt should be visible now');
-                
-                // Auto-hide after 20 seconds for testing
-                setTimeout(() => {
-                    console.log('🏛️ PWA Install: Auto-hiding mobile prompt');
-                    hideInstallPrompt();
-                }, 20000);
-            } else {
-                console.error('🏛️ PWA Install: Mobile prompt element not found!');
             }
         }
         
-        // Desktop install banner
         function showDesktopInstallBanner() {
-            console.log('🏛️ PWA Install: Showing desktop install banner');
             const installBanner = document.getElementById('desktop-install-banner');
             if (installBanner) {
                 installBanner.classList.remove('hidden');
                 document.body.classList.add('banner-shown');
-                console.log('🏛️ PWA Install: Desktop banner should be visible now');
-                
-                // Auto-hide after 25 seconds for testing
-                setTimeout(() => {
-                    console.log('🏛️ PWA Install: Auto-hiding desktop banner');
-                    hideDesktopBanner();
-                }, 25000);
-            } else {
-                console.error('🏛️ PWA Install: Desktop banner element not found!');
             }
         }
         
-        // Hide mobile install prompt
         function hideInstallPrompt() {
             const installPrompt = document.getElementById('pwa-install-prompt');
             if (installPrompt) {
                 installPrompt.classList.add('hidden');
-                console.log('🏛️ PWA Install: Mobile prompt hidden');
             }
         }
         
-        // Hide desktop banner
         function hideDesktopBanner() {
             const installBanner = document.getElementById('desktop-install-banner');
             if (installBanner) {
                 installBanner.classList.add('hidden');
                 document.body.classList.remove('banner-shown');
-                console.log('🏛️ PWA Install: Desktop banner hidden');
             }
         }
         
-        // Hide all install prompts
         function hideAllInstallPrompts() {
             hideInstallPrompt();
             hideDesktopBanner();
@@ -949,57 +286,41 @@
         
         // Handle install button clicks
         document.addEventListener('click', (e) => {
-            // Mobile install button
             if (e.target.id === 'pwa-install-btn') {
-                console.log('🏛️ PWA Install: Mobile install button clicked');
                 if (deferredPrompt) {
-                    console.log('🏛️ PWA Install: Using native install prompt');
                     deferredPrompt.prompt();
                     deferredPrompt.userChoice.then((choiceResult) => {
-                        console.log('🏛️ User choice:', choiceResult.outcome);
                         deferredPrompt = null;
                         hideInstallPrompt();
                     });
                 } else {
-                    console.log('🏛️ PWA Install: No native prompt, checking for iOS...');
-                    // Fallback instructions for iOS Safari or manual instructions
                     showInstallInstructions();
                 }
             }
             
-            // Desktop install button
             else if (e.target.id === 'desktop-install-btn') {
-                console.log('🏛️ PWA Install: Desktop install button clicked');
                 if (deferredPrompt) {
-                    console.log('🏛️ PWA Install: Using native install prompt');
                     deferredPrompt.prompt();
                     deferredPrompt.userChoice.then((choiceResult) => {
-                        console.log('🏛️ User choice:', choiceResult.outcome);
                         deferredPrompt = null;
                         hideDesktopBanner();
                     });
                 } else {
-                    console.log('🏛️ PWA Install: No native prompt available');
                     showInstallInstructions();
                 }
             }
             
-            // Dismiss buttons
             else if (e.target.id === 'pwa-dismiss-btn') {
-                console.log('🏛️ PWA Install: Mobile dismiss button clicked');
                 hideInstallPrompt();
             } else if (e.target.id === 'desktop-dismiss-btn') {
-                console.log('🏛️ PWA Install: Desktop dismiss button clicked');
                 hideDesktopBanner();
             }
         });
         
-        // Universal install instructions
         function showInstallInstructions() {
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
             const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
             const isChrome = /Chrome/.test(navigator.userAgent);
-            const isEdge = /Edg/.test(navigator.userAgent);
             
             let instructions = '';
             
@@ -1007,10 +328,8 @@
                 instructions = 'To install this app on your iOS device:\n\n1. Tap the Share button (□↗) in Safari\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add" to confirm\n\nThe app will appear on your home screen!';
             } else if (isChrome) {
                 instructions = 'To install this app:\n\n1. Click the three dots menu (⋮) in Chrome\n2. Select "Install Ascension Lutheran..."\n3. Click "Install" to confirm\n\nOr look for the install icon in the address bar!';
-            } else if (isEdge) {
-                instructions = 'To install this app:\n\n1. Click the three dots menu (...) in Edge\n2. Select "Apps" > "Install this site as an app"\n3. Click "Install" to confirm';
             } else {
-                instructions = 'To install this app:\n\n1. Look for an install button in your browser\'s address bar\n2. Or check your browser\'s menu for "Install" or "Add to Home Screen" options\n3. Follow the prompts to install\n\nThis will add the app to your device!';
+                instructions = 'To install this app:\n\n1. Look for an install button in your browser\'s address bar\n2. Or check your browser\'s menu for "Install" or "Add to Home Screen" options\n3. Follow the prompts to install';
             }
             
             alert(instructions);
@@ -1019,99 +338,13 @@
         
         // Check if app is already running as PWA
         function isPWA() {
-            const isPWAMode = window.matchMedia('(display-mode: standalone)').matches || 
-                             window.navigator.standalone === true;
-            console.log('🏛️ PWA Install: Running as PWA?', isPWAMode);
-            return isPWAMode;
+            return window.matchMedia('(display-mode: standalone)').matches || 
+                   window.navigator.standalone === true;
         }
         
-        // Don't show install prompts if already running as PWA
         if (isPWA()) {
-            console.log('🏛️ PWA Install: Already running as installed PWA, hiding prompts');
-            // Add PWA-specific styling
             document.body.classList.add('pwa-mode');
         }
-        
-        // Handle offline/online status for PWA feel
-        window.addEventListener('online', () => {
-            console.log('🏛️ PWA: Back online');
-            document.body.classList.remove('offline-mode');
-        });
-        
-        window.addEventListener('offline', () => {
-            console.log('🏛️ PWA: Gone offline');
-            document.body.classList.add('offline-mode');
-        });
-        
-        // Add PWA badge/indicator in the corner
-        function addPWAIndicator() {
-            if (isPWA()) {
-                const indicator = document.createElement('div');
-                indicator.innerHTML = '📱';
-                indicator.title = 'Running as installed app';
-                indicator.style.cssText = `
-                    position: fixed;
-                    top: 10px;
-                    right: 10px;
-                    background: rgba(139, 0, 0, 0.9);
-                    color: white;
-                    padding: 0.5rem;
-                    border-radius: 50%;
-                    font-size: 1rem;
-                    z-index: 10001;
-                    opacity: 0.8;
-                    cursor: pointer;
-                    transition: opacity 0.3s ease;
-                `;
-                document.body.appendChild(indicator);
-                
-                // Fade out after 4 seconds
-                setTimeout(() => {
-                    indicator.style.opacity = '0';
-                    setTimeout(() => indicator.remove(), 1000);
-                }, 4000);
-            }
-        }
-        
-        // Show PWA indicator when app loads
-        setTimeout(addPWAIndicator, 2000);
-        
-        // Debug manifest loading
-        fetch('./manifest.json')
-            .then(response => {
-                if (response.ok) {
-                    console.log('🏛️ PWA Install: Manifest file loaded successfully');
-                    return response.json();
-                } else {
-                    console.error('🏛️ PWA Install: Manifest file failed to load');
-                }
-            })
-            .then(manifest => {
-                if (manifest) {
-                    console.log('🏛️ PWA Install: Manifest content:', manifest);
-                }
-            })
-            .catch(error => {
-                console.error('🏛️ PWA Install: Manifest error:', error);
-            });
-        
-        // Debug - check if elements exist
-        setTimeout(() => {
-            const mobilePrompt = document.getElementById('pwa-install-prompt');
-            const desktopBanner = document.getElementById('desktop-install-banner');
-            console.log('🏛️ PWA Install: Mobile prompt element exists?', !!mobilePrompt);
-            console.log('🏛️ PWA Install: Desktop banner element exists?', !!desktopBanner);
-            
-            if (mobilePrompt) {
-                console.log('🏛️ PWA Install: Mobile prompt classes:', mobilePrompt.className);
-                console.log('🏛️ PWA Install: Mobile prompt styles:', mobilePrompt.style.cssText);
-            }
-            
-            if (desktopBanner) {
-                console.log('🏛️ PWA Install: Desktop banner classes:', desktopBanner.className);
-                console.log('🏛️ PWA Install: Desktop banner styles:', desktopBanner.style.cssText);
-            }
-        }, 1000);
     </script>
 </body>
 </html>
