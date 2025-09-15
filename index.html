@@ -3,269 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Pages Debug - Ascension Lutheran Church</title>
+    <title>Ascension Lutheran Church & School | Fort Wayne, IN</title>
+    <meta name="description" content="Welcome to Ascension Evangelical Lutheran Church in Fort Wayne, Indiana. Join our family in worshipping and serving our glorious God.">
+    <meta name="keywords" content="Lutheran Church, Fort Wayne, Christian Education, Family, Worship, Bible Study">
     
-    <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            margin: 20px; 
-            background: #f5f5f5; 
-        }
-        .debug-panel { 
-            background: white; 
-            padding: 20px; 
-            border-radius: 8px; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
-            margin-bottom: 20px;
-        }
-        .status { 
-            padding: 10px; 
-            border-radius: 4px; 
-            margin: 5px 0; 
-        }
-        .success { background: #d4edda; color: #155724; }
-        .error { background: #f8d7da; color: #721c24; }
-        .info { background: #d1ecf1; color: #0c5460; }
-        .file-test { 
-            margin: 10px 0; 
-            padding: 10px; 
-            border: 1px solid #ddd; 
-            border-radius: 4px; 
-        }
-        button { 
-            background: #007bff; 
-            color: white; 
-            border: none; 
-            padding: 10px 20px; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            margin: 5px; 
-        }
-        button:hover { background: #0056b3; }
-        .loading { color: #666; font-style: italic; }
-    </style>
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#2C5282">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Ascension Lutheran">
+    
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="Ascension Lutheran Church & School | Fort Wayne, IN">
+    <meta property="og:description" content="Welcome to Ascension Evangelical Lutheran Church in Fort Wayne, Indiana. Join our family in worshipping and serving our glorious God.">
+    <meta property="og:image" content="./images/church-exterior.jpg">
+    <meta property="og:url" content="https://ghost081280.github.io/Ascension-Lutheran-Church-and-School/">
+    <meta property="og:type" content="website">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ascension Lutheran Church & School">
+    <meta name="twitter:description" content="Welcome to Ascension Evangelical Lutheran Church in Fort Wayne, Indiana.">
+    <meta name="twitter:image" content="./images/church-exterior.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="./images/apple-touch-icon.png">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="./manifest.json">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/components.css">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="./css/main.css" as="style">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>🔧 GitHub Pages Debug for Ascension Lutheran Church</h1>
-    
-    <div class="debug-panel">
-        <h2>Current Status</h2>
-        <div id="location-info" class="status info">
-            <strong>Current URL:</strong> <span id="current-url"></span><br>
-            <strong>Base URL:</strong> <span id="base-url"></span><br>
-            <strong>Repository:</strong> <span id="repo-name"></span>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="church-logo">
+                <img src="./images/alc-logo.png" alt="Ascension Lutheran Church Logo" class="logo-img" 
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div style="display: none; width: 120px; height: 120px; background: rgba(255,255,255,0.2); border-radius: 50%; align-items: center; justify-content: center; font-size: 3rem; color: white; border: 3px solid rgba(255,255,255,0.3);">✚</div>
+            </div>
+            <h1 class="loading-title">Ascension Lutheran Church</h1>
+            <p class="loading-subtitle">Fort Wayne, Indiana</p>
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+            </div>
+            <p class="loading-verse">"I am the way, and the truth, and the life." - John 14:6</p>
         </div>
     </div>
 
-    <div class="debug-panel">
-        <h2>File Loading Tests</h2>
-        <button onclick="testAllFiles()">Test All Files</button>
-        <button onclick="loadActualApp()">Load Actual App</button>
-        
-        <div id="file-tests">
-            <div class="file-test">
-                <strong>CSS Files:</strong>
-                <div id="css-test" class="loading">Testing...</div>
-            </div>
-            <div class="file-test">
-                <strong>JS Files:</strong>
-                <div id="js-test" class="loading">Testing...</div>
-            </div>
-            <div class="file-test">
-                <strong>Other Files:</strong>
-                <div id="other-test" class="loading">Testing...</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="debug-panel">
-        <h2>Repository Structure</h2>
-        <p>Your files should be organized like this in your GitHub repository:</p>
-        <pre>
-your-repo-name/
-├── index.html
-├── css/
-│   ├── main.css
-│   └── components.css
-├── js/
-│   ├── app.js
-│   ├── components.js
-│   └── navigation.js
-├── images/ (optional)
-└── manifest.json
-        </pre>
-    </div>
-
-    <div class="debug-panel" id="app-container" style="display: none;">
-        <h2>App Loading</h2>
-        <div id="app-status">Ready to load app...</div>
-        <div id="actual-app"></div>
-    </div>
-
-    <script>
-        // Get current location info
-        document.getElementById('current-url').textContent = window.location.href;
-        document.getElementById('base-url').textContent = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
-        
-        // Extract repo name from GitHub Pages URL
-        const pathParts = window.location.pathname.split('/').filter(part => part);
-        const repoName = pathParts.length > 0 ? pathParts[0] : 'root';
-        document.getElementById('repo-name').textContent = repoName;
-
-        // Test if a file exists
-        async function testFile(url, description) {
-            try {
-                const response = await fetch(url, { method: 'HEAD' });
-                if (response.ok) {
-                    return { status: 'success', message: `✅ ${description}: Found` };
-                } else {
-                    return { status: 'error', message: `❌ ${description}: ${response.status} ${response.statusText}` };
-                }
-            } catch (error) {
-                return { status: 'error', message: `❌ ${description}: ${error.message}` };
-            }
-        }
-
-        // Test all files
-        async function testAllFiles() {
-            console.log('🔧 Testing all files...');
-            
-            // Get base path
-            const basePath = window.location.pathname.endsWith('/') ? 
-                window.location.pathname : 
-                window.location.pathname.replace(/\/[^\/]*$/, '/');
-            
-            console.log('Base path:', basePath);
-
-            // Test CSS files
-            const cssResults = await Promise.all([
-                testFile(basePath + 'css/main.css', 'main.css'),
-                testFile(basePath + 'css/components.css', 'components.css')
-            ]);
-            
-            document.getElementById('css-test').innerHTML = cssResults.map(r => 
-                `<div class="${r.status}">${r.message}</div>`
-            ).join('');
-
-            // Test JS files
-            const jsResults = await Promise.all([
-                testFile(basePath + 'js/app.js', 'app.js'),
-                testFile(basePath + 'js/components.js', 'components.js'),
-                testFile(basePath + 'js/navigation.js', 'navigation.js')
-            ]);
-            
-            document.getElementById('js-test').innerHTML = jsResults.map(r => 
-                `<div class="${r.status}">${r.message}</div>`
-            ).join('');
-
-            // Test other files
-            const otherResults = await Promise.all([
-                testFile(basePath + 'manifest.json', 'manifest.json'),
-                testFile(basePath + 'sw.js', 'sw.js')
-            ]);
-            
-            document.getElementById('other-test').innerHTML = otherResults.map(r => 
-                `<div class="${r.status}">${r.message}</div>`
-            ).join('');
-
-            // Check if all JS files are available
-            const allJsOk = jsResults.every(r => r.status === 'success');
-            const allCssOk = cssResults.every(r => r.status === 'success');
-            
-            if (allJsOk && allCssOk) {
-                document.getElementById('app-container').style.display = 'block';
-                document.getElementById('app-status').innerHTML = 
-                    '<div class="status success">✅ All required files found! Ready to load the actual app.</div>';
-            } else {
-                document.getElementById('app-status').innerHTML = 
-                    '<div class="status error">❌ Some files are missing. Check your repository structure.</div>';
-            }
-        }
-
-        // Load the actual app
-        function loadActualApp() {
-            const basePath = window.location.pathname.endsWith('/') ? 
-                window.location.pathname : 
-                window.location.pathname.replace(/\/[^\/]*$/, '/');
-
-            document.getElementById('app-status').innerHTML = 
-                '<div class="status info">🔄 Loading actual church app...</div>';
-
-            // Create the actual app HTML
-            const appHTML = `
-                <style>
-                    .church-app { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-top: 20px; }
-                    .loading-screen { text-align: center; padding: 40px; background: linear-gradient(135deg, #2C5282, #1A365D); color: white; border-radius: 8px; }
-                    .main-app { display: none; background: white; border-radius: 8px; padding: 20px; margin-top: 20px; }
-                    .nav-link { display: inline-block; padding: 10px 15px; margin: 5px; background: #2C5282; color: white; text-decoration: none; border-radius: 4px; cursor: pointer; }
-                    .nav-link:hover { background: #3D63A0; }
-                    .nav-link.active { background: #D69E2E; }
-                    .page-container { margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 8px; min-height: 200px; }
-                </style>
-                
-                <div class="church-app">
-                    <div id="loading-screen-test" class="loading-screen">
-                        <h2>🏛️ Ascension Lutheran Church</h2>
-                        <p>Loading...</p>
-                        <div style="margin: 20px 0;">⏳</div>
-                    </div>
-                    
-                    <div id="main-app-test" class="main-app">
-                        <nav>
-                            <a href="#" class="nav-link active" data-page="home">Home</a>
-                            <a href="#" class="nav-link" data-page="church">Church</a>
-                            <a href="#" class="nav-link" data-page="family">Family</a>
-                            <a href="#" class="nav-link" data-page="school">School</a>
-                            <a href="#" class="nav-link" data-page="worship">Worship</a>
-                            <a href="#" class="nav-link" data-page="contact">Contact</a>
-                        </nav>
-                        
-                        <div id="page-container-test" class="page-container">
-                            <h2>Welcome to Ascension Lutheran Church</h2>
-                            <p>This is a test version running directly in the debug page to verify the app logic works.</p>
+    <!-- Main Application -->
+    <div id="main-app" class="main-app hidden">
+        <!-- Navigation Header -->
+        <header class="main-header">
+            <nav class="navbar">
+                <div class="nav-container">
+                    <div class="nav-brand">
+                        <img src="./images/alc-logo.png" alt="ALC Logo" class="nav-logo"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div style="display: none; width: 50px; height: 50px; background: var(--primary-color); border-radius: 50%; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">✚</div>
+                        <div class="brand-text">
+                            <h1 class="brand-name">Ascension Lutheran</h1>
+                            <p class="brand-subtitle">Church & School</p>
                         </div>
                     </div>
+                    
+                    <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </button>
+                    
+                    <div class="nav-menu">
+                        <a href="#home" class="nav-link active" data-page="home">Home</a>
+                        <a href="#church" class="nav-link" data-page="church">Church</a>
+                        <a href="#family" class="nav-link" data-page="family">Family</a>
+                        <a href="#school" class="nav-link" data-page="school">School</a>
+                        <a href="#worship" class="nav-link" data-page="worship">Worship</a>
+                        <a href="#contact" class="nav-link" data-page="contact">Contact</a>
+                    </div>
                 </div>
-            `;
+            </nav>
+        </header>
 
-            document.getElementById('actual-app').innerHTML = appHTML;
+        <!-- Page Content Container -->
+        <main id="page-container" class="page-container">
+            <!-- Home Page Content will be loaded here -->
+        </main>
 
-            // Simple app logic
-            setTimeout(() => {
-                document.getElementById('loading-screen-test').style.display = 'none';
-                document.getElementById('main-app-test').style.display = 'block';
+        <!-- Quick Action Buttons -->
+        <div class="quick-actions">
+            <button class="action-btn" id="share-btn" aria-label="Share this page">
+                <svg class="action-icon" viewBox="0 0 24 24">
+                    <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+                </svg>
+            </button>
+            
+            <button class="action-btn" id="install-btn" aria-label="Install app" style="display: none;">
+                <svg class="action-icon" viewBox="0 0 24 24">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                </svg>
+            </button>
+            
+            <a href="tel:+12604862226" class="action-btn" aria-label="Call church">
+                <svg class="action-icon" viewBox="0 0 24 24">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <p>8811 St. Joe Road<br>Fort Wayne, IN 46835</p>
+                    <p>Phone: <a href="tel:+12604862226">(260) 486-2226</a></p>
+                    <p>Email: <a href="mailto:office@alcsfw.org">office@alcsfw.org</a></p>
+                </div>
                 
-                // Add navigation
-                document.querySelectorAll('.nav-link').forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const page = link.getAttribute('data-page');
-                        
-                        // Update active nav
-                        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                        link.classList.add('active');
-                        
-                        // Update content
-                        const content = {
-                            home: '<h2>Home</h2><p>Welcome to Ascension Lutheran Church in Fort Wayne, Indiana.</p>',
-                            church: '<h2>Our Church</h2><p>Faithful to the Gospel of Christ since 1977.</p>',
-                            family: '<h2>Family Ministry</h2><p>Programs for families to grow in faith together.</p>',
-                            school: '<h2>Lutheran School</h2><p>Christian education from Preschool through 8th grade.</p>',
-                            worship: '<h2>Worship Times</h2><p>Sunday services at 8:00 AM & 10:45 AM.</p>',
-                            contact: '<h2>Contact Us</h2><p>8811 St. Joe Road, Fort Wayne, IN 46835<br>Phone: (260) 486-2226</p>'
-                        };
-                        
-                        document.getElementById('page-container-test').innerHTML = content[page] || content.home;
+                <div class="footer-section">
+                    <h3>Worship Times</h3>
+                    <p>Sunday Divine Worship:<br>8:00 AM & 10:45 AM</p>
+                    <p>Sunday School & Adult Class:<br>9:30 AM</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/alcsfw/" target="_blank" rel="noopener" class="social-link facebook">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                            Facebook
+                        </a>
+                        <a href="https://www.youtube.com/channel/UC_CHANNEL_ID" target="_blank" rel="noopener" class="social-link youtube">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                            YouTube
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Ascension Lutheran Church and School. All rights reserved.</p>
+                <p>Visit us at 8811 St. Joe Road, Fort Wayne, IN 46835</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="./js/components.js"></script>
+    <script src="./js/navigation.js"></script>
+    <script src="./js/app.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        // Add some error handling for development
+        window.addEventListener('error', (e) => {
+            console.error('JavaScript Error:', e.error);
+        });
+
+        // Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
                     });
-                });
-                
-                document.getElementById('app-status').innerHTML = 
-                    '<div class="status success">✅ Test app loaded successfully! The logic works.</div>';
-            }, 2000);
+            });
         }
-
-        // Run initial test
-        testAllFiles();
+        
+        // Add debug info for GitHub Pages
+        console.log('🏛️ Ascension Lutheran Church PWA');
+        console.log('📍 Location:', window.location.href);
+        console.log('📁 Base path:', window.location.pathname);
     </script>
 </body>
 </html>
