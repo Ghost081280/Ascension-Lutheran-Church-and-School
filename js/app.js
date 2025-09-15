@@ -1,4 +1,4 @@
-// FIXED app.js - Enhanced Mobile Navigation & Logo Click Handler
+// UPDATED app.js - Enhanced Mobile Navigation & Logo Click Handler with Deep Fixes
 console.log('🏛️ Content-driven app.js loading...');
 
 class AscensionApp {
@@ -43,45 +43,19 @@ class AscensionApp {
   }
 
   setupEventListeners() {
-    // FIXED Mobile menu toggle
-    const mobileToggle = document.getElementById('mobile-menu-toggle');
-    if (mobileToggle) {
-      mobileToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('🏛️ Mobile toggle clicked');
-        this.toggleMobileMenu();
-      });
-    }
-
-    // Navigation links
-    document.addEventListener('click', (e) => {
-      // Handle page navigation
-      if (e.target.hasAttribute('data-page')) {
-        e.preventDefault();
-        const page = e.target.getAttribute('data-page');
-        this.loadPage(page);
-      }
-      
-      // Handle nav links
-      if (e.target.classList.contains('nav-link') && e.target.hasAttribute('data-page')) {
-        e.preventDefault();
-        const page = e.target.getAttribute('data-page');
-        this.loadPage(page);
-      }
-
-      // Close mobile menu on outside click
-      if (this.mobileMenuOpen && !e.target.closest('.nav-menu') && !e.target.closest('.mobile-menu-toggle')) {
-        this.closeMobileMenu();
-      }
-    });
-
-    // FIXED Logo click to home - Enhanced setup
+    // DEEP FIX: Enhanced mobile menu toggle with comprehensive event handling
+    this.setupMobileMenuToggle();
+    
+    // Enhanced navigation link handling
+    this.setupNavigationLinks();
+    
+    // DEEP FIX: Enhanced logo click handler
     this.setupLogoHandler();
 
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && this.mobileMenuOpen) {
+        console.log('🏛️ Escape key pressed - closing mobile menu');
         this.closeMobileMenu();
       }
     });
@@ -89,50 +63,150 @@ class AscensionApp {
     // Hash change handling
     window.addEventListener('hashchange', () => {
       const hash = window.location.hash.substring(1);
-      if (hash && this.content.pages[hash]) {
+      if (hash && this.content && this.content.pages[hash]) {
         this.loadPage(hash);
       }
     });
 
-    // Window resize
+    // Window resize - close mobile menu on desktop
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 768 && this.mobileMenuOpen) {
+      if (window.innerWidth > 767 && this.mobileMenuOpen) {
+        console.log('🏛️ Window resized to desktop - closing mobile menu');
+        this.closeMobileMenu();
+      }
+    });
+
+    // Orientation change handling
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => {
+        if (this.mobileMenuOpen) {
+          console.log('🏛️ Orientation changed - adjusting mobile menu');
+          this.closeMobileMenu();
+        }
+      }, 100);
+    });
+  }
+
+  setupMobileMenuToggle() {
+    // DEEP FIX: Enhanced mobile menu toggle setup
+    const setupToggle = () => {
+      const mobileToggle = document.getElementById('mobile-menu-toggle');
+      if (mobileToggle) {
+        console.log('🏛️ Setting up mobile menu toggle');
+        
+        // Remove any existing listeners
+        const newToggle = mobileToggle.cloneNode(true);
+        mobileToggle.parentNode.replaceChild(newToggle, mobileToggle);
+        
+        // Add comprehensive event listeners
+        newToggle.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('🏛️ Mobile toggle clicked');
+          this.toggleMobileMenu();
+        });
+        
+        newToggle.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          console.log('🏛️ Mobile toggle touched');
+        }, { passive: false });
+        
+        newToggle.addEventListener('touchend', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('🏛️ Mobile toggle touch ended - toggling menu');
+          this.toggleMobileMenu();
+        }, { passive: false });
+        
+        // Keyboard support
+        newToggle.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('🏛️ Mobile toggle keyboard activated');
+            this.toggleMobileMenu();
+          }
+        });
+        
+        console.log('🏛️ Mobile toggle setup complete');
+      } else {
+        console.warn('🏛️ Mobile toggle not found, retrying...');
+        setTimeout(setupToggle, 100);
+      }
+    };
+    
+    setupToggle();
+  }
+
+  setupNavigationLinks() {
+    // Enhanced navigation link handling with delegation
+    document.addEventListener('click', (e) => {
+      // Handle page navigation buttons/links
+      if (e.target.hasAttribute('data-page')) {
+        e.preventDefault();
+        e.stopPropagation();
+        const page = e.target.getAttribute('data-page');
+        console.log('🏛️ Navigation link clicked:', page);
+        this.loadPage(page);
+      }
+      
+      // Handle nav links specifically
+      if (e.target.classList.contains('nav-link') && e.target.hasAttribute('data-page')) {
+        e.preventDefault();
+        e.stopPropagation();
+        const page = e.target.getAttribute('data-page');
+        console.log('🏛️ Nav link clicked:', page);
+        this.loadPage(page);
+      }
+
+      // Close mobile menu on outside click
+      if (this.mobileMenuOpen && 
+          !e.target.closest('.nav-menu') && 
+          !e.target.closest('.mobile-menu-toggle')) {
+        console.log('🏛️ Outside click detected - closing mobile menu');
         this.closeMobileMenu();
       }
     });
   }
 
   setupLogoHandler() {
-    // Enhanced logo click handler setup
-    setTimeout(() => {
+    // DEEP FIX: Enhanced logo click handler with comprehensive setup
+    const setupLogo = () => {
       const logoBrand = document.getElementById('nav-brand-home');
       if (logoBrand) {
         console.log('🏛️ Setting up logo click handler');
         
-        // Remove any existing listeners by cloning
+        // Create comprehensive click handler
+        const handleLogoActivation = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('🏛️ Logo activated - navigating to home');
+          this.loadPage('home');
+        };
+        
+        // Remove existing listeners by cloning
         const newLogoBrand = logoBrand.cloneNode(true);
         logoBrand.parentNode.replaceChild(newLogoBrand, logoBrand);
         
-        // Add click handler
-        newLogoBrand.addEventListener('click', (e) => {
-          e.preventDefault();
-          console.log('🏛️ Logo clicked - navigating to home');
-          this.loadPage('home');
-        });
+        // Add multiple event types for comprehensive coverage
+        newLogoBrand.addEventListener('click', handleLogoActivation);
+        newLogoBrand.addEventListener('touchend', handleLogoActivation);
         
-        // Add keyboard handler
+        // Keyboard support
         newLogoBrand.addEventListener('keydown', (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            console.log('🏛️ Logo keyboard activated - navigating to home');
+            e.stopPropagation();
+            console.log('🏛️ Logo keyboard activated');
             this.loadPage('home');
           }
         });
         
-        // Add visual feedback
+        // Visual feedback
         newLogoBrand.style.cursor = 'pointer';
         newLogoBrand.style.transition = 'transform 0.2s ease';
         
+        // Hover effects
         newLogoBrand.addEventListener('mouseenter', () => {
           newLogoBrand.style.transform = 'scale(1.02)';
         });
@@ -141,17 +215,29 @@ class AscensionApp {
           newLogoBrand.style.transform = 'scale(1)';
         });
         
+        // Touch feedback
+        newLogoBrand.addEventListener('touchstart', () => {
+          newLogoBrand.style.transform = 'scale(0.98)';
+        });
+        
+        newLogoBrand.addEventListener('touchend', () => {
+          newLogoBrand.style.transform = 'scale(1)';
+        });
+        
         console.log('🏛️ Logo handler setup complete');
       } else {
         console.warn('🏛️ Logo brand element not found, retrying...');
-        setTimeout(() => this.setupLogoHandler(), 500);
+        setTimeout(setupLogo, 200);
       }
-    }, 100);
+    };
+    
+    // Setup with delay to ensure DOM is ready
+    setTimeout(setupLogo, 100);
   }
 
   loadInitialPage() {
     const hash = window.location.hash.substring(1);
-    const initialPage = hash && this.content.pages[hash] ? hash : 'home';
+    const initialPage = hash && this.content && this.content.pages[hash] ? hash : 'home';
     this.loadPage(initialPage);
   }
 
@@ -163,14 +249,14 @@ class AscensionApp {
       return;
     }
 
-    // Close mobile menu
+    // Close mobile menu when loading a page
     this.closeMobileMenu();
 
     // Get page content
     const pageData = this.content.pages[pageName];
     const pageHTML = this.generatePageHTML(pageName, pageData);
 
-    // Update page container
+    // Update page container with smooth transition
     const container = document.getElementById('page-container');
     if (container) {
       container.style.opacity = '0.3';
@@ -616,7 +702,7 @@ class AscensionApp {
     `;
   }
 
-  // FIXED Mobile Menu Functions
+  // DEEP FIX: Enhanced Mobile Menu Functions
   toggleMobileMenu() {
     console.log('🏛️ Toggle mobile menu - current state:', this.mobileMenuOpen);
     if (this.mobileMenuOpen) {
@@ -637,13 +723,25 @@ class AscensionApp {
 
     console.log('🏛️ Opening mobile menu');
     this.mobileMenuOpen = true;
+    
+    // Add active classes
     navMenu.classList.add('active');
     mobileToggle.classList.add('active');
     mobileToggle.setAttribute('aria-expanded', 'true');
     
-    // Prevent body scroll
+    // Prevent body scroll with multiple methods
     document.body.classList.add('menu-open');
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    
+    // Focus first nav link for accessibility
+    setTimeout(() => {
+      const firstNavLink = navMenu.querySelector('.nav-link');
+      if (firstNavLink) {
+        firstNavLink.focus();
+      }
+    }, 100);
   }
 
   closeMobileMenu() {
@@ -657,6 +755,8 @@ class AscensionApp {
 
     console.log('🏛️ Closing mobile menu');
     this.mobileMenuOpen = false;
+    
+    // Remove active classes
     navMenu.classList.remove('active');
     mobileToggle.classList.remove('active');
     mobileToggle.setAttribute('aria-expanded', 'false');
@@ -664,6 +764,8 @@ class AscensionApp {
     // Restore body scroll
     document.body.classList.remove('menu-open');
     document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
   }
 
   // Navigation Updates
@@ -689,10 +791,14 @@ class AscensionApp {
     buttons.forEach(button => {
       button.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         const page = button.getAttribute('data-page');
         this.loadPage(page);
       });
     });
+
+    // Setup logo handler again after page load
+    this.setupLogoHandler();
   }
 }
 
