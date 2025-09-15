@@ -240,7 +240,7 @@ class ChurchApp {
                                     </div>
                                 </div>
                                 <div class="card">
-                                    <div style="width: 100%; height: 200px; background: linear-gradient(45deg, #8B0000, #660000); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🎓</div>
+                                    <img src="./images/Ascension-Lutheran-School-5l01p65peb8ccskgkkck08s4s-1122.webp" alt="Ascension Lutheran School Building" class="card-image" style="height: 200px; object-fit: cover;">
                                     <div class="card-content">
                                         <h3 class="card-title">School</h3>
                                         <p class="card-text">Providing traditional, Christian education to students in Preschool through 8th grade with academic excellence within our Christ-centered Lutheran worldview.</p>
