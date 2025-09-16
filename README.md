@@ -365,5 +365,4 @@ The site reflects the church's mission: *"To seek, make, and mature disciples fo
 
 ---
 
-*Last updated: September 16 2025*
-*Version: 1.0.0*
+*Updated on September 16, 2025 — Version 1.0.0*
