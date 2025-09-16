@@ -177,15 +177,13 @@
 .loading-content {
     text-align: center;
     z-index: 10;
-    max-width: 420px;
-    padding: 3rem 2.5rem;
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(20px);
-    border-radius: 32px;
-    border: 2px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 
-        0 25px 50px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    max-width: 400px;
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 24px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
     position: relative;
     overflow: hidden;
 }
@@ -207,18 +205,16 @@
 }
 
 .church-logo {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     position: relative;
     z-index: 2;
 }
 
 .logo-img {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
-    box-shadow: 
-        0 15px 35px rgba(0, 0, 0, 0.4),
-        0 0 20px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     border: 3px solid rgba(255, 255, 255, 0.3);
     transition: all 0.3s ease;
     animation: logoGlow 4s ease-in-out infinite;
@@ -226,24 +222,19 @@
 
 .loading-title {
     color: white;
-    font-size: 2.2rem;
+    font-size: 2rem;
     font-weight: 700;
-    margin: 0 0 0.75rem 0;
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+    margin: 0 0 0.5rem 0;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
     font-family: 'Playfair Display', Georgia, serif;
     position: relative;
     z-index: 2;
-    background: linear-gradient(45deg, #ffffff, #f0f0f0, #ffffff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: titleShimmer 3s ease-in-out infinite;
 }
 
 .loading-subtitle {
     color: rgba(255, 255, 255, 0.95);
-    font-size: 1.2rem;
-    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    margin: 0 0 0.25rem 0;
     font-weight: 500;
     position: relative;
     z-index: 2;
@@ -251,8 +242,8 @@
 
 .loading-location {
     color: rgba(255, 255, 255, 0.85);
-    font-size: 1.1rem;
-    margin: 0 0 2rem 0;
+    font-size: 1rem;
+    margin: 0 0 1.5rem 0;
     font-weight: 400;
     position: relative;
     z-index: 2;
@@ -260,7 +251,7 @@
 
 /* Enhanced Loading Spinner */
 .loading-spinner {
-    margin: 2rem auto;
+    margin: 1.5rem auto;
     display: flex;
     justify-content: center;
     position: relative;
@@ -268,73 +259,43 @@
 }
 
 .spinner {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border: 4px solid rgba(255, 255, 255, 0.2);
     border-top: 4px solid rgba(255, 255, 255, 0.8);
     border-right: 4px solid rgba(255, 255, 255, 0.6);
     border-radius: 50%;
-    animation: enhancedSpin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+    animation: enhancedSpin 1.2s linear infinite;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 .loading-status {
     color: white;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    margin: 1rem 0 2rem 0;
-    letter-spacing: 2px;
+    margin: 0.5rem 0 1.5rem 0;
+    letter-spacing: 1px;
     text-transform: uppercase;
     opacity: 0.9;
     position: relative;
     z-index: 2;
-    animation: statusPulse 2s ease-in-out infinite;
 }
 
 /* Enhanced Loading Verse */
 .loading-verse {
-    background: rgba(255, 255, 255, 0.18);
-    border-radius: 16px;
-    padding: 1.5rem;
-    margin: 1.5rem 0;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin: 1rem 0;
     border-left: 4px solid rgba(255, 255, 255, 0.6);
     color: white;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-style: italic;
-    line-height: 1.8;
-    box-shadow: 
-        0 8px 20px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    line-height: 1.6;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     text-align: center;
     position: relative;
     z-index: 2;
-    overflow: hidden;
-}
-
-.loading-verse::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.05) 2px, transparent 2px),
-        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 2px, transparent 2px);
-    background-size: 30px 30px, 50px 50px;
-    animation: versePatternMove 25s ease-in-out infinite;
-    pointer-events: none;
-}
-
-.loading-verse::after {
-    content: '"';
-    position: absolute;
-    top: -15px;
-    left: 20px;
-    font-size: 4rem;
-    color: rgba(255, 255, 255, 0.1);
-    font-family: 'Playfair Display', Georgia, serif;
-    pointer-events: none;
 }
 
 /* Enhanced Background Animations */
