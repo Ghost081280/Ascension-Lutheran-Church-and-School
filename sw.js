@@ -1,12 +1,17 @@
-// Fixed Service Worker for Ascension Lutheran Church PWA
-// Version: 2025.01.15 - Minimal interference, focused caching
+// Enhanced Service Worker for Ascension Lutheran Church PWA
+// Version: 2025.01.15 - Comprehensive offline support and caching
 
-const CACHE_VERSION = 'alc-fixed-v1';
+const CACHE_VERSION = 'alc-v2025-01-15';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
+const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
+const IMAGES_CACHE = `${CACHE_VERSION}-images`;
 const OFFLINE_URL = '/offline.html';
+const FALLBACK_IMAGE = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y3ZmFmYyIvPiA8dGV4dCB4PSI1MCUiIHk9IjUwJSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzcxODA5NiI+QXNjZW5zaW9uIEx1dGhlcmFuPC90ZXh0Pjwvc3ZnPg==';
 
-// Only essential static assets - NO HTML caching to avoid dynamic content issues
+// Static assets to precache
 const STATIC_ASSETS = [
+  '/',
+  '/index.html',
   '/css/main.css',
   '/css/components.css',
   '/css/loading.css',
@@ -17,25 +22,42 @@ const STATIC_ASSETS = [
   '/content/content.js',
   '/manifest.json',
   '/images/Rose_ColorThumb.png',
-  '/images/Color Luther Rose - 72 dpi.jpg'
+  '/images/Pastor.png',
+  '/images/ascension-lutheran-school-fort-wayne-in-primaryphoto.jpg',
+  '/images/families.jpg',
+  '/images/Ascension-Lutheran-School-5l01p65peb8ccskgkkck08s4s-1122.webp',
+  '/offline.html'
 ];
 
-// External resources that can be cached safely
+// Essential fonts and external resources
 const EXTERNAL_ASSETS = [
   'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap'
 ];
 
-console.log('🏛️ Fixed Service Worker loading...');
+console.log('🏛️ Enhanced Service Worker loading...');
 
-// Install Event - Cache only static assets, NO HTML
+// Install Event - Precache static assets
 self.addEventListener('install', (event) => {
-  console.log('🏛️ Service Worker: Installing fixed version');
+  console.log('🏛️ Service Worker: Installing enhanced version');
   
   event.waitUntil(
-    caches.open(STATIC_CACHE).then((cache) => {
-      console.log('🏛️ Service Worker: Caching static assets only');
-      return cache.addAll(STATIC_ASSETS.concat(EXTERNAL_ASSETS));
-    }).then(() => {
+    Promise.all([
+      // Cache static assets
+      caches.open(STATIC_CACHE).then((cache) => {
+        console.log('🏛️ Service Worker: Caching static assets');
+        return cache.addAll(STATIC_ASSETS.concat(EXTERNAL_ASSETS));
+      }),
+      // Ensure offline page is cached
+      caches.open(STATIC_CACHE).then((cache) => {
+        return cache.add(OFFLINE_URL).catch(() => {
+          // Create basic offline page if file doesn't exist
+          const offlineResponse = new Response(createOfflinePage(), {
+            headers: { 'Content-Type': 'text/html' }
+          });
+          return cache.put(OFFLINE_URL, offlineResponse);
+        });
+      })
+    ]).then(() => {
       console.log('🏛️ Service Worker: Installation complete, skipping waiting');
       return self.skipWaiting();
     }).catch((error) => {
@@ -46,7 +68,7 @@ self.addEventListener('install', (event) => {
 
 // Activate Event - Clean up old caches
 self.addEventListener('activate', (event) => {
-  console.log('🏛️ Service Worker: Activating fixed version');
+  console.log('🏛️ Service Worker: Activating enhanced version');
   
   event.waitUntil(
     Promise.all([
@@ -69,7 +91,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch Event - Network first for HTML, Cache first for static assets
+// Fetch Event - Advanced caching strategies
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   
@@ -87,27 +109,33 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(handleFetch(request));
 });
 
+// Enhanced fetch handler with multiple strategies
 async function handleFetch(request) {
   const url = new URL(request.url);
   
   try {
-    // Strategy 1: NETWORK FIRST for HTML pages (no caching to avoid stale content)
-    if (isHTMLRequest(request)) {
-      return await networkFirstNoCache(request);
-    }
-    
-    // Strategy 2: Cache First for static assets (CSS, JS, images)
+    // Strategy 1: Cache First for static assets
     if (isStaticAsset(request)) {
-      return await cacheFirst(request);
+      return await cacheFirst(request, STATIC_CACHE);
     }
     
-    // Strategy 3: Cache First for fonts
-    if (isFontRequest(request)) {
-      return await cacheFirst(request);
+    // Strategy 2: Network First for HTML pages
+    if (isHTMLRequest(request)) {
+      return await networkFirst(request, DYNAMIC_CACHE);
     }
     
-    // Strategy 4: Network Only for everything else
-    return await fetch(request);
+    // Strategy 3: Cache First for images with fallback
+    if (isImageRequest(request)) {
+      return await cacheFirstWithFallback(request, IMAGES_CACHE, FALLBACK_IMAGE);
+    }
+    
+    // Strategy 4: Stale While Revalidate for fonts and external resources
+    if (isFontRequest(request) || isExternalResource(request)) {
+      return await staleWhileRevalidate(request, DYNAMIC_CACHE);
+    }
+    
+    // Strategy 5: Network Only for everything else
+    return await networkOnly(request);
     
   } catch (error) {
     console.error('🏛️ Service Worker: Fetch error', error);
@@ -115,23 +143,11 @@ async function handleFetch(request) {
   }
 }
 
-// Network First with NO caching for HTML to ensure fresh content
-async function networkFirstNoCache(request) {
-  try {
-    console.log('🏛️ Fetching fresh HTML from network:', request.url);
-    const networkResponse = await fetch(request);
-    
-    // DO NOT cache HTML responses to avoid serving stale content
-    return networkResponse;
-  } catch (error) {
-    console.log('🏛️ Network failed for HTML:', request.url);
-    throw error;
-  }
-}
+// Caching Strategies
 
-// Cache First for static assets only
-async function cacheFirst(request) {
-  const cache = await caches.open(STATIC_CACHE);
+// Cache First - Check cache first, fallback to network
+async function cacheFirst(request, cacheName) {
+  const cache = await caches.open(cacheName);
   const cachedResponse = await cache.match(request);
   
   if (cachedResponse) {
@@ -139,7 +155,7 @@ async function cacheFirst(request) {
     return cachedResponse;
   }
   
-  console.log('🏛️ Fetching and caching static asset:', request.url);
+  console.log('🏛️ Fetching from network:', request.url);
   const networkResponse = await fetch(request);
   
   if (networkResponse.ok) {
@@ -149,12 +165,101 @@ async function cacheFirst(request) {
   return networkResponse;
 }
 
+// Network First - Try network first, fallback to cache
+async function networkFirst(request, cacheName) {
+  const cache = await caches.open(cacheName);
+  
+  try {
+    console.log('🏛️ Fetching from network:', request.url);
+    const networkResponse = await fetch(request);
+    
+    if (networkResponse.ok) {
+      cache.put(request, networkResponse.clone());
+    }
+    
+    return networkResponse;
+  } catch (error) {
+    console.log('🏛️ Network failed, trying cache:', request.url);
+    const cachedResponse = await cache.match(request);
+    
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+    
+    throw error;
+  }
+}
+
+// Cache First with Fallback for images
+async function cacheFirstWithFallback(request, cacheName, fallbackUrl) {
+  const cache = await caches.open(cacheName);
+  const cachedResponse = await cache.match(request);
+  
+  if (cachedResponse) {
+    return cachedResponse;
+  }
+  
+  try {
+    const networkResponse = await fetch(request);
+    
+    if (networkResponse.ok) {
+      cache.put(request, networkResponse.clone());
+      return networkResponse;
+    }
+    
+    throw new Error('Network response not ok');
+  } catch (error) {
+    console.log('🏛️ Image failed, using fallback:', request.url);
+    return new Response(fallbackUrl, {
+      headers: { 'Content-Type': 'image/svg+xml' }
+    });
+  }
+}
+
+// Stale While Revalidate - Serve from cache, update in background
+async function staleWhileRevalidate(request, cacheName) {
+  const cache = await caches.open(cacheName);
+  const cachedResponse = await cache.match(request);
+  
+  // Start fetch in background
+  const fetchPromise = fetch(request).then((networkResponse) => {
+    if (networkResponse.ok) {
+      cache.put(request, networkResponse.clone());
+    }
+    return networkResponse;
+  }).catch((error) => {
+    console.log('🏛️ Background fetch failed:', request.url, error);
+  });
+  
+  // Return cached response immediately if available
+  if (cachedResponse) {
+    return cachedResponse;
+  }
+  
+  // Wait for network if no cache
+  return fetchPromise;
+}
+
+// Network Only - Always fetch from network
+async function networkOnly(request) {
+  return fetch(request);
+}
+
 // Error Handlers
+
 async function handleFetchError(request) {
   const url = new URL(request.url);
   
   // For navigation requests, show offline page
   if (request.mode === 'navigate') {
+    const cache = await caches.open(STATIC_CACHE);
+    const offlineResponse = await cache.match(OFFLINE_URL);
+    
+    if (offlineResponse) {
+      return offlineResponse;
+    }
+    
+    // Create basic offline response
     return new Response(createOfflinePage(), {
       headers: { 'Content-Type': 'text/html' },
       status: 503,
@@ -164,7 +269,7 @@ async function handleFetchError(request) {
   
   // For images, return fallback
   if (isImageRequest(request)) {
-    return new Response(createFallbackImage(), {
+    return new Response(FALLBACK_IMAGE, {
       headers: { 'Content-Type': 'image/svg+xml' }
     });
   }
@@ -178,19 +283,20 @@ async function handleFetchError(request) {
 }
 
 // Helper Functions
-function isHTMLRequest(request) {
-  return request.destination === 'document' ||
-         request.headers.get('accept')?.includes('text/html') ||
-         request.url.endsWith('/') ||
-         request.url.endsWith('.html');
-}
 
 function isStaticAsset(request) {
   const url = new URL(request.url);
   return url.pathname.endsWith('.css') ||
          url.pathname.endsWith('.js') ||
          url.pathname.endsWith('.json') ||
+         url.pathname === '/' ||
+         url.pathname === '/index.html' ||
          STATIC_ASSETS.includes(url.pathname);
+}
+
+function isHTMLRequest(request) {
+  return request.destination === 'document' ||
+         request.headers.get('accept').includes('text/html');
 }
 
 function isImageRequest(request) {
@@ -202,6 +308,11 @@ function isFontRequest(request) {
   return request.destination === 'font' ||
          /\.(woff|woff2|ttf|eot)$/i.test(new URL(request.url).pathname) ||
          new URL(request.url).hostname === 'fonts.gstatic.com';
+}
+
+function isExternalResource(request) {
+  const url = new URL(request.url);
+  return url.hostname !== self.location.hostname;
 }
 
 // Create basic offline page HTML
@@ -270,6 +381,7 @@ function createOfflinePage() {
             Fort Wayne, IN 46835
         </div>
         <button class="btn" onclick="window.location.reload()">Try Again</button>
+        <button class="btn" onclick="window.history.back()">Go Back</button>
     </div>
     <script>
         // Auto-reload when connection is restored
@@ -282,15 +394,76 @@ function createOfflinePage() {
   `;
 }
 
-// Create fallback image
-function createFallbackImage() {
-  return `<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
-    <rect width="100%" height="100%" fill="#f7fafc"/>
-    <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-family="Arial, sans-serif" font-size="18" fill="#718096">
-      Ascension Lutheran
-    </text>
-  </svg>`;
+// Background Sync (if supported)
+self.addEventListener('sync', (event) => {
+  console.log('🏛️ Service Worker: Background sync triggered', event.tag);
+  
+  if (event.tag === 'background-sync') {
+    event.waitUntil(doBackgroundSync());
+  }
+});
+
+async function doBackgroundSync() {
+  try {
+    // Perform background tasks like updating cache, syncing data, etc.
+    console.log('🏛️ Service Worker: Performing background sync');
+    
+    // Update dynamic cache with fresh content
+    const cache = await caches.open(DYNAMIC_CACHE);
+    
+    // Pre-fetch important pages
+    const importantPages = ['/', '/#church', '/#worship', '/#contact'];
+    await Promise.all(
+      importantPages.map(async (page) => {
+        try {
+          const response = await fetch(page);
+          if (response.ok) {
+            await cache.put(page, response);
+          }
+        } catch (error) {
+          console.log('🏛️ Background sync failed for', page, error);
+        }
+      })
+    );
+    
+  } catch (error) {
+    console.error('🏛️ Service Worker: Background sync failed', error);
+  }
 }
+
+// Push Notifications (basic setup)
+self.addEventListener('push', (event) => {
+  console.log('🏛️ Service Worker: Push message received');
+  
+  const options = {
+    body: event.data ? event.data.text() : 'New update from Ascension Lutheran Church',
+    icon: '/images/Rose_ColorThumb.png',
+    badge: '/images/Rose_ColorThumb.png',
+    tag: 'alc-notification',
+    requireInteraction: false,
+    actions: [
+      { action: 'view', title: 'View' },
+      { action: 'dismiss', title: 'Dismiss' }
+    ]
+  };
+  
+  event.waitUntil(
+    self.registration.showNotification('Ascension Lutheran Church', options)
+  );
+});
+
+// Notification Click Handler
+self.addEventListener('notificationclick', (event) => {
+  console.log('🏛️ Service Worker: Notification clicked', event.action);
+  
+  event.notification.close();
+  
+  if (event.action === 'view') {
+    event.waitUntil(
+      clients.openWindow('/')
+    );
+  }
+});
 
 // Message Handler for communication with main app
 self.addEventListener('message', (event) => {
@@ -299,6 +472,34 @@ self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
+  
+  if (event.data && event.data.type === 'CACHE_UPDATE') {
+    // Trigger cache update
+    event.waitUntil(updateCache());
+  }
 });
 
-console.log('🏛️ Fixed Service Worker for Ascension Lutheran Church - Ready');
+async function updateCache() {
+  try {
+    console.log('🏛️ Service Worker: Updating cache');
+    const cache = await caches.open(STATIC_CACHE);
+    await cache.addAll(STATIC_ASSETS);
+    console.log('🏛️ Service Worker: Cache updated successfully');
+  } catch (error) {
+    console.error('🏛️ Service Worker: Cache update failed', error);
+  }
+}
+
+// Periodic cleanup
+setInterval(() => {
+  // Clean up old cache entries periodically
+  caches.keys().then((cacheNames) => {
+    cacheNames.forEach((cacheName) => {
+      if (!cacheName.startsWith(CACHE_VERSION)) {
+        caches.delete(cacheName);
+      }
+    });
+  });
+}, 24 * 60 * 60 * 1000); // Daily cleanup
+
+console.log('🏛️ Enhanced Service Worker for Ascension Lutheran Church - Ready');
