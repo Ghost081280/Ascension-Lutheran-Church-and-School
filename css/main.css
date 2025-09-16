@@ -81,7 +81,7 @@ body {
   position: relative;
 }
 
-/* Enhanced Background Patterns */
+/* SIMPLIFIED BACKGROUND PATTERNS - FINAL VERSION */
 body::before {
   content: '';
   position: fixed;
@@ -90,51 +90,41 @@ body::before {
   width: 100%;
   height: 100%;
   background-image: 
-    radial-gradient(circle at 20% 20%, var(--cross-pattern-color) 2px, transparent 2px),
-    radial-gradient(circle at 80% 80%, var(--cross-pattern-color) 2px, transparent 2px),
-    radial-gradient(circle at 60% 30%, var(--cross-pattern-color) 1px, transparent 1px),
-    radial-gradient(circle at 30% 70%, var(--cross-pattern-color) 1px, transparent 1px);
-  background-size: 150px 150px, 200px 200px, 100px 100px, 120px 120px;
-  background-position: 0 0, 100px 100px, 50px 0, 0 50px;
+    radial-gradient(circle at 20% 20%, rgba(139, 0, 0, 0.02) 2px, transparent 2px),
+    radial-gradient(circle at 80% 80%, rgba(139, 0, 0, 0.02) 2px, transparent 2px);
+  background-size: 120px 120px, 160px 160px;
+  background-position: 0 0, 80px 80px;
   z-index: -2;
   pointer-events: none;
-  opacity: 0.4;
-  animation: subtleFloat 60s ease-in-out infinite;
+  opacity: 0.5;
 }
 
-/* Decorative cross elements for enhanced visual appeal */
-.page-content {
-  position: relative;
-  overflow: hidden;
-}
-
+/* SIMPLIFIED DECORATIVE ELEMENTS - FINAL VERSION */
 .page-content::before {
   content: '✚';
   position: absolute;
-  font-size: 8rem;
-  color: rgba(139, 0, 0, 0.02);
-  top: 10%;
-  right: 5%;
+  font-size: 6rem;
+  color: rgba(139, 0, 0, 0.015);
+  top: 15%;
+  right: 8%;
   z-index: 0;
   pointer-events: none;
   font-weight: 300;
-  animation: gentleRotate 120s linear infinite;
 }
 
 .page-content::after {
   content: '✚';
   position: absolute;
-  font-size: 12rem;
-  color: rgba(139, 0, 0, 0.015);
-  bottom: 10%;
-  left: 3%;
+  font-size: 8rem;
+  color: rgba(139, 0, 0, 0.01);
+  bottom: 15%;
+  left: 5%;
   z-index: 0;
   pointer-events: none;
   font-weight: 300;
-  animation: gentleRotate 180s linear infinite reverse;
 }
 
-/* Section-specific decorative elements */
+/* SIMPLIFIED SECTION DECORATIONS - FINAL VERSION */
 .info-section {
   position: relative;
 }
@@ -142,58 +132,40 @@ body::before {
 .info-section:nth-child(even)::before {
   content: '⛪';
   position: absolute;
-  font-size: 4rem;
-  color: rgba(205, 133, 63, 0.03);
+  font-size: 2.5rem;
+  color: rgba(205, 133, 63, 0.02);
   top: 20px;
   right: 20px;
   z-index: 0;
   pointer-events: none;
-  animation: gentlePulse 8s ease-in-out infinite;
 }
 
 .info-section:nth-child(odd)::after {
   content: '🙏';
   position: absolute;
-  font-size: 3rem;
-  color: rgba(205, 133, 63, 0.03);
+  font-size: 2rem;
+  color: rgba(205, 133, 63, 0.02);
   bottom: 20px;
   left: 20px;
   z-index: 0;
   pointer-events: none;
-  animation: gentlePulse 10s ease-in-out infinite;
 }
 
-/* Enhanced Animations */
-@keyframes subtleFloat {
-  0%, 100% { 
-    transform: translateY(0px) rotate(0deg);
-    opacity: 0.4;
-  }
-  50% { 
-    transform: translateY(-10px) rotate(2deg);
-    opacity: 0.6;
-  }
-}
+/* REMOVED COMPLEX ANIMATIONS - SIMPLIFIED */
 
-@keyframes gentleRotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes gentlePulse {
-  0%, 100% { 
-    opacity: 0.03;
-    transform: scale(1);
+/* Mobile optimization - hide decorative elements */
+@media (max-width: 479px) {
+  body::before {
+    background-size: 80px 80px, 120px 120px;
+    opacity: 0.2;
   }
-  50% { 
-    opacity: 0.08;
-    transform: scale(1.05);
+  
+  .page-content::before,
+  .page-content::after,
+  .info-section::before,
+  .info-section::after {
+    display: none;
   }
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
 }
 
 /* Typography with enhanced visual hierarchy */
