@@ -1,4 +1,4 @@
-/* Loading Screen Styles for Ascension Lutheran Church */
+/* Enhanced Loading Screen Styles for Ascension Lutheran Church */
 
 .loading-screen {
     position: fixed;
@@ -6,13 +6,14 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #8B0000 0%, #660000 100%);
+    background: linear-gradient(135deg, #8B0000 0%, #660000 50%, #4A0000 100%);
     z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 1;
     transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+    overflow: hidden;
 }
 
 .loading-screen.hidden {
@@ -30,29 +31,91 @@
     overflow: hidden;
 }
 
+/* Enhanced Decorative Pattern System */
 .decorative-pattern {
     position: relative;
     width: 100%;
     height: 100%;
 }
 
+/* Cross Elements - More varied and elegant */
 .pattern-cross {
     position: absolute;
-    color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.08);
     font-size: 2.5rem;
     font-weight: bold;
     animation: enhancedFloat 25s ease-in-out infinite;
     user-select: none;
     pointer-events: none;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
+/* Church Icons - New additions */
+.pattern-church {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.06);
+    font-size: 2rem;
+    animation: gentleFloat 30s ease-in-out infinite;
+    user-select: none;
+    pointer-events: none;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Prayer Icons - Additional spiritual elements */
+.pattern-prayer {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.05);
+    font-size: 1.8rem;
+    animation: gentlePulse 20s ease-in-out infinite;
+    user-select: none;
+    pointer-events: none;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Dove Icons - Peaceful elements */
+.pattern-dove {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.04);
+    font-size: 1.5rem;
+    animation: doveFloat 35s ease-in-out infinite;
+    user-select: none;
+    pointer-events: none;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
+}
+
+/* Enhanced Circle Elements */
 .pattern-circle {
     position: absolute;
-    border: 3px solid rgba(255, 255, 255, 0.1);
+    border: 3px solid rgba(255, 255, 255, 0.06);
     border-radius: 50%;
     animation: enhancedPulse 20s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
+/* Heart Elements - Love and faith */
+.pattern-heart {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.04);
+    font-size: 1.2rem;
+    animation: heartFloat 28s ease-in-out infinite;
+    user-select: none;
+    pointer-events: none;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+/* Star Elements - Divine guidance */
+.pattern-star {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.03);
+    font-size: 1rem;
+    animation: starTwinkle 15s ease-in-out infinite;
+    user-select: none;
+    pointer-events: none;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+}
+
+/* Positioned Elements - Comprehensive Layout */
+/* Crosses */
 .cross-1 { top: 8%; left: 12%; animation-delay: 0s; }
 .cross-2 { top: 15%; left: 35%; animation-delay: 6s; }
 .cross-3 { top: 10%; left: 58%; animation-delay: 12s; }
@@ -61,7 +124,44 @@
 .cross-6 { top: 38%; left: 65%; animation-delay: 9s; }
 .cross-7 { top: 75%; left: 10%; animation-delay: 15s; }
 .cross-8 { top: 68%; left: 60%; animation-delay: 21s; }
+.cross-9 { top: 25%; left: 5%; animation-delay: 7s; }
+.cross-10 { top: 55%; left: 85%; animation-delay: 14s; }
 
+/* Churches */
+.church-1 { top: 5%; left: 20%; animation-delay: 2s; }
+.church-2 { top: 30%; left: 80%; animation-delay: 8s; }
+.church-3 { top: 70%; left: 25%; animation-delay: 16s; }
+.church-4 { top: 85%; left: 75%; animation-delay: 22s; }
+.church-5 { top: 20%; left: 45%; animation-delay: 11s; }
+
+/* Prayer Hands */
+.prayer-1 { top: 18%; left: 25%; animation-delay: 4s; }
+.prayer-2 { top: 42%; left: 75%; animation-delay: 10s; }
+.prayer-3 { top: 65%; left: 8%; animation-delay: 18s; }
+.prayer-4 { top: 80%; left: 45%; animation-delay: 24s; }
+.prayer-5 { top: 35%; left: 50%; animation-delay: 13s; }
+
+/* Doves */
+.dove-1 { top: 12%; left: 60%; animation-delay: 5s; }
+.dove-2 { top: 50%; left: 20%; animation-delay: 12s; }
+.dove-3 { top: 78%; left: 70%; animation-delay: 19s; }
+.dove-4 { top: 28%; left: 90%; animation-delay: 26s; }
+
+/* Hearts */
+.heart-1 { top: 22%; left: 8%; animation-delay: 6s; }
+.heart-2 { top: 48%; left: 40%; animation-delay: 15s; }
+.heart-3 { top: 72%; left: 85%; animation-delay: 20s; }
+.heart-4 { top: 88%; left: 30%; animation-delay: 25s; }
+
+/* Stars */
+.star-1 { top: 6%; left: 40%; animation-delay: 1s; }
+.star-2 { top: 16%; left: 70%; animation-delay: 8s; }
+.star-3 { top: 32%; left: 12%; animation-delay: 14s; }
+.star-4 { top: 52%; left: 55%; animation-delay: 17s; }
+.star-5 { top: 62%; left: 88%; animation-delay: 23s; }
+.star-6 { top: 82%; left: 15%; animation-delay: 28s; }
+
+/* Circles - Enhanced positioning */
 .circle-1 { top: 3%; left: 25%; width: 70px; height: 70px; animation-delay: 1s; }
 .circle-2 { top: 8%; left: 70%; width: 90px; height: 90px; animation-delay: 7s; }
 .circle-3 { top: 30%; left: 3%; width: 60px; height: 60px; animation-delay: 13s; }
@@ -70,160 +170,500 @@
 .circle-6 { top: 55%; left: 75%; width: 65px; height: 65px; animation-delay: 10s; }
 .circle-7 { top: 85%; left: 30%; width: 85px; height: 85px; animation-delay: 16s; }
 .circle-8 { top: 80%; left: 70%; width: 75px; height: 75px; animation-delay: 22s; }
+.circle-9 { top: 40%; left: 45%; width: 55px; height: 55px; animation-delay: 25s; }
+.circle-10 { top: 65%; left: 50%; width: 70px; height: 70px; animation-delay: 28s; }
 
+/* Enhanced Loading Content */
 .loading-content {
     text-align: center;
     z-index: 10;
-    max-width: 400px;
-    padding: 2.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    border-radius: 24px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    max-width: 420px;
+    padding: 3rem 2.5rem;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(20px);
+    border-radius: 32px;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle animated background for content */
+.loading-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.05) 2px, transparent 2px),
+        radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.03) 2px, transparent 2px);
+    background-size: 40px 40px, 60px 60px;
+    animation: subtlePatternMove 40s ease-in-out infinite;
+    pointer-events: none;
 }
 
 .church-logo {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
 }
 
 .logo-img {
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(255, 255, 255, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    animation: logoGlow 4s ease-in-out infinite;
 }
 
 .loading-title {
     color: white;
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 700;
-    margin: 0 0 0.5rem 0;
-    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
+    margin: 0 0 0.75rem 0;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
     font-family: 'Playfair Display', Georgia, serif;
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(45deg, #ffffff, #f0f0f0, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: titleShimmer 3s ease-in-out infinite;
 }
 
 .loading-subtitle {
     color: rgba(255, 255, 255, 0.95);
-    font-size: 1.1rem;
-    margin: 0 0 0.25rem 0;
+    font-size: 1.2rem;
+    margin: 0 0 0.5rem 0;
     font-weight: 500;
+    position: relative;
+    z-index: 2;
 }
 
 .loading-location {
     color: rgba(255, 255, 255, 0.85);
-    font-size: 1rem;
-    margin: 0 0 1.5rem 0;
+    font-size: 1.1rem;
+    margin: 0 0 2rem 0;
     font-weight: 400;
+    position: relative;
+    z-index: 2;
 }
 
+/* Enhanced Loading Spinner */
 .loading-spinner {
-    margin: 1.5rem auto;
+    margin: 2rem auto;
     display: flex;
     justify-content: center;
+    position: relative;
+    z-index: 2;
 }
 
 .spinner {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border: 4px solid rgba(255, 255, 255, 0.2);
-    border-top: 4px solid white;
+    border-top: 4px solid rgba(255, 255, 255, 0.8);
+    border-right: 4px solid rgba(255, 255, 255, 0.6);
     border-radius: 50%;
-    animation: spin 1.2s linear infinite;
+    animation: enhancedSpin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 .loading-status {
     color: white;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 600;
-    margin: 0.5rem 0 1.5rem 0;
-    letter-spacing: 1px;
+    margin: 1rem 0 2rem 0;
+    letter-spacing: 2px;
     text-transform: uppercase;
     opacity: 0.9;
+    position: relative;
+    z-index: 2;
+    animation: statusPulse 2s ease-in-out infinite;
 }
 
+/* Enhanced Loading Verse */
 .loading-verse {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
-    padding: 1.2rem;
-    margin: 1rem 0;
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
     border-left: 4px solid rgba(255, 255, 255, 0.6);
     color: white;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-style: italic;
-    line-height: 1.6;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    line-height: 1.8;
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
     text-align: center;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
 }
 
-/* Background Animations */
+.loading-verse::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.05) 2px, transparent 2px),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 2px, transparent 2px);
+    background-size: 30px 30px, 50px 50px;
+    animation: versePatternMove 25s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.loading-verse::after {
+    content: '"';
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    font-size: 4rem;
+    color: rgba(255, 255, 255, 0.1);
+    font-family: 'Playfair Display', Georgia, serif;
+    pointer-events: none;
+}
+
+/* Enhanced Background Animations */
 @keyframes enhancedFloat {
     0%, 100% { 
         transform: translate(0, 0) rotate(0deg) scale(1); 
         opacity: 0.05; 
     }
-    25% { 
-        transform: translate(30px, -20px) rotate(90deg) scale(1.2); 
-        opacity: 0.3; 
+    15% { 
+        transform: translate(15px, -10px) rotate(30deg) scale(1.1); 
+        opacity: 0.15; 
     }
-    50% { 
-        transform: translate(-20px, -35px) rotate(180deg) scale(0.8); 
+    30% { 
+        transform: translate(35px, -25px) rotate(90deg) scale(1.3); 
+        opacity: 0.25; 
+    }
+    45% { 
+        transform: translate(20px, -40px) rotate(150deg) scale(1.0); 
+        opacity: 0.2; 
+    }
+    60% { 
+        transform: translate(-10px, -35px) rotate(200deg) scale(0.9); 
         opacity: 0.1; 
     }
     75% { 
-        transform: translate(25px, -15px) rotate(270deg) scale(1.1); 
-        opacity: 0.25; 
+        transform: translate(25px, -20px) rotate(270deg) scale(1.2); 
+        opacity: 0.3; 
+    }
+    90% { 
+        transform: translate(10px, -10px) rotate(330deg) scale(1.05); 
+        opacity: 0.15; 
     }
 }
 
 @keyframes enhancedPulse {
     0%, 100% { 
         transform: scale(1) translateX(0) translateY(0); 
-        opacity: 0.1; 
-        border-color: rgba(255, 255, 255, 0.1); 
+        opacity: 0.06; 
+        border-color: rgba(255, 255, 255, 0.06); 
     }
-    20% { 
-        transform: scale(1.3) translateX(15px) translateY(-15px); 
-        opacity: 0.4; 
-        border-color: rgba(255, 255, 255, 0.4); 
+    10% { 
+        transform: scale(1.1) translateX(8px) translateY(-8px); 
+        opacity: 0.2; 
+        border-color: rgba(255, 255, 255, 0.2); 
     }
-    40% { 
-        transform: scale(0.7) translateX(-10px) translateY(20px); 
-        opacity: 0.08; 
-        border-color: rgba(255, 255, 255, 0.08); 
-    }
-    60% { 
-        transform: scale(1.2) translateX(20px) translateY(-8px); 
+    25% { 
+        transform: scale(1.4) translateX(20px) translateY(-20px); 
         opacity: 0.35; 
         border-color: rgba(255, 255, 255, 0.35); 
     }
-    80% { 
-        transform: scale(0.9) translateX(-8px) translateY(12px); 
-        opacity: 0.15; 
-        border-color: rgba(255, 255, 255, 0.15); 
+    40% { 
+        transform: scale(0.8) translateX(-12px) translateY(15px); 
+        opacity: 0.08; 
+        border-color: rgba(255, 255, 255, 0.08); 
+    }
+    55% { 
+        transform: scale(1.3) translateX(25px) translateY(-12px); 
+        opacity: 0.4; 
+        border-color: rgba(255, 255, 255, 0.4); 
+    }
+    70% { 
+        transform: scale(0.9) translateX(-8px) translateY(20px); 
+        opacity: 0.12; 
+        border-color: rgba(255, 255, 255, 0.12); 
+    }
+    85% { 
+        transform: scale(1.2) translateX(15px) translateY(-5px); 
+        opacity: 0.25; 
+        border-color: rgba(255, 255, 255, 0.25); 
     }
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+@keyframes gentleFloat {
+    0%, 100% { 
+        transform: translateY(0px) translateX(0px) rotate(0deg); 
+        opacity: 0.06; 
+    }
+    20% { 
+        transform: translateY(-12px) translateX(8px) rotate(15deg); 
+        opacity: 0.15; 
+    }
+    40% { 
+        transform: translateY(-8px) translateX(-5px) rotate(-10deg); 
+        opacity: 0.1; 
+    }
+    60% { 
+        transform: translateY(-15px) translateX(12px) rotate(20deg); 
+        opacity: 0.2; 
+    }
+    80% { 
+        transform: translateY(-5px) translateX(-8px) rotate(-5deg); 
+        opacity: 0.12; 
+    }
 }
 
-/* Mobile responsive loading */
+@keyframes gentlePulse {
+    0%, 100% { 
+        opacity: 0.05;
+        transform: scale(1) rotate(0deg);
+    }
+    25% { 
+        opacity: 0.15;
+        transform: scale(1.1) rotate(5deg);
+    }
+    50% { 
+        opacity: 0.1;
+        transform: scale(0.95) rotate(-3deg);
+    }
+    75% { 
+        opacity: 0.18;
+        transform: scale(1.05) rotate(8deg);
+    }
+}
+
+@keyframes doveFloat {
+    0%, 100% { 
+        transform: translateY(0px) translateX(0px) rotate(0deg); 
+        opacity: 0.04; 
+    }
+    30% { 
+        transform: translateY(-20px) translateX(15px) rotate(10deg); 
+        opacity: 0.12; 
+    }
+    60% { 
+        transform: translateY(-10px) translateX(-10px) rotate(-8deg); 
+        opacity: 0.08; 
+    }
+    90% { 
+        transform: translateY(-15px) translateX(20px) rotate(12deg); 
+        opacity: 0.15; 
+    }
+}
+
+@keyframes heartFloat {
+    0%, 100% { 
+        transform: scale(1) translateY(0px); 
+        opacity: 0.04; 
+    }
+    50% { 
+        transform: scale(1.2) translateY(-10px); 
+        opacity: 0.12; 
+    }
+}
+
+@keyframes starTwinkle {
+    0%, 100% { 
+        opacity: 0.03; 
+        transform: scale(1) rotate(0deg); 
+    }
+    25% { 
+        opacity: 0.15; 
+        transform: scale(1.3) rotate(90deg); 
+    }
+    50% { 
+        opacity: 0.08; 
+        transform: scale(0.8) rotate(180deg); 
+    }
+    75% { 
+        opacity: 0.2; 
+        transform: scale(1.1) rotate(270deg); 
+    }
+}
+
+@keyframes enhancedSpin {
+    0% { 
+        transform: rotate(0deg); 
+        border-top-color: rgba(255, 255, 255, 0.8);
+        border-right-color: rgba(255, 255, 255, 0.6);
+    }
+    25% { 
+        border-top-color: rgba(255, 255, 255, 0.9);
+        border-right-color: rgba(255, 255, 255, 0.7);
+    }
+    50% { 
+        border-top-color: rgba(255, 255, 255, 1);
+        border-right-color: rgba(255, 255, 255, 0.8);
+    }
+    75% { 
+        border-top-color: rgba(255, 255, 255, 0.9);
+        border-right-color: rgba(255, 255, 255, 0.7);
+    }
+    100% { 
+        transform: rotate(360deg); 
+        border-top-color: rgba(255, 255, 255, 0.8);
+        border-right-color: rgba(255, 255, 255, 0.6);
+    }
+}
+
+@keyframes logoGlow {
+    0%, 100% { 
+        box-shadow: 
+            0 15px 35px rgba(0, 0, 0, 0.4),
+            0 0 20px rgba(255, 255, 255, 0.2);
+    }
+    50% { 
+        box-shadow: 
+            0 20px 40px rgba(0, 0, 0, 0.5),
+            0 0 30px rgba(255, 255, 255, 0.4);
+    }
+}
+
+@keyframes titleShimmer {
+    0%, 100% { 
+        background-position: -200% center; 
+    }
+    50% { 
+        background-position: 200% center; 
+    }
+}
+
+@keyframes statusPulse {
+    0%, 100% { 
+        opacity: 0.9; 
+        letter-spacing: 2px;
+    }
+    50% { 
+        opacity: 0.6; 
+        letter-spacing: 3px;
+    }
+}
+
+@keyframes subtlePatternMove {
+    0%, 100% { 
+        transform: translateX(0) translateY(0); 
+        opacity: 0.05;
+    }
+    25% { 
+        transform: translateX(5px) translateY(-3px); 
+        opacity: 0.08;
+    }
+    50% { 
+        transform: translateX(-3px) translateY(5px); 
+        opacity: 0.06;
+    }
+    75% { 
+        transform: translateX(3px) translateY(-2px); 
+        opacity: 0.07;
+    }
+}
+
+@keyframes versePatternMove {
+    0%, 100% { 
+        transform: translateX(0) translateY(0) rotate(0deg); 
+        opacity: 0.03;
+    }
+    33% { 
+        transform: translateX(2px) translateY(-2px) rotate(1deg); 
+        opacity: 0.06;
+    }
+    66% { 
+        transform: translateX(-2px) translateY(2px) rotate(-1deg); 
+        opacity: 0.04;
+    }
+}
+
+/* Mobile responsive loading - Enhanced */
 @media (max-width: 480px) {
     .loading-content {
-        margin: 1.5rem;
+        margin: 1rem;
         padding: 2rem 1.5rem;
         max-width: 350px;
+        border-radius: 24px;
     }
     
     .logo-img {
-        width: 80px;
-        height: 80px;
+        width: 85px;
+        height: 85px;
     }
     
     .loading-title {
-        font-size: 1.8rem;
+        font-size: 1.9rem;
+    }
+    
+    .loading-subtitle {
+        font-size: 1.05rem;
+    }
+    
+    .loading-location {
+        font-size: 1rem;
+    }
+    
+    .loading-verse {
+        font-size: 1rem;
+        padding: 1.2rem;
+        line-height: 1.6;
+    }
+    
+    .spinner {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .pattern-cross {
+        font-size: 2rem;
+    }
+    
+    .pattern-church {
+        font-size: 1.7rem;
+    }
+    
+    .pattern-prayer {
+        font-size: 1.5rem;
+    }
+    
+    /* Reduce density on mobile */
+    .cross-9, .cross-10,
+    .church-4, .church-5,
+    .prayer-4, .prayer-5,
+    .dove-3, .dove-4,
+    .heart-3, .heart-4,
+    .star-4, .star-5, .star-6,
+    .circle-9, .circle-10 {
+        display: none;
+    }
+}
+
+@media (max-width: 320px) {
+    .loading-content {
+        padding: 1.5rem 1rem;
+        margin: 0.5rem;
+    }
+    
+    .logo-img {
+        width: 75px;
+        height: 75px;
+    }
+    
+    .loading-title {
+        font-size: 1.7rem;
     }
     
     .loading-subtitle {
@@ -236,11 +676,100 @@
     }
     
     .spinner {
-        width: 40px;
-        height: 40px;
+        width: 45px;
+        height: 45px;
+    }
+    
+    /* Further reduce elements on very small screens */
+    .pattern-cross {
+        font-size: 1.8rem;
+    }
+    
+    .pattern-church {
+        font-size: 1.5rem;
+    }
+    
+    .cross-7, .cross-8,
+    .church-3,
+    .prayer-3,
+    .dove-2,
+    .heart-2,
+    .star-3,
+    .circle-7, .circle-8 {
+        display: none;
+    }
+}
+
+/* Tablet responsive adjustments */
+@media (min-width: 481px) and (max-width: 768px) {
+    .loading-content {
+        max-width: 400px;
+        padding: 2.5rem 2rem;
+    }
+    
+    .logo-img {
+        width: 95px;
+        height: 95px;
+    }
+    
+    .loading-title {
+        font-size: 2.1rem;
+    }
+    
+    .loading-verse {
+        font-size: 1.05rem;
+        padding: 1.3rem;
+    }
+    
+    .spinner {
+        width: 55px;
+        height: 55px;
+    }
+}
+
+/* Large screen enhancements */
+@media (min-width: 1200px) {
+    .loading-content {
+        max-width: 480px;
+        padding: 3.5rem 3rem;
+    }
+    
+    .logo-img {
+        width: 110px;
+        height: 110px;
+    }
+    
+    .loading-title {
+        font-size: 2.4rem;
+    }
+    
+    .loading-subtitle {
+        font-size: 1.3rem;
+    }
+    
+    .loading-location {
+        font-size: 1.2rem;
+    }
+    
+    .loading-verse {
+        font-size: 1.2rem;
+        padding: 1.8rem;
+    }
+    
+    .spinner {
+        width: 70px;
+        height: 70px;
     }
     
     .pattern-cross {
+        font-size: 3rem;
+    }
+    
+    .pattern-church {
+        font-size: 2.3rem;
+    }
+    
+    .pattern-prayer {
         font-size: 2rem;
     }
 }
@@ -248,15 +777,116 @@
 /* Reduced motion accessibility */
 @media (prefers-reduced-motion: reduce) {
     .pattern-cross,
+    .pattern-church,
+    .pattern-prayer,
+    .pattern-dove,
     .pattern-circle,
-    .spinner {
-        animation: none;
+    .pattern-heart,
+    .pattern-star,
+    .spinner,
+    .logo-img,
+    .loading-title {
+        animation: none !important;
+    }
+    
+    .loading-content::before,
+    .loading-verse::before {
+        animation: none !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .loading-screen {
+        background: linear-gradient(135deg, #000000 0%, #1a0000 100%);
+    }
+    
+    .pattern-cross,
+    .pattern-church,
+    .pattern-prayer,
+    .pattern-dove,
+    .pattern-heart,
+    .pattern-star {
+        color: rgba(255, 255, 255, 0.15);
+    }
+    
+    .pattern-circle {
+        border-color: rgba(255, 255, 255, 0.12);
+    }
+    
+    .loading-content {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+    
+    .loading-verse {
+        background: rgba(255, 255, 255, 0.25);
+        border-left-color: rgba(255, 255, 255, 0.8);
     }
 }
 
 /* Fallback for browsers without backdrop-filter */
-@supports not (backdrop-filter: blur(15px)) {
+@supports not (backdrop-filter: blur(20px)) {
     .loading-content {
         background: rgba(139, 0, 0, 0.9);
+    }
+    
+    .loading-verse {
+        background: rgba(139, 0, 0, 0.8);
+    }
+}
+
+/* Print styles - hide loading screen */
+@media print {
+    .loading-screen {
+        display: none !important;
+    }
+}
+
+/* Enhanced loading screen for PWA */
+@media (display-mode: standalone) {
+    .loading-screen {
+        /* Add PWA-specific enhancements */
+        backdrop-filter: blur(10px);
+    }
+    
+    .loading-content {
+        background: rgba(255, 255, 255, 0.15);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+}
+
+/* Additional spiritual symbols for variety */
+.pattern-bible {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.05);
+    font-size: 1.6rem;
+    animation: gentleFloat 32s ease-in-out infinite;
+    user-select: none;
+    pointer-events: none;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.pattern-fish {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.04);
+    font-size: 1.4rem;
+    animation: doveFloat 38s ease-in-out infinite;
+    user-select: none;
+    pointer-events: none;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+}
+
+/* Bible and Fish positioning */
+.bible-1 { top: 14%; left: 85%; animation-delay: 9s; }
+.bible-2 { top: 58%; left: 5%; animation-delay: 21s; }
+.fish-1 { top: 35%; left: 18%; animation-delay: 17s; }
+.fish-2 { top: 75%; left: 65%; animation-delay: 29s; }
+
+/* Hide additional elements on smaller screens */
+@media (max-width: 480px) {
+    .pattern-bible,
+    .pattern-fish {
+        display: none;
     }
 }
