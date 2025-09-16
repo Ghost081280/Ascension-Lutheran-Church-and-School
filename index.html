@@ -211,10 +211,11 @@
     <!-- Skip Link for Accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
     
-    <!-- Beautiful Loading Screen -->
+    <!-- Enhanced Loading Screen with Spiritual Elements -->
     <div id="loading-screen" class="loading-screen" role="status" aria-live="polite">
         <div class="loading-background">
             <div class="decorative-pattern">
+                <!-- Enhanced Cross Elements -->
                 <div class="pattern-cross cross-1" aria-hidden="true">✚</div>
                 <div class="pattern-cross cross-2" aria-hidden="true">✚</div>
                 <div class="pattern-cross cross-3" aria-hidden="true">✚</div>
@@ -223,6 +224,50 @@
                 <div class="pattern-cross cross-6" aria-hidden="true">✚</div>
                 <div class="pattern-cross cross-7" aria-hidden="true">✚</div>
                 <div class="pattern-cross cross-8" aria-hidden="true">✚</div>
+                <div class="pattern-cross cross-9" aria-hidden="true">✚</div>
+                <div class="pattern-cross cross-10" aria-hidden="true">✚</div>
+                
+                <!-- Church Building Icons -->
+                <div class="pattern-church church-1" aria-hidden="true">⛪</div>
+                <div class="pattern-church church-2" aria-hidden="true">⛪</div>
+                <div class="pattern-church church-3" aria-hidden="true">⛪</div>
+                <div class="pattern-church church-4" aria-hidden="true">⛪</div>
+                <div class="pattern-church church-5" aria-hidden="true">⛪</div>
+                
+                <!-- Prayer Hands -->
+                <div class="pattern-prayer prayer-1" aria-hidden="true">🙏</div>
+                <div class="pattern-prayer prayer-2" aria-hidden="true">🙏</div>
+                <div class="pattern-prayer prayer-3" aria-hidden="true">🙏</div>
+                <div class="pattern-prayer prayer-4" aria-hidden="true">🙏</div>
+                <div class="pattern-prayer prayer-5" aria-hidden="true">🙏</div>
+                
+                <!-- Dove Symbols -->
+                <div class="pattern-dove dove-1" aria-hidden="true">🕊️</div>
+                <div class="pattern-dove dove-2" aria-hidden="true">🕊️</div>
+                <div class="pattern-dove dove-3" aria-hidden="true">🕊️</div>
+                <div class="pattern-dove dove-4" aria-hidden="true">🕊️</div>
+                
+                <!-- Heart Symbols -->
+                <div class="pattern-heart heart-1" aria-hidden="true">♥</div>
+                <div class="pattern-heart heart-2" aria-hidden="true">♥</div>
+                <div class="pattern-heart heart-3" aria-hidden="true">♥</div>
+                <div class="pattern-heart heart-4" aria-hidden="true">♥</div>
+                
+                <!-- Star Symbols -->
+                <div class="pattern-star star-1" aria-hidden="true">★</div>
+                <div class="pattern-star star-2" aria-hidden="true">★</div>
+                <div class="pattern-star star-3" aria-hidden="true">★</div>
+                <div class="pattern-star star-4" aria-hidden="true">★</div>
+                <div class="pattern-star star-5" aria-hidden="true">★</div>
+                <div class="pattern-star star-6" aria-hidden="true">★</div>
+                
+                <!-- Bible and Fish Symbols -->
+                <div class="pattern-bible bible-1" aria-hidden="true">📖</div>
+                <div class="pattern-bible bible-2" aria-hidden="true">📖</div>
+                <div class="pattern-fish fish-1" aria-hidden="true">🐟</div>
+                <div class="pattern-fish fish-2" aria-hidden="true">🐟</div>
+                
+                <!-- Enhanced Circle Elements -->
                 <div class="pattern-circle circle-1" aria-hidden="true"></div>
                 <div class="pattern-circle circle-2" aria-hidden="true"></div>
                 <div class="pattern-circle circle-3" aria-hidden="true"></div>
@@ -231,6 +276,8 @@
                 <div class="pattern-circle circle-6" aria-hidden="true"></div>
                 <div class="pattern-circle circle-7" aria-hidden="true"></div>
                 <div class="pattern-circle circle-8" aria-hidden="true"></div>
+                <div class="pattern-circle circle-9" aria-hidden="true"></div>
+                <div class="pattern-circle circle-10" aria-hidden="true"></div>
             </div>
         </div>
         <div class="loading-content">
@@ -243,8 +290,8 @@
             <div class="loading-spinner">
                 <div class="spinner"></div>
             </div>
-            <p class="loading-status">Loading...</p>
-            <div class="loading-verse">"I am the way, and the truth, and the life." - John 14:6</div>
+            <p class="loading-status">Preparing Your Experience...</p>
+            <div class="loading-verse">"I am the way, and the truth, and the life. No one comes to the Father except through me." - John 14:6</div>
         </div>
     </div>
 
@@ -351,7 +398,7 @@
             });
         }
         
-        // Extended loading manager
+        // Enhanced loading manager with pattern control
         let loadingTimer;
         
         function hideLoading() {
@@ -365,22 +412,22 @@
             }
         }
         
-        // Extended loading time to appreciate the design and read the verse
-        loadingTimer = setTimeout(hideLoading, 4500);
+        // Extended loading time to appreciate the enhanced design and read the verse
+        loadingTimer = setTimeout(hideLoading, 5000);
         
         window.addEventListener('load', () => {
             clearTimeout(loadingTimer);
-            setTimeout(hideLoading, 3000);
+            setTimeout(hideLoading, 3500);
         });
         
         // Initialize app when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🏛️ DOM ready, initializing app...');
+            console.log('🏛️ DOM ready, initializing enhanced app...');
             
             // Announce to screen readers
             const announcements = document.getElementById('announcements');
             if (announcements) {
-                announcements.textContent = 'Ascension Lutheran Church website loaded. Welcome!';
+                announcements.textContent = 'Ascension Lutheran Church website loaded with enhanced visual design. Welcome!';
             }
         });
         
@@ -413,11 +460,11 @@
         let deferredPrompt;
         let installPromptShown = false;
         
-        console.log('🏛️ PWA Install: Starting setup...');
+        console.log('🏛️ PWA Install: Starting enhanced setup...');
         
         // Force show install prompts for testing
         setTimeout(() => {
-            console.log('🏛️ PWA Install: Showing test prompts...');
+            console.log('🏛️ PWA Install: Showing enhanced test prompts...');
             forceShowInstallPromptsNow();
         }, 3000);
         
@@ -454,14 +501,14 @@
         });
         
         window.addEventListener('appinstalled', () => {
-            console.log('🏛️ PWA was installed successfully!');
+            console.log('🏛️ Enhanced PWA was installed successfully!');
             hideAllInstallPrompts();
             deferredPrompt = null;
             
             // Announce to screen readers
             const announcements = document.getElementById('announcements');
             if (announcements) {
-                announcements.textContent = 'Ascension Lutheran app has been installed successfully!';
+                announcements.textContent = 'Ascension Lutheran app has been installed successfully with enhanced features!';
             }
         });
         
@@ -565,11 +612,11 @@
             let instructions = '';
             
             if (isIOS && isSafari) {
-                instructions = 'To install this app on your iOS device:\n\n1. Tap the Share button (□↗) in Safari\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add" to confirm\n\nThe app will appear on your home screen!';
+                instructions = 'To install this enhanced app on your iOS device:\n\n1. Tap the Share button (□↗) in Safari\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add" to confirm\n\nThe app will appear on your home screen with beautiful visuals!';
             } else if (isChrome) {
-                instructions = 'To install this app:\n\n1. Click the three dots menu (⋮) in Chrome\n2. Select "Install Ascension Lutheran..."\n3. Click "Install" to confirm\n\nOr look for the install icon in the address bar!';
+                instructions = 'To install this enhanced app:\n\n1. Click the three dots menu (⋮) in Chrome\n2. Select "Install Ascension Lutheran..."\n3. Click "Install" to confirm\n\nOr look for the install icon in the address bar!';
             } else {
-                instructions = 'To install this app:\n\n1. Look for an install button in your browser\'s address bar\n2. Or check your browser\'s menu for "Install" or "Add to Home Screen" options\n3. Follow the prompts to install';
+                instructions = 'To install this enhanced app:\n\n1. Look for an install button in your browser\'s address bar\n2. Or check your browser\'s menu for "Install" or "Add to Home Screen" options\n3. Follow the prompts to install\n\nEnjoy the beautiful, enhanced experience!';
             }
             
             alert(instructions);
@@ -583,20 +630,20 @@
         }
         
         if (isPWA()) {
-            console.log('🏛️ Running as installed PWA');
+            console.log('🏛️ Running as installed enhanced PWA');
             document.body.classList.add('pwa-mode');
             
-            // Add PWA indicator
+            // Add enhanced PWA indicator
             setTimeout(() => {
                 const indicator = document.createElement('div');
-                indicator.innerHTML = '📱';
-                indicator.title = 'Running as installed app';
-                indicator.setAttribute('aria-label', 'Running as installed app');
+                indicator.innerHTML = '✨📱';
+                indicator.title = 'Running as enhanced installed app';
+                indicator.setAttribute('aria-label', 'Running as enhanced installed app');
                 indicator.style.cssText = `
                     position: fixed;
                     top: 10px;
                     right: 10px;
-                    background: rgba(139, 0, 0, 0.9);
+                    background: linear-gradient(135deg, rgba(139, 0, 0, 0.9), rgba(165, 42, 42, 0.9));
                     color: white;
                     padding: 0.5rem;
                     border-radius: 50%;
@@ -604,35 +651,46 @@
                     z-index: 10001;
                     opacity: 0.8;
                     cursor: pointer;
-                    transition: opacity 0.3s ease;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
                 `;
                 document.body.appendChild(indicator);
+                
+                indicator.addEventListener('mouseover', () => {
+                    indicator.style.opacity = '1';
+                    indicator.style.transform = 'scale(1.1)';
+                });
+                
+                indicator.addEventListener('mouseout', () => {
+                    indicator.style.opacity = '0.8';
+                    indicator.style.transform = 'scale(1)';
+                });
                 
                 setTimeout(() => {
                     indicator.style.opacity = '0';
                     setTimeout(() => indicator.remove(), 1000);
-                }, 4000);
+                }, 5000);
             }, 2000);
         }
         
         // Handle offline/online status
         window.addEventListener('online', () => {
-            console.log('🏛️ Back online');
+            console.log('🏛️ Back online with enhanced features');
             document.body.classList.remove('offline-mode');
             
             const announcements = document.getElementById('announcements');
             if (announcements) {
-                announcements.textContent = 'Connection restored. All features are now available.';
+                announcements.textContent = 'Connection restored. All enhanced features are now available.';
             }
         });
         
         window.addEventListener('offline', () => {
-            console.log('🏛️ Gone offline');
+            console.log('🏛️ Gone offline - enhanced offline mode active');
             document.body.classList.add('offline-mode');
             
             const announcements = document.getElementById('announcements');
             if (announcements) {
-                announcements.textContent = 'You are currently offline. Some features may not be available.';
+                announcements.textContent = 'You are currently offline. Enhanced cached content is still available.';
             }
         });
         
@@ -690,7 +748,7 @@
             trapFocus(pwaPrompt);
         }
         
-        console.log('🏛️ Ascension Lutheran Church PWA - Enhanced Version Loaded');
+        console.log('🏛️ Ascension Lutheran Church Enhanced PWA - Premium Visual Experience Loaded');
     </script>
 </body>
 </html>
