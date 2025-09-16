@@ -1,5 +1,5 @@
-// Ascension Lutheran Church App - Enhanced with Real Content
-console.log('🏛️ App.js loading...');
+// Ascension Lutheran Church App - FIXED VERSION
+console.log('🏛️ App.js loading - FIXED VERSION...');
 
 class AscensionApp {
   constructor() {
@@ -14,6 +14,7 @@ class AscensionApp {
     
     try {
       await this.waitForContent();
+      await this.waitForDOM();
       this.setupEventListeners();
       this.populateNavigation();
       this.populateFooter();
@@ -43,6 +44,24 @@ class AscensionApp {
     throw new Error('Content not available after maximum attempts');
   }
 
+  async waitForDOM() {
+    let attempts = 0;
+    const maxAttempts = 50;
+    
+    while (attempts < maxAttempts) {
+      const container = document.getElementById('main-content');
+      if (container) {
+        console.log('🏛️ DOM container found');
+        return;
+      }
+      
+      attempts++;
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+    
+    throw new Error('DOM container not found after maximum attempts');
+  }
+
   setupEventListeners() {
     // Mobile menu toggle
     const mobileToggle = document.getElementById('mobile-menu-toggle');
@@ -60,9 +79,16 @@ class AscensionApp {
         e.preventDefault();
         this.loadPage('home');
       });
+      
+      logoContainer.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.loadPage('home');
+        }
+      });
     }
 
-    // Navigation clicks
+    // Document-level navigation clicks - Use event delegation
     document.addEventListener('click', (e) => {
       if (e.target.hasAttribute('data-page')) {
         e.preventDefault();
@@ -96,13 +122,16 @@ class AscensionApp {
 
   populateNavigation() {
     const navMenu = document.getElementById('nav-menu');
-    if (!navMenu || !this.content) return;
+    if (!navMenu || !this.content) {
+      console.warn('🏛️ Navigation menu or content not found');
+      return;
+    }
 
     const navLinks = this.content.navigation.map(item => 
-      `<a href="javascript:void(0)" class="nav-link" data-page="${item.id}">${item.label}</a>`
+      `<a href="javascript:void(0)" class="nav-link" data-page="${item.id}" role="menuitem">${item.label}</a>`
     ).join('');
 
-    const donateButton = `<a href="${this.content.external.donate}" target="_blank" rel="noopener" class="nav-link donate-link">
+    const donateButton = `<a href="${this.content.external.donate}" target="_blank" rel="noopener" class="nav-link donate-link" role="menuitem">
       <span class="donate-heart">♥</span> Give
     </a>`;
 
@@ -111,11 +140,16 @@ class AscensionApp {
     // Set home as active
     const homeLink = navMenu.querySelector('[data-page="home"]');
     if (homeLink) homeLink.classList.add('active');
+    
+    console.log('🏛️ Navigation populated successfully');
   }
 
   populateFooter() {
     const footer = document.getElementById('main-footer');
-    if (!footer || !this.content) return;
+    if (!footer || !this.content) {
+      console.warn('🏛️ Footer or content not found');
+      return;
+    }
 
     const footerData = this.content.footer;
     const socialData = this.content.social;
@@ -158,6 +192,8 @@ class AscensionApp {
         </div>
       </div>
     `;
+    
+    console.log('🏛️ Footer populated successfully');
   }
 
   loadPage(pageName) {
@@ -174,19 +210,29 @@ class AscensionApp {
     const pageData = this.content.pages[pageName];
     const pageHTML = this.generatePageHTML(pageName, pageData);
 
-    const container = document.getElementById('page-container');
-    if (container) {
-      container.style.opacity = '0.5';
-      setTimeout(() => {
-        container.innerHTML = pageHTML;
-        container.style.opacity = '1';
-        this.currentPage = pageName;
-        this.updateNavigation(pageName);
-        this.updateURL(pageName);
-        this.setupPageEventListeners();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 100);
+    // FIXED: Use correct container ID
+    const container = document.getElementById('main-content');
+    if (!container) {
+      console.error('🏛️ CRITICAL: main-content container not found!');
+      return;
     }
+
+    // Smooth transition
+    container.style.opacity = '0.5';
+    setTimeout(() => {
+      container.innerHTML = pageHTML;
+      container.style.opacity = '1';
+      this.currentPage = pageName;
+      this.updateNavigation(pageName);
+      this.updateURL(pageName);
+      this.setupPageEventListeners();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // Announce page change for accessibility
+      if (window.announcePageChange) {
+        window.announcePageChange(pageName);
+      }
+    }, 100);
   }
 
   generatePageHTML(pageName, pageData) {
@@ -370,7 +416,7 @@ class AscensionApp {
 
     const cards = section.cards.map(card => `
       <div class="card">
-        <img src="${card.image}" alt="${card.title}" class="card-image">
+        <img src="${card.image}" alt="${card.title}" class="card-image" loading="lazy">
         <div class="card-content">
           <h3 class="card-title">${card.title}</h3>
           <p class="card-text">${card.text}</p>
@@ -406,7 +452,7 @@ class AscensionApp {
         </div>
         <div class="pastor-section">
           <div class="pastor-image-wrapper">
-            <img src="${pastor.image}" alt="${pastor.name}" class="pastor-photo">
+            <img src="${pastor.image}" alt="${pastor.name}" class="pastor-photo" loading="lazy">
           </div>
           <div class="pastor-info">
             <h3 class="pastor-name">${pastor.name}</h3>
@@ -724,7 +770,7 @@ class AscensionApp {
         <!-- Senior Pastor -->
         <div class="pastor-section">
           <div class="pastor-image-wrapper">
-            <img src="${staff.seniorPastor.image}" alt="${staff.seniorPastor.name}" class="pastor-photo">
+            <img src="${staff.seniorPastor.image}" alt="${staff.seniorPastor.name}" class="pastor-photo" loading="lazy">
           </div>
           <div class="pastor-info">
             <h3 class="pastor-name">${staff.seniorPastor.name}</h3>
@@ -951,6 +997,7 @@ class AscensionApp {
     mobileToggle.setAttribute('aria-expanded', 'true');
     
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('menu-open');
   }
 
   closeMobileMenu() {
@@ -965,6 +1012,7 @@ class AscensionApp {
     mobileToggle.setAttribute('aria-expanded', 'false');
     
     document.body.style.overflow = '';
+    document.body.classList.remove('menu-open');
   }
 
   updateNavigation(pageName) {
@@ -984,21 +1032,13 @@ class AscensionApp {
   }
 
   setupPageEventListeners() {
-    const buttons = document.querySelectorAll('[data-page]');
-    buttons.forEach(button => {
-      const newButton = button.cloneNode(true);
-      button.parentNode.replaceChild(newButton, button);
-      
-      newButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        const page = newButton.getAttribute('data-page');
-        this.loadPage(page);
-      });
-    });
+    // This method will re-attach event listeners to newly created page elements
+    // using event delegation, this should work automatically
+    console.log('🏛️ Page event listeners set up');
   }
 
   showFallbackContent() {
-    const container = document.getElementById('page-container');
+    const container = document.getElementById('main-content');
     if (container) {
       container.innerHTML = `
         <div class="page-content">
@@ -1007,6 +1047,7 @@ class AscensionApp {
               <h1 class="hero-title">Welcome to Ascension Lutheran Church</h1>
               <p class="hero-subtitle">Church & School • Fort Wayne, Indiana</p>
               <p>Sunday Services: 8:00 AM & 10:45 AM</p>
+              <p>Phone: (260) 486-2226</p>
             </div>
           </section>
         </div>
