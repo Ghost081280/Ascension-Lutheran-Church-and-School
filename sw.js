@@ -1,25 +1,25 @@
 // Enhanced Service Worker for Ascension Lutheran Church PWA
-// Version: 2025.01.15 - Comprehensive offline support and caching
+// Version: 2025.01.15-mobile-fix - Mobile cache fixes
 
-const CACHE_VERSION = 'alc-v2025-01-15';
+const CACHE_VERSION = 'alc-v2025-01-15-mobile-fix';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
 const IMAGES_CACHE = `${CACHE_VERSION}-images`;
 const OFFLINE_URL = '/offline.html';
 const FALLBACK_IMAGE = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y3ZmFmYyIvPiA8dGV4dCB4PSI1MCUiIHk9IjUwJSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzcxODA5NiI+QXNjZW5zaW9uIEx1dGhlcmFuPC90ZXh0Pjwvc3ZnPg==';
 
-// Static assets to precache
+// Static assets to precache with version numbers
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/css/main.css',
-  '/css/components.css',
-  '/css/loading.css',
-  '/css/pwa.css',
-  '/js/app.js',
-  '/js/components.js',
-  '/js/navigation.js',
-  '/content/content.js',
+  '/css/main.css?v=2025-01-15-mobile-fix',
+  '/css/components.css?v=2025-01-15',
+  '/css/loading.css?v=2025-01-15',
+  '/css/pwa.css?v=2025-01-15',
+  '/js/app.js?v=2025-01-15-mobile-fix',
+  '/js/components.js?v=2025-01-15',
+  '/js/navigation.js?v=2025-01-15',
+  '/content/content.js?v=2025-01-15',
   '/manifest.json',
   '/images/Rose_ColorThumb.png',
   '/images/Pastor.png',
@@ -34,19 +34,32 @@ const EXTERNAL_ASSETS = [
   'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap'
 ];
 
-console.log('🏛️ Enhanced Service Worker loading...');
+console.log('🏛️ Enhanced Service Worker loading - Mobile Fix Version...');
 
-// Install Event - Precache static assets
+// Install Event - Force cache update on mobile
 self.addEventListener('install', (event) => {
-  console.log('🏛️ Service Worker: Installing enhanced version');
+  console.log('🏛️ Service Worker: Installing mobile-fixed version');
   
   event.waitUntil(
     Promise.all([
+      // Force cache clearing for mobile
+      caches.keys().then((cacheNames) => {
+        return Promise.all(
+          cacheNames.map((cacheName) => {
+            if (!cacheName.includes('2025-01-15-mobile-fix')) {
+              console.log('🏛️ Service Worker: Deleting old cache', cacheName);
+              return caches.delete(cacheName);
+            }
+          })
+        );
+      }),
+      
       // Cache static assets
       caches.open(STATIC_CACHE).then((cache) => {
-        console.log('🏛️ Service Worker: Caching static assets');
+        console.log('🏛️ Service Worker: Caching static assets with mobile fixes');
         return cache.addAll(STATIC_ASSETS.concat(EXTERNAL_ASSETS));
       }),
+      
       // Ensure offline page is cached
       caches.open(STATIC_CACHE).then((cache) => {
         return cache.add(OFFLINE_URL).catch(() => {
@@ -58,7 +71,7 @@ self.addEventListener('install', (event) => {
         });
       })
     ]).then(() => {
-      console.log('🏛️ Service Worker: Installation complete, skipping waiting');
+      console.log('🏛️ Service Worker: Mobile-fixed installation complete, skipping waiting');
       return self.skipWaiting();
     }).catch((error) => {
       console.error('🏛️ Service Worker: Installation failed', error);
@@ -66,32 +79,44 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activate Event - Clean up old caches
+// Activate Event - Take immediate control for mobile
 self.addEventListener('activate', (event) => {
-  console.log('🏛️ Service Worker: Activating enhanced version');
+  console.log('🏛️ Service Worker: Activating mobile-fixed version');
   
   event.waitUntil(
     Promise.all([
-      // Clean up old caches
+      // Clean up ALL old caches aggressively for mobile
       caches.keys().then((cacheNames) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
-            if (!cacheName.startsWith(CACHE_VERSION)) {
+            if (!cacheName.includes('2025-01-15-mobile-fix')) {
               console.log('🏛️ Service Worker: Deleting old cache', cacheName);
               return caches.delete(cacheName);
             }
           })
         );
       }),
-      // Take immediate control
-      self.clients.claim()
+      
+      // Take immediate control of all clients (including mobile)
+      self.clients.claim(),
+      
+      // Force refresh of all mobile clients
+      self.clients.matchAll().then((clients) => {
+        clients.forEach((client) => {
+          console.log('🏛️ Service Worker: Notifying client of update');
+          client.postMessage({
+            type: 'CACHE_UPDATED',
+            version: CACHE_VERSION
+          });
+        });
+      })
     ]).then(() => {
-      console.log('🏛️ Service Worker: Activation complete');
+      console.log('🏛️ Service Worker: Mobile-fixed activation complete');
     })
   );
 });
 
-// Fetch Event - Advanced caching strategies
+// Fetch Event - Mobile-optimized caching strategies
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   
@@ -109,22 +134,22 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(handleFetch(request));
 });
 
-// Enhanced fetch handler with multiple strategies
+// Enhanced fetch handler with mobile-specific optimizations
 async function handleFetch(request) {
   const url = new URL(request.url);
   
   try {
-    // Strategy 1: Cache First for static assets
+    // Strategy 1: Cache First for static assets (mobile-optimized)
     if (isStaticAsset(request)) {
-      return await cacheFirst(request, STATIC_CACHE);
+      return await cacheFirstMobile(request, STATIC_CACHE);
     }
     
-    // Strategy 2: Network First for HTML pages
+    // Strategy 2: Network First for HTML pages (mobile-optimized)
     if (isHTMLRequest(request)) {
-      return await networkFirst(request, DYNAMIC_CACHE);
+      return await networkFirstMobile(request, DYNAMIC_CACHE);
     }
     
-    // Strategy 3: Cache First for images with fallback
+    // Strategy 3: Cache First for images with mobile fallback
     if (isImageRequest(request)) {
       return await cacheFirstWithFallback(request, IMAGES_CACHE, FALLBACK_IMAGE);
     }
@@ -143,19 +168,30 @@ async function handleFetch(request) {
   }
 }
 
-// Caching Strategies
+// Mobile-optimized caching strategies
 
-// Cache First - Check cache first, fallback to network
-async function cacheFirst(request, cacheName) {
+// Cache First Mobile - More aggressive caching for mobile
+async function cacheFirstMobile(request, cacheName) {
   const cache = await caches.open(cacheName);
   const cachedResponse = await cache.match(request);
   
   if (cachedResponse) {
-    console.log('🏛️ Serving from cache:', request.url);
+    console.log('🏛️ Serving from cache (mobile):', request.url);
+    
+    // Background update for mobile - don't wait
+    fetch(request).then((networkResponse) => {
+      if (networkResponse.ok) {
+        console.log('🏛️ Background cache update (mobile):', request.url);
+        cache.put(request, networkResponse.clone());
+      }
+    }).catch(() => {
+      // Ignore background update failures
+    });
+    
     return cachedResponse;
   }
   
-  console.log('🏛️ Fetching from network:', request.url);
+  console.log('🏛️ Fetching from network (mobile):', request.url);
   const networkResponse = await fetch(request);
   
   if (networkResponse.ok) {
@@ -165,13 +201,20 @@ async function cacheFirst(request, cacheName) {
   return networkResponse;
 }
 
-// Network First - Try network first, fallback to cache
-async function networkFirst(request, cacheName) {
+// Network First Mobile - Faster timeout for mobile
+async function networkFirstMobile(request, cacheName) {
   const cache = await caches.open(cacheName);
   
   try {
-    console.log('🏛️ Fetching from network:', request.url);
-    const networkResponse = await fetch(request);
+    console.log('🏛️ Fetching from network (mobile):', request.url);
+    
+    // Shorter timeout for mobile connections
+    const networkResponse = await Promise.race([
+      fetch(request),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Mobile timeout')), 3000)
+      )
+    ]);
     
     if (networkResponse.ok) {
       cache.put(request, networkResponse.clone());
@@ -179,7 +222,7 @@ async function networkFirst(request, cacheName) {
     
     return networkResponse;
   } catch (error) {
-    console.log('🏛️ Network failed, trying cache:', request.url);
+    console.log('🏛️ Network failed (mobile), trying cache:', request.url);
     const cachedResponse = await cache.match(request);
     
     if (cachedResponse) {
@@ -291,12 +334,12 @@ function isStaticAsset(request) {
          url.pathname.endsWith('.json') ||
          url.pathname === '/' ||
          url.pathname === '/index.html' ||
-         STATIC_ASSETS.includes(url.pathname);
+         STATIC_ASSETS.some(asset => asset.split('?')[0] === url.pathname);
 }
 
 function isHTMLRequest(request) {
   return request.destination === 'document' ||
-         request.headers.get('accept').includes('text/html');
+         request.headers.get('accept')?.includes('text/html');
 }
 
 function isImageRequest(request) {
@@ -357,6 +400,8 @@ function createOfflinePage() {
             cursor: pointer;
             margin: 0.5rem;
             transition: transform 0.2s ease;
+            min-height: 48px;
+            min-width: 120px;
         }
         .btn:hover { transform: translateY(-2px); }
         .info {
@@ -366,6 +411,13 @@ function createOfflinePage() {
             margin: 1rem 0;
             font-size: 0.9rem;
         }
+        .mobile-notice {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin: 0.5rem 0;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
@@ -373,6 +425,9 @@ function createOfflinePage() {
         <div class="cross">✚</div>
         <h1>You're Offline</h1>
         <p>Don't worry - some content is still available while you're offline.</p>
+        <div class="mobile-notice">
+            📱 Mobile users: Try refreshing or check your connection
+        </div>
         <div class="info">
             <strong>Sunday Worship:</strong><br>
             8:00 AM & 10:45 AM<br><br>
@@ -380,14 +435,23 @@ function createOfflinePage() {
             <strong>Address:</strong> 8811 St. Joe Road<br>
             Fort Wayne, IN 46835
         </div>
-        <button class="btn" onclick="window.location.reload()">Try Again</button>
+        <button class="btn" onclick="window.location.reload(true)">Try Again</button>
         <button class="btn" onclick="window.history.back()">Go Back</button>
     </div>
     <script>
         // Auto-reload when connection is restored
         window.addEventListener('online', () => {
-            setTimeout(() => window.location.reload(), 1000);
+            console.log('🏛️ Connection restored - reloading');
+            setTimeout(() => window.location.reload(true), 1000);
         });
+        
+        // Force reload after 5 seconds if online
+        setTimeout(() => {
+            if (navigator.onLine) {
+                console.log('🏛️ Force reload attempt');
+                window.location.reload(true);
+            }
+        }, 5000);
     </script>
 </body>
 </html>
@@ -405,14 +469,13 @@ self.addEventListener('sync', (event) => {
 
 async function doBackgroundSync() {
   try {
-    // Perform background tasks like updating cache, syncing data, etc.
-    console.log('🏛️ Service Worker: Performing background sync');
+    console.log('🏛️ Service Worker: Performing background sync (mobile optimized)');
     
     // Update dynamic cache with fresh content
     const cache = await caches.open(DYNAMIC_CACHE);
     
-    // Pre-fetch important pages
-    const importantPages = ['/', '/#church', '/#worship', '/#contact'];
+    // Pre-fetch important pages for mobile
+    const importantPages = ['/', '/#worship', '/#contact'];
     await Promise.all(
       importantPages.map(async (page) => {
         try {
@@ -477,6 +540,11 @@ self.addEventListener('message', (event) => {
     // Trigger cache update
     event.waitUntil(updateCache());
   }
+  
+  if (event.data && event.data.type === 'FORCE_MOBILE_UPDATE') {
+    // Force mobile cache refresh
+    event.waitUntil(forceMobileUpdate());
+  }
 });
 
 async function updateCache() {
@@ -490,16 +558,37 @@ async function updateCache() {
   }
 }
 
-// Periodic cleanup
+async function forceMobileUpdate() {
+  try {
+    console.log('🏛️ Service Worker: Force mobile cache update');
+    
+    // Clear all caches
+    const cacheNames = await caches.keys();
+    await Promise.all(
+      cacheNames.map(cacheName => caches.delete(cacheName))
+    );
+    
+    // Re-cache everything
+    const cache = await caches.open(STATIC_CACHE);
+    await cache.addAll(STATIC_ASSETS.concat(EXTERNAL_ASSETS));
+    
+    console.log('🏛️ Service Worker: Mobile cache force update complete');
+  } catch (error) {
+    console.error('🏛️ Service Worker: Mobile force update failed', error);
+  }
+}
+
+// Mobile-specific periodic cleanup
 setInterval(() => {
-  // Clean up old cache entries periodically
+  // Clean up old cache entries more frequently on mobile
   caches.keys().then((cacheNames) => {
     cacheNames.forEach((cacheName) => {
-      if (!cacheName.startsWith(CACHE_VERSION)) {
+      if (!cacheName.includes('2025-01-15-mobile-fix')) {
+        console.log('🏛️ Service Worker: Periodic cleanup -', cacheName);
         caches.delete(cacheName);
       }
     });
   });
-}, 24 * 60 * 60 * 1000); // Daily cleanup
+}, 6 * 60 * 60 * 1000); // Every 6 hours instead of 24
 
-console.log('🏛️ Enhanced Service Worker for Ascension Lutheran Church - Ready');
+console.log('🏛️ Enhanced Service Worker for Ascension Lutheran Church - Mobile Fixed Version Ready');
