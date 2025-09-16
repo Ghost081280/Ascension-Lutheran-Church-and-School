@@ -1,6 +1,6 @@
 // Content Management System for Ascension Lutheran Church
 // Edit this file to update all site content
-// Version: 2025.01.15 - Enhanced with Real Website Content
+// Version: 2025.01.15 - Fixed Images & Consolidated Navigation
 
 const SITE_CONTENT = {
   // Site Information
@@ -137,15 +137,13 @@ const SITE_CONTENT = {
     }
   },
 
-  // Navigation Menu
+  // STREAMLINED Navigation Menu - Consolidated for better desktop layout
   navigation: [
     { id: "home", label: "Home", url: "#home" },
     { id: "church", label: "Church", url: "#church" },
     { id: "family", label: "Family", url: "#family" },
     { id: "school", label: "School", url: "#school" },
     { id: "worship", label: "Worship", url: "#worship" },
-    { id: "ministries", label: "Ministries", url: "#ministries" },
-    { id: "leadership", label: "Leadership", url: "#leadership" },
     { id: "contact", label: "Contact", url: "#contact" }
   ],
 
@@ -382,10 +380,11 @@ const SITE_CONTENT = {
       }
     },
 
+    // CONSOLIDATED: Worship + Ministries
     worship: {
       hero: {
-        title: "Worship With Us",
-        subtitle: "Traditional Lutheran worship services every Sunday"
+        title: "Worship & Ministries",
+        subtitle: "Traditional Lutheran worship services and ministry opportunities"
       },
       schedule: {
         title: "Sunday Worship Schedule",
@@ -408,18 +407,6 @@ const SITE_CONTENT = {
           text: "Watch on YouTube",
           link: "https://www.youtube.com/c/alcsfw"
         }
-      },
-      verse: {
-        text: "Let us not give up meeting together, as some are in the habit of doing, but let us encourage one another—and all the more as you see the Day approaching.",
-        reference: "Hebrews 10:25 (NIV)"
-      }
-    },
-
-    // NEW PAGES ADDED
-    ministries: {
-      hero: {
-        title: "Ministries & Programs",
-        subtitle: "Serving our community through Christ's love"
       },
       musicMinistry: {
         title: "Music Ministry",
@@ -456,29 +443,16 @@ const SITE_CONTENT = {
         ]
       },
       verse: {
-        text: "And this is the victory that has overcome the world—our faith . . . that Jesus is the Son of God",
-        reference: "1 John 5:4–5"
+        text: "Let us not give up meeting together, as some are in the habit of doing, but let us encourage one another—and all the more as you see the Day approaching.",
+        reference: "Hebrews 10:25 (NIV)"
       }
     },
 
-    leadership: {
-      hero: {
-        title: "Church Leadership",
-        subtitle: "Faithful servants called to minister to God's people"
-      },
-      staff: {
-        // Will use the detailed staff object from above
-      },
-      verse: {
-        text: "Let the elders who rule well be considered worthy of double honor, especially those who labor in preaching and teaching.",
-        reference: "1 Timothy 5:17 (ESV)"
-      }
-    },
-
+    // CONSOLIDATED: Contact + Leadership
     contact: {
       hero: {
-        title: "Contact Us",
-        subtitle: "We'd love to hear from you and answer any questions"
+        title: "Contact & Leadership",
+        subtitle: "We'd love to hear from you and meet our faithful servants"
       },
       sections: {
         office: {
@@ -525,6 +499,10 @@ const SITE_CONTENT = {
           "Pastor Gier conducts instructional classes regularly each fall and Pastor Zieroth in the spring, as preparation for those who want to join Ascension or have children in Ascension Lutheran School."
         ],
         requirement: "The pastor's class is a requirement for both church membership and school enrollment."
+      },
+      leadership: {
+        title: "Church Leadership",
+        subtitle: "Faithful servants called to minister to God's people"
       },
       verse: {
         text: "Come to me, all you who are weary and burdened, and I will give you rest.",
@@ -594,7 +572,7 @@ const SITE_CONTENT = {
     ]
   },
 
-  // Images and Assets
+  // Images and Assets - RESTORED ORIGINAL PATHS
   images: {
     logo: "./images/Rose_ColorThumb.png",
     pastor: "./images/Pastor.png",
@@ -605,7 +583,7 @@ const SITE_CONTENT = {
     placeholders: {
       church: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y3ZmFmYyIvPiA8dGV4dCB4PSI1MCUiIHk9IjUwJSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzcxODA5NiI+Q2h1cmNoIEJ1aWxkaW5nPC90ZXh0Pjwvc3ZnPg==",
       families: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y3ZmFmYyIvPiA8dGV4dCB4PSI1MCUiIHk9IjUwJSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzcxODA5NiI+Q2h1cmNoIEZhbWlsaWVzPC90ZXh0Pjwvc3ZnPg==",
-      school: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y3ZmFmYyIvPiA8dGV4dCB4PSI1MCUiIHk9IjUwJSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzcxODA5NiI+THV0aGVyYW4gU2Nob29sPC90ZXh0Pjwvc3ZnPg==",
+      school: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y3ZmFmYyIvPiA3GV4dCB4PSI1MCUiIHk9IjUwJSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzcxODA5NiI+THV0aGVyYW4gU2Nob29sPC90ZXh0Pjwvc3ZnPg==",
       pastor: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjI0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y3ZmFmYyIvPiA8Y2lyY2xlIGN4PSI1MCUiIGN5PSIzNSUiIHI9IjIwJSIgZmlsbD0iI2EwYWVjMCIvPiA8ZWxsaXBzZSBjeD0iNTAlIiBjeT0iNzAlIiByeD0iMzAlIiByeT0iMjAlIiBmaWxsPSIjYTBhZWMwIi8+IDx0ZXh0IHg9IjUwJSIgeT0iOTAlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM3MTgwOTYiPlJldi4gSmFtZXMgR2llcjwvdGV4dD48L3N2Zz4="
     }
   },
