@@ -61,11 +61,11 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="./css/main.css">
-    <link rel="stylesheet" href="./css/components.css">
-    <link rel="stylesheet" href="./css/loading.css">
-    <link rel="stylesheet" href="./css/pwa.css">
+    <!-- CSS Files with cache busting -->
+    <link rel="stylesheet" href="./css/main.css?v=2025-01-15-mobile-fix">
+    <link rel="stylesheet" href="./css/components.css?v=2025-01-15">
+    <link rel="stylesheet" href="./css/loading.css?v=2025-01-15">
+    <link rel="stylesheet" href="./css/pwa.css?v=2025-01-15">
     
     <!-- Structured Data for Local Business -->
     <script type="application/ld+json">
@@ -332,11 +332,58 @@
     <!-- ARIA Live Region for Announcements -->
     <div id="announcements" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
-    <!-- JavaScript Files -->
-    <script src="./content/content.js"></script>
-    <script src="./js/app.js"></script>
+    <!-- JavaScript Files with cache busting -->
+    <script src="./content/content.js?v=2025-01-15"></script>
+    <script src="./js/app.js?v=2025-01-15-mobile-fix"></script>
     
+    <!-- MOBILE DEBUG & CACHE BUSTING SCRIPT -->
     <script>
+        // Enhanced Mobile Debug Information
+        console.log('🏛️ MOBILE DEBUG INFO:', {
+            screenWidth: window.innerWidth,
+            screenHeight: window.innerHeight,
+            isMobile: window.innerWidth <= 767,
+            devicePixelRatio: window.devicePixelRatio,
+            userAgent: navigator.userAgent.substring(0, 100),
+            timestamp: new Date().toISOString(),
+            location: window.location.href
+        });
+        
+        // Force mobile cache refresh
+        if (window.innerWidth <= 767) {
+            console.log('🏛️ Mobile device detected - forcing cache refresh');
+            
+            // Force service worker update
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    console.log('🏛️ Found', registrations.length, 'service workers');
+                    registrations.forEach(registration => {
+                        console.log('🏛️ Updating service worker');
+                        registration.update();
+                    });
+                });
+            }
+            
+            // Force reload if content not visible after 3 seconds
+            setTimeout(() => {
+                const pageContent = document.querySelector('.page-content');
+                const mainContent = document.getElementById('main-content');
+                
+                console.log('🏛️ Mobile content check:', {
+                    pageContentExists: !!pageContent,
+                    pageContentChildren: pageContent ? pageContent.children.length : 0,
+                    mainContentExists: !!mainContent,
+                    mainContentVisible: mainContent ? mainContent.offsetHeight > 0 : false,
+                    bodyHeight: document.body.offsetHeight
+                });
+                
+                if (!pageContent || pageContent.children.length <= 1) {
+                    console.log('🏛️ Mobile content not loaded properly, forcing refresh');
+                    window.location.reload(true);
+                }
+            }, 3000);
+        }
+        
         // Performance monitoring
         if ('performance' in window) {
             window.addEventListener('load', () => {
@@ -384,12 +431,17 @@
             }
         });
         
-        // Register service worker
+        // Register service worker with mobile-specific handling
         if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
+                navigator.serviceWorker.register('./sw.js?v=2025-01-15')
                     .then(registration => {
                         console.log('🏛️ Service Worker registered:', registration.scope);
+                        
+                        // Force update on mobile
+                        if (window.innerWidth <= 767) {
+                            registration.update();
+                        }
                         
                         // Check for updates
                         registration.addEventListener('updatefound', () => {
@@ -690,7 +742,7 @@
             trapFocus(pwaPrompt);
         }
         
-        console.log('🏛️ Ascension Lutheran Church PWA - Enhanced Version Loaded');
+        console.log('🏛️ Ascension Lutheran Church PWA - Enhanced Mobile Fixed Version Loaded');
     </script>
 </body>
 </html>
