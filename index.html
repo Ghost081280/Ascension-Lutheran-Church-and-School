@@ -412,12 +412,12 @@
             }
         }
         
-        // Extended loading time to appreciate the enhanced design and read the verse
-        loadingTimer = setTimeout(hideLoading, 5000);
+        // Extended loading time reduced for better UX
+        loadingTimer = setTimeout(hideLoading, 3500);
         
         window.addEventListener('load', () => {
             clearTimeout(loadingTimer);
-            setTimeout(hideLoading, 3500);
+            setTimeout(hideLoading, 2000);
         });
         
         // Initialize app when DOM is ready
