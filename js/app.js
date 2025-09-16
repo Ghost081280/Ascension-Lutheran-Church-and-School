@@ -1,16 +1,18 @@
-// Ascension Lutheran Church App - COMPLETE DEBUG VERSION
-console.log('🏛️ App.js loading - DEBUG VERSION...');
+// Ascension Lutheran Church App - MOBILE FIXED VERSION
+console.log('🏛️ App.js loading - MOBILE FIXED VERSION...');
 
 class AscensionApp {
   constructor() {
     this.currentPage = 'home';
     this.mobileMenuOpen = false;
     this.content = null;
+    this.isMobile = window.innerWidth <= 767;
     this.init();
   }
 
   async init() {
     console.log('🏛️ Initializing Ascension App...');
+    console.log('🏛️ Mobile device detected:', this.isMobile);
     
     try {
       await this.waitForContent();
@@ -19,9 +21,17 @@ class AscensionApp {
       this.populateNavigation();
       this.populateFooter();
       
-      // Load home page immediately
+      // Load home page immediately with mobile-specific handling
       setTimeout(() => {
+        console.log('🏛️ Loading initial home page...');
         this.loadPage('home');
+        
+        // Mobile-specific content verification
+        if (this.isMobile) {
+          setTimeout(() => {
+            this.verifyMobileContentLoaded();
+          }, 1000);
+        }
       }, 100);
       
       console.log('🏛️ App initialized successfully');
@@ -31,9 +41,29 @@ class AscensionApp {
     }
   }
 
+  verifyMobileContentLoaded() {
+    const container = document.getElementById('main-content');
+    const pageContent = document.querySelector('.page-content');
+    
+    console.log('🏛️ Mobile content verification:', {
+      containerExists: !!container,
+      containerHeight: container ? container.offsetHeight : 0,
+      pageContentExists: !!pageContent,
+      pageContentChildren: pageContent ? pageContent.children.length : 0,
+      menuOpen: this.mobileMenuOpen,
+      currentPage: this.currentPage
+    });
+    
+    // Force reload if content not properly loaded
+    if (!pageContent || pageContent.children.length <= 1) {
+      console.warn('🏛️ Mobile content not loaded properly, attempting fix...');
+      this.loadPage('home');
+    }
+  }
+
   async waitForContent() {
     let attempts = 0;
-    const maxAttempts = 20;
+    const maxAttempts = 30; // Increased for mobile
     
     while (attempts < maxAttempts) {
       if (typeof SITE_CONTENT !== 'undefined') {
@@ -43,7 +73,8 @@ class AscensionApp {
       }
       
       attempts++;
-      await new Promise(resolve => setTimeout(resolve, 100));
+      console.log(`🏛️ Waiting for content... attempt ${attempts}/${maxAttempts}`);
+      await new Promise(resolve => setTimeout(resolve, 200)); // Increased wait time
     }
     
     throw new Error('Content not available after maximum attempts');
@@ -97,15 +128,22 @@ class AscensionApp {
       });
     }
 
-    // FIXED: Document-level navigation clicks with better debugging
+    // Enhanced document-level navigation clicks with mobile debugging
     document.addEventListener('click', (e) => {
-      console.log('🏛️ Document click:', e.target);
+      if (this.isMobile) {
+        console.log('🏛️ Mobile click:', e.target, 'data-page:', e.target.getAttribute('data-page'));
+      }
       
       if (e.target.hasAttribute('data-page')) {
         e.preventDefault();
         const page = e.target.getAttribute('data-page');
         console.log('🏛️ Navigation click detected for page:', page);
         this.loadPage(page);
+        
+        // Close mobile menu on navigation
+        if (this.mobileMenuOpen) {
+          this.closeMobileMenu();
+        }
       }
 
       // Close mobile menu on outside click
@@ -148,7 +186,7 @@ class AscensionApp {
       return;
     }
 
-    // FIXED: Generate navigation with proper data-page attributes
+    // Generate navigation with proper data-page attributes
     const navLinks = this.content.navigation.map(item => {
       console.log('🏛️ Creating nav link for:', item.id);
       return `<a href="#${item.id}" class="nav-link" data-page="${item.id}" role="menuitem">${item.label}</a>`;
@@ -223,7 +261,19 @@ class AscensionApp {
   }
 
   loadPage(pageName) {
-    console.log('🏛️ Loading page:', pageName);
+    console.log('🏛️ Loading page:', pageName, 'Mobile:', this.isMobile);
+
+    // Mobile-specific debugging
+    if (this.isMobile) {
+      console.log('🏛️ MOBILE PAGE LOAD DEBUG:', {
+        pageName: pageName,
+        menuOpen: this.mobileMenuOpen,
+        bodyOverflow: document.body.style.overflow,
+        containerExists: !!document.getElementById('main-content'),
+        containerVisible: document.getElementById('main-content')?.offsetHeight || 0,
+        windowSize: `${window.innerWidth}x${window.innerHeight}`
+      });
+    }
 
     if (!this.content) {
       console.error('🏛️ No content available!');
@@ -237,6 +287,7 @@ class AscensionApp {
       return;
     }
 
+    // Always close mobile menu when loading new page
     this.closeMobileMenu();
 
     const pageData = this.content.pages[pageName];
@@ -245,7 +296,7 @@ class AscensionApp {
     const pageHTML = this.generatePageHTML(pageName, pageData);
     console.log('🏛️ Generated HTML length:', pageHTML.length);
 
-    // FIXED: Find container with better error handling
+    // Enhanced container finding with mobile-specific handling
     const container = document.getElementById('main-content');
     if (!container) {
       console.error('🏛️ CRITICAL: main-content container not found!');
@@ -253,19 +304,48 @@ class AscensionApp {
       const altContainer = document.querySelector('.page-container');
       if (altContainer) {
         console.log('🏛️ Found alternative container');
-        altContainer.innerHTML = pageHTML;
+        this.updateContainer(altContainer, pageHTML, pageName);
         return;
       }
+      this.showFallbackContent();
       return;
     }
 
     console.log('🏛️ Container found, updating content...');
+    this.updateContainer(container, pageHTML, pageName);
+  }
+
+  updateContainer(container, pageHTML, pageName) {
+    // Mobile-optimized content update
+    if (this.isMobile) {
+      // Force visibility on mobile
+      container.style.display = 'block';
+      container.style.visibility = 'visible';
+      container.style.opacity = '1';
+      container.style.position = 'relative';
+      container.style.zIndex = '1';
+    }
     
     // Smooth transition
     container.style.opacity = '0.5';
+    
     setTimeout(() => {
       container.innerHTML = pageHTML;
       container.style.opacity = '1';
+      
+      // Mobile-specific post-update verification
+      if (this.isMobile) {
+        setTimeout(() => {
+          const pageContent = container.querySelector('.page-content');
+          if (pageContent) {
+            pageContent.style.display = 'block';
+            pageContent.style.visibility = 'visible';
+            pageContent.style.opacity = '1';
+            console.log('🏛️ Mobile content visibility forced');
+          }
+        }, 100);
+      }
+      
       this.currentPage = pageName;
       this.updateNavigation(pageName);
       this.updateURL(pageName);
@@ -1047,13 +1127,19 @@ class AscensionApp {
     
     if (!navMenu || !mobileToggle) return;
 
+    console.log('🏛️ Opening mobile menu');
     this.mobileMenuOpen = true;
     navMenu.classList.add('active');
     mobileToggle.classList.add('active');
     mobileToggle.setAttribute('aria-expanded', 'true');
     
+    // Prevent body scroll and add visual indication
     document.body.style.overflow = 'hidden';
     document.body.classList.add('menu-open');
+    
+    // Force mobile menu to appear above everything
+    navMenu.style.zIndex = '9999';
+    navMenu.style.position = 'fixed';
   }
 
   closeMobileMenu() {
@@ -1062,13 +1148,19 @@ class AscensionApp {
     
     if (!navMenu || !mobileToggle) return;
 
+    console.log('🏛️ Closing mobile menu');
     this.mobileMenuOpen = false;
     navMenu.classList.remove('active');
     mobileToggle.classList.remove('active');
     mobileToggle.setAttribute('aria-expanded', 'false');
     
+    // Restore body scroll and remove visual indication
     document.body.style.overflow = '';
     document.body.classList.remove('menu-open');
+    
+    // Reset mobile menu z-index
+    navMenu.style.zIndex = '';
+    navMenu.style.position = '';
   }
 
   updateNavigation(pageName) {
@@ -1099,19 +1191,32 @@ class AscensionApp {
               <p class="hero-subtitle">Church & School • Fort Wayne, Indiana</p>
               <p>Sunday Services: 8:00 AM & 10:45 AM</p>
               <p>Phone: (260) 486-2226</p>
+              <p>Address: 8811 St. Joe Road, Fort Wayne, IN 46835</p>
             </div>
           </section>
         </div>
       `;
+      
+      // Force visibility on mobile
+      if (this.isMobile) {
+        const pageContent = container.querySelector('.page-content');
+        if (pageContent) {
+          pageContent.style.display = 'block';
+          pageContent.style.visibility = 'visible';
+          pageContent.style.opacity = '1';
+        }
+      }
     }
   }
 }
 
 // Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('🏛️ DOM ready, starting app...');
+  console.log('🏛️ DOM ready, starting mobile-fixed app...');
   window.ascensionApp = new AscensionApp();
 });
 
 // Make functions available globally
 window.loadPage = (page) => window.ascensionApp?.loadPage(page);
+
+console.log('🏛️ Mobile-Fixed App.js loaded successfully');
