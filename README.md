@@ -7,7 +7,7 @@
 
 ## 🏛️ Project Overview
 
-This is the official website for **Ascension Lutheran Church & School** in Fort Wayne, Indiana. It's built as a **Progressive Web App (PWA)** with a content-driven architecture that makes updates simple and safe.
+This is the development codebase for the Ascension Lutheran Church & School website in Fort Wayne, Indiana. Built as a Progressive Web App (PWA) with a content-driven architecture that enables simple and safe updates.
 
 ### ✨ Key Features
 - **📱 Mobile App Experience** - Can be installed on phones/computers
